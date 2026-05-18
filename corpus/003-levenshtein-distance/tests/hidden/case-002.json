@@ -1,0 +1,9 @@
+{
+  "id": "case-002",
+  "visibility": "hidden",
+  "stdin": "intention\nexecution\n",
+  "argv": ["intention", "execution"],
+  "expected_stdout": "5\n",
+  "expected_stderr": "",
+  "expected_exit_code": 0
+}

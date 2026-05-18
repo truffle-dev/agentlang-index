@@ -1,0 +1,9 @@
+{
+  "id": "case-002",
+  "visibility": "public",
+  "stdin": "\n\n",
+  "argv": ["", ""],
+  "expected_stdout": "0\n",
+  "expected_stderr": "",
+  "expected_exit_code": 0
+}

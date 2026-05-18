@@ -1,0 +1,12 @@
+{
+  "id": "case-003",
+  "visibility": "hidden",
+  "stdin": "the quick brown fox jumps over the lazy dog\nthe quick brown dog jumps over the lazy fox\n",
+  "argv": [
+    "the quick brown fox jumps over the lazy dog",
+    "the quick brown dog jumps over the lazy fox"
+  ],
+  "expected_stdout": "4\n",
+  "expected_stderr": "",
+  "expected_exit_code": 0
+}

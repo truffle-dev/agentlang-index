@@ -1,0 +1,25 @@
+{
+  "slug": "003-levenshtein-distance",
+  "title": "Levenshtein edit distance",
+  "difficulty": "easy",
+  "tags": ["computation", "dp", "strings"],
+  "spec_version": 1,
+  "prompt": "Read two short ASCII strings A and B (one per line) from standard input, and write the Levenshtein edit distance between them to standard output followed by a single newline. The allowed edits are single-character insertion, deletion, and substitution, each at cost 1. Either string may be empty. Each string is at most 50 characters and uses only printable ASCII (no tabs, no newlines inside the string). Exit with status 0.",
+  "input_schema": {
+    "stdin": "<string A on line 1, string B on line 2; either may be empty; both lines terminated by \\n>"
+  },
+  "output_schema": {
+    "stdout": "<edit distance as decimal digits>\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1600,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads A from argv[1] and B from argv[2] because Zero 0.1.2 has no exposed stdin capability. All other languages read two lines from stdin. The harness adapts per language."
+}
