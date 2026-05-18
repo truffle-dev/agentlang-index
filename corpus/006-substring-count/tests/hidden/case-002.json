@@ -1,0 +1,8 @@
+{
+  "name": "pattern equals text",
+  "stdin": "hello\nhello\n",
+  "argv": ["hello", "hello"],
+  "expected_stdout": "1\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

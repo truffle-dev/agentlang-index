@@ -1,0 +1,8 @@
+{
+  "name": "longer pattern in mixed text",
+  "stdin": "abc\nabcXabcabcYabc\n",
+  "argv": ["abc", "abcXabcabcYabc"],
+  "expected_stdout": "4\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

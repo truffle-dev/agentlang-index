@@ -1,0 +1,8 @@
+{
+  "name": "greedy non-overlap on aa over aaaa",
+  "stdin": "aa\naaaa\n",
+  "argv": ["aa", "aaaa"],
+  "expected_stdout": "2\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "006-substring-count",
+  "title": "Non-overlapping substring count",
+  "difficulty": "easy",
+  "tags": ["parsing", "strings", "search"],
+  "spec_version": 1,
+  "prompt": "Read a pattern P followed by a text T, each on its own line of stdin. Count the number of non-overlapping occurrences of P inside T using a greedy left-to-right scan: once a match starts at index i, the next candidate match starts at index i + len(P). P is between 1 and 100 printable-ASCII characters; T is between 0 and 1000 printable-ASCII characters. Both lines are terminated by \\n. Write the decimal count followed by a newline. Exit 0.",
+  "input_schema": {
+    "stdin": "<P\\nT\\n>"
+  },
+  "output_schema": {
+    "stdout": "<decimal count followed by \\n>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1400,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads P from argv[1] and T from argv[2] because Zero 0.1.2 has no exposed stdin capability. All other languages read two lines from stdin (terminators stripped). The harness adapts per language."
+}

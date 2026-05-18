@@ -1,0 +1,8 @@
+{
+  "name": "simple repetition",
+  "stdin": "ab\nabababab\n",
+  "argv": ["ab", "abababab"],
+  "expected_stdout": "4\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,8 @@
+{
+  "name": "banana with na pattern",
+  "stdin": "na\nbanana\n",
+  "argv": ["na", "banana"],
+  "expected_stdout": "2\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
