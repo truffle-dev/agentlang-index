@@ -1,0 +1,8 @@
+{
+  "id": "case-001",
+  "visibility": "hidden",
+  "stdin": "",
+  "expected_stdout": "hello\n",
+  "expected_stderr": "",
+  "expected_exit_code": 0
+}

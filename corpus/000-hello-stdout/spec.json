@@ -1,0 +1,22 @@
+{
+  "slug": "000-hello-stdout",
+  "title": "Hello, stdout",
+  "difficulty": "easy",
+  "tags": ["io", "smoke-test"],
+  "spec_version": 1,
+  "prompt": "Write a complete program that prints the six bytes `hello\\n` (lowercase, no quotes, single trailing newline) to standard output and exits with status code 0. Read no input.",
+  "input_schema": {"stdin": ""},
+  "output_schema": {
+    "stdout": "hello\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact": "hello\n",
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 500,
+  "languages": ["zero", "ts", "rust", "go", "python"]
+}
