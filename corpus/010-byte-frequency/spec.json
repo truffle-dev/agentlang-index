@@ -1,0 +1,25 @@
+{
+  "slug": "010-byte-frequency",
+  "title": "Per-byte frequency table sorted by byte value",
+  "difficulty": "easy",
+  "tags": ["io", "counting", "sorting", "multi-record-output"],
+  "spec_version": 1,
+  "prompt": "Read all bytes from standard input. Count how often each byte value (0 through 255) appears. For every byte value with a non-zero count, write one line of the form `<byte_decimal> <count>\\n` to standard output. The lines must be in ascending byte-value order. Empty input produces empty output. Exit with status 0.",
+  "input_schema": {
+    "stdin": "<input bytes, possibly empty, up to 100000 bytes>"
+  },
+  "output_schema": {
+    "stdout": "<zero or more lines of '<byte_decimal> <count>\\n' in ascending byte-value order>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1600,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads the input bytes from argv[1] because Zero 0.1.2 has no exposed stdin capability; the bytes are interpreted identically to stdin reads in the other languages. All other languages read all bytes from stdin until EOF. The harness adapts per language."
+}

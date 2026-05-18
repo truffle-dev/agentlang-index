@@ -1,0 +1,8 @@
+{
+  "name": "single byte",
+  "stdin": "a",
+  "argv": ["a"],
+  "expected_stdout": "97 1\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

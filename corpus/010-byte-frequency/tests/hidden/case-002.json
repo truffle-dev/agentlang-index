@@ -1,0 +1,8 @@
+{
+  "name": "hello has four distinct bytes",
+  "stdin": "hello",
+  "argv": ["hello"],
+  "expected_stdout": "101 1\n104 1\n108 2\n111 1\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

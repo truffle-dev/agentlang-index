@@ -1,0 +1,8 @@
+{
+  "name": "uppercase and lowercase are distinct",
+  "stdin": "AaA",
+  "argv": ["AaA"],
+  "expected_stdout": "65 2\n97 1\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,82 @@
+// Per-byte frequency table, Zero 0.1.2 direct backend.
+//
+// argv[1] is the input bytes (Zero 0.1.2 has no exposed stdin capability).
+// All logic stays inside `pub fun main` to avoid Span/MutSpan parameter
+// restrictions.
+//
+// One pass to populate a [256]u32 counts table, then walk byte values
+// 0..255 in ascending order and emit `<byte_decimal> <count>\n` per
+// non-zero entry. Decimal renderer uses small-divisor u32 divmod
+// (avoids the 2^32-divisor narrowing-cast SIGFPE) and lives inline in
+// both rendering sites because Zero 0.1.2 does not support Span/MutSpan
+// parameters and the buffer-write style is tightest as inline blocks.
+pub fun main(world: World) -> Void raises {
+    let line_opt = std.args.get(1)
+    let mut bytes: Span<u8> = std.mem.span("")
+    if line_opt.has {
+        bytes = std.mem.span(line_opt.value)
+    }
+    let n: usize = std.mem.len(bytes)
+
+    let mut counts: [256]u32 = [0_u32; 256]
+    let mut i: usize = 0
+    while i < n {
+        let idx: usize = bytes[i] as usize
+        counts[idx] = counts[idx] + 1_u32
+        i = i + 1
+    }
+
+    let mut out_buf: [4096]u8 = [0_u8; 4096]
+    let mut written: usize = 0
+    let mut bi: usize = 0
+    while bi < 256 {
+        let c: u32 = counts[bi]
+        if c > 0_u32 {
+            let b_val: u32 = bi as u32
+            if b_val == 0_u32 {
+                out_buf[written] = 48_u8
+                written = written + 1
+            } else {
+                let mut tmp: [4]u8 = [0_u8; 4]
+                let mut tn: usize = 0
+                let mut v: u32 = b_val
+                while v > 0_u32 {
+                    tmp[tn] = (48_u32 + (v % 10_u32)) as u8
+                    tn = tn + 1
+                    v = v / 10_u32
+                }
+                let mut j: usize = 0
+                while j < tn {
+                    out_buf[written] = tmp[tn - 1 - j]
+                    written = written + 1
+                    j = j + 1
+                }
+            }
+            out_buf[written] = 32_u8
+            written = written + 1
+
+            let mut tmp2: [16]u8 = [0_u8; 16]
+            let mut tn2: usize = 0
+            let mut v2: u32 = c
+            while v2 > 0_u32 {
+                tmp2[tn2] = (48_u32 + (v2 % 10_u32)) as u8
+                tn2 = tn2 + 1
+                v2 = v2 / 10_u32
+            }
+            let mut j2: usize = 0
+            while j2 < tn2 {
+                out_buf[written] = tmp2[tn2 - 1 - j2]
+                written = written + 1
+                j2 = j2 + 1
+            }
+
+            out_buf[written] = 10_u8
+            written = written + 1
+        }
+        bi = bi + 1
+    }
+
+    let out: Span<u8> = out_buf[0..written]
+    check world.out.write(out)
+    return
+}

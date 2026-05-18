@@ -1,0 +1,8 @@
+{
+  "name": "three byte pairs",
+  "stdin": "aabbcc",
+  "argv": ["aabbcc"],
+  "expected_stdout": "97 2\n98 2\n99 2\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
