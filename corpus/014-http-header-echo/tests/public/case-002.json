@@ -1,0 +1,8 @@
+{
+  "name": "lowercase content-type on /headers route returns application/json (case-insensitive name match)",
+  "stdin": "http://127.0.0.1:18014/headers\ncontent-type\n",
+  "argv": ["http://127.0.0.1:18014/headers", "content-type"],
+  "expected_stdout": "application/json\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

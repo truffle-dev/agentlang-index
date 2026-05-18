@@ -1,0 +1,17 @@
+[package]
+name = "http_header_echo"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "http_header_echo"
+path = "ref.rs"
+
+[dependencies]
+ureq = { version = "3", default-features = false, features = ["rustls"] }
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true

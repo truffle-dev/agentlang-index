@@ -1,0 +1,8 @@
+{
+  "name": "non-200 status on /404 route returns error even though X-Echo header is present",
+  "stdin": "http://127.0.0.1:18014/404\nX-Echo\n",
+  "argv": ["http://127.0.0.1:18014/404", "X-Echo"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

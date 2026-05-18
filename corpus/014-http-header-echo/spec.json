@@ -1,0 +1,25 @@
+{
+  "slug": "014-http-header-echo",
+  "title": "GET a URL and echo a named response header",
+  "difficulty": "medium",
+  "tags": ["networking", "http", "headers", "stdlib-breadth"],
+  "spec_version": 1,
+  "prompt": "Read two lines from standard input: a URL and a header name (each line is newline-terminated; trailing whitespace on either line is trimmed). Issue an HTTP GET request to that URL with a 5000 ms transport timeout. On a transport-successful HTTP 200 response, locate the named header (case-insensitive) and write its value followed by a newline, e.g. `application/json\\n`. On any failure (transport error, non-200 status, or missing header), write the literal string `error\\n` to standard output. Do not write to standard error. Exit with status 0 in every case. The header name match is case-insensitive on the name; the value bytes are echoed exactly as they appear after the colon and a single space (HTTP value trimming is delegated to the platform helper).",
+  "input_schema": {
+    "stdin": "two lines: URL, header name"
+  },
+  "output_schema": {
+    "stdout": "either `<header_value>\\n` on a successful match or `error\\n` on any failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 10000
+  },
+  "token_budget": 2400,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads URL from argv[1] and header name from argv[2] because Zero 0.1.2 has no exposed stdin capability; the values are interpreted identically to the two stdin lines other languages read (trailing whitespace trimmed). All other languages read two newline-terminated lines from stdin. The verifier spins up a local HTTP fixture server before each language run and tears it down after; the fixture serves `/headers` (returns 200 with several headers), `/json` (returns 200 with Content-Type only), `/empty` (returns 200 with no extra headers), and `/404` (returns 404). The verifier passes inputs via stdin for non-Zero refs and via argv for Zero."
+}

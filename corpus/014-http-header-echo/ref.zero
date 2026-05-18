@@ -1,0 +1,106 @@
+// HTTP header echo reference for AgentLang Index.
+//
+// Zero 0.1.2 has no exposed stdin, so URL/header-name come from
+// argv[1..2]. std.http.fetch is invoked with a GET envelope
+// (method-line + URL + blank line). On HTTP 200 we look up the
+// named header with std.http.headerValue and echo its bytes
+// + newline. On any transport, status, or header-miss failure
+// we write `error\n`.
+//
+// The direct backend MVP forbids user functions that take Span<u8>,
+// MutSpan<u8>, or return shape locals, so all logic is inline.
+
+pub fun main(world: World) -> Void raises {
+    let maybe_url = std.args.get(1)
+    let maybe_name = std.args.get(2)
+    if maybe_url.has == false {
+        check world.out.write("error\n")
+        return
+    }
+    if maybe_name.has == false {
+        check world.out.write("error\n")
+        return
+    }
+
+    let url_s = std.mem.span(maybe_url.value)
+    let name_s = std.mem.span(maybe_name.value)
+
+    // ---- Build GET envelope: GET <url>\n\n ----
+    let mut envelope: [1024]u8 = [0_u8; 1024]
+    let mut env_n: usize = 0
+
+    let prefix = std.mem.span("GET ")
+    let pre_n = std.mem.len(prefix)
+    let mut pi: usize = 0
+    while pi < pre_n {
+        envelope[env_n] = prefix[pi]
+        env_n = env_n + 1
+        pi = pi + 1
+    }
+
+    let url_n = std.mem.len(url_s)
+    let mut ui: usize = 0
+    let mut url_flag: Bool = true
+    while url_flag {
+        if ui >= url_n {
+            url_flag = false
+        } else {
+            let c = url_s[ui]
+            if c == 10_u8 {
+                url_flag = false
+            } else {
+                if c == 13_u8 {
+                    url_flag = false
+                } else {
+                    envelope[env_n] = c
+                    env_n = env_n + 1
+                    ui = ui + 1
+                }
+            }
+        }
+    }
+    envelope[env_n] = 10_u8
+    env_n = env_n + 1
+    envelope[env_n] = 10_u8
+    env_n = env_n + 1
+
+    // ---- Fetch ----
+    let net = std.net.host()
+    let client = std.http.client(net)
+    let mut response: [8192]u8 = [0_u8; 8192]
+    let result = std.http.fetch(client, envelope[0..env_n], response, std.time.ms(5000))
+    if std.http.resultOk(result) == false {
+        check world.out.write("error\n")
+        return
+    }
+    if std.http.resultStatus(result) != 200 {
+        check world.out.write("error\n")
+        return
+    }
+
+    // ---- Header lookup ----
+    let header_val = std.http.headerValue(response, name_s)
+    if std.http.headerFound(header_val) == false {
+        check world.out.write("error\n")
+        return
+    }
+
+    let h_off = std.http.headerOffset(header_val)
+    let h_len = std.http.headerLen(header_val)
+
+    // ---- Render header value + newline ----
+    // Inline the write rather than reach for a helper so we obey
+    // the seventh codegen-quirk constraint about returning slices.
+    let mut out: [4096]u8 = [0_u8; 4096]
+    let mut out_n: usize = 0
+    let mut wi: usize = 0
+    while wi < h_len {
+        out[out_n] = response[h_off + wi]
+        out_n = out_n + 1
+        wi = wi + 1
+    }
+    out[out_n] = 10_u8
+    out_n = out_n + 1
+    check world.out.write(out[0..out_n])
+    return
+}

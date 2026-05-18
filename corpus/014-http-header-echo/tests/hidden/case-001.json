@@ -1,0 +1,8 @@
+{
+  "name": "missing header on /empty route returns error",
+  "stdin": "http://127.0.0.1:18014/empty\nX-Missing\n",
+  "argv": ["http://127.0.0.1:18014/empty", "X-Missing"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
