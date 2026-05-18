@@ -1,0 +1,8 @@
+{
+  "name": "shift 13, xyz -> klm (rot13)",
+  "stdin": "13\nxyz\n",
+  "argv": ["13", "xyz"],
+  "expected_stdout": "klm\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

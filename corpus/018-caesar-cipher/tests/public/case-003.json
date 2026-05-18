@@ -1,0 +1,8 @@
+{
+  "name": "shift 25, abc -> zab (wrap)",
+  "stdin": "25\nabc\n",
+  "argv": ["25", "abc"],
+  "expected_stdout": "zab\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,8 @@
+{
+  "name": "shift 3, abc -> def",
+  "stdin": "3\nabc\n",
+  "argv": ["3", "abc"],
+  "expected_stdout": "def\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

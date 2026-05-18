@@ -1,0 +1,8 @@
+{
+  "name": "shift 26 rejects (out of range)",
+  "stdin": "26\nabc\n",
+  "argv": ["26", "abc"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

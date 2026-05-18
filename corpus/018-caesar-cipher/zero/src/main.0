@@ -1,0 +1,103 @@
+// Caesar cipher main driver for AgentLang Index slot 018.
+//
+// Zero 0.1.2 has no exposed stdin, so shift and plaintext come
+// from argv[1..2]. Lib (src/lib.0) provides is_lowercase_letter
+// and shift_letter; main parses + validates + composes.
+//
+// Failure modes collapse to "error\n":
+//   - argv[1] or argv[2] missing
+//   - shift fails to parse, has non-digit bytes, or is > 25
+//   - plaintext is empty
+//   - any plaintext byte is outside [a-z]
+
+use lib
+
+pub fun main(world: World) -> Void raises {
+    let maybe_shift = std.args.get(1)
+    let maybe_text = std.args.get(2)
+    if maybe_shift.has == false {
+        check world.out.write("error\n")
+        return
+    }
+    if maybe_text.has == false {
+        check world.out.write("error\n")
+        return
+    }
+
+    let shift_in = std.mem.span(maybe_shift.value)
+    let text_in = std.mem.span(maybe_text.value)
+
+    // ---- Parse shift as u8 in 0..=25 ----
+    let s_len = std.mem.len(shift_in)
+    let mut s_acc: u64 = 0_u64
+    let mut s_have: Bool = false
+    let mut s_ok: Bool = true
+    let mut s_i: usize = 0
+    while s_i < s_len {
+        let c = shift_in[s_i]
+        if c >= 48_u8 {
+            if c <= 57_u8 {
+                let d: u64 = (c - 48_u8) as u64
+                s_acc = s_acc * 10_u64 + d
+                s_have = true
+                s_i = s_i + 1
+            } else {
+                s_ok = false
+                s_i = s_len
+            }
+        } else {
+            s_ok = false
+            s_i = s_len
+        }
+    }
+    if s_ok == false {
+        check world.out.write("error\n")
+        return
+    }
+    if s_have == false {
+        check world.out.write("error\n")
+        return
+    }
+    if s_acc > 25_u64 {
+        check world.out.write("error\n")
+        return
+    }
+    let shift_val: u8 = s_acc as u8
+
+    // ---- Validate plaintext non-empty + all lowercase letters ----
+    let t_len = std.mem.len(text_in)
+    if t_len == 0 {
+        check world.out.write("error\n")
+        return
+    }
+    let mut text_ok: Bool = true
+    let mut t_i: usize = 0
+    while t_i < t_len {
+        let b = text_in[t_i]
+        if is_lowercase_letter(b) == false {
+            text_ok = false
+            t_i = t_len
+        } else {
+            t_i = t_i + 1
+        }
+    }
+    if text_ok == false {
+        check world.out.write("error\n")
+        return
+    }
+
+    // ---- Build ciphertext + trailing newline ----
+    let mut out: [1100]u8 = [0_u8; 1100]
+    let mut out_n: usize = 0
+    let mut wi: usize = 0
+    while wi < t_len {
+        let b = text_in[wi]
+        out[out_n] = shift_letter(b, shift_val)
+        out_n = out_n + 1
+        wi = wi + 1
+    }
+    out[out_n] = 10_u8
+    out_n = out_n + 1
+    check world.out.write(out[0..out_n])
+    return
+}

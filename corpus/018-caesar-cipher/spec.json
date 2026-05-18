@@ -1,0 +1,25 @@
+{
+  "slug": "018-caesar-cipher",
+  "title": "Shift a lowercase ASCII string by a Caesar offset, or error on bad input",
+  "difficulty": "easy",
+  "tags": ["string-transform", "module-boundary", "multi-file"],
+  "spec_version": 1,
+  "prompt": "Read two lines from standard input. Line 1 is a non-negative decimal integer `shift` in the range 0 through 25 inclusive. Line 2 is the plaintext: a non-empty string of lowercase ASCII letters (bytes in `a` through `z`). Rotate each plaintext byte forward by `shift` positions within the lowercase alphabet (wrapping `z + 1` back to `a`) and write the ciphertext followed by a single newline. If any of the following hold, write `error\\n` instead and exit: line 1 fails to parse (empty, has non-digit bytes, exceeds 25); line 2 is empty; line 2 contains any byte outside `a` through `z`. Trailing whitespace on line 1 is trimmed before parsing. Line 2 is taken verbatim. Do not write to standard error. Exit with status 0 in every case.",
+  "input_schema": {
+    "stdin": "two lines: shift (0..=25), plaintext (lowercase a-z, non-empty)"
+  },
+  "output_schema": {
+    "stdout": "either `<ciphertext>\\n` on success or `error\\n` on any failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 2000,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads `shift` from argv[1] and `plaintext` from argv[2] because Zero 0.1.2 has no exposed stdin capability; the values are interpreted identically to the two stdin lines other languages read (line 1 trimmed, line 2 taken verbatim). All other languages read two newline-terminated lines from stdin. This task opens the multi-file arc: the Zero implementation is a multi-file project under `zero/` with `zero.json`, `src/main.0` (driver), and `src/lib.0` (`is_lowercase_letter`, `shift_letter` helpers). Lib signatures are scalar-only (u8 + Bool) because Zero 0.1.2's direct backend forbids user functions over Span<u8>/MutSpan<u8>/shape values. The Zero project is invoked as `zero run zero -- <shift> <plaintext>` (project directory + double-dash + argv pair)."
+}

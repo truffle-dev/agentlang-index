@@ -1,0 +1,8 @@
+{
+  "name": "shift 0 is identity, hello -> hello",
+  "stdin": "0\nhello\n",
+  "argv": ["0", "hello"],
+  "expected_stdout": "hello\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
