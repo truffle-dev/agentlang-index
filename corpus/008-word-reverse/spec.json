@@ -1,0 +1,25 @@
+{
+  "slug": "008-word-reverse",
+  "title": "Reverse the order of words on a line",
+  "difficulty": "easy",
+  "tags": ["parsing", "strings", "tokenization"],
+  "spec_version": 1,
+  "prompt": "Read one line of printable ASCII (at most 1000 characters, terminated by \\n) from standard input. A `word` is a maximal run of non-space characters; the only delimiter is the ASCII space (0x20). Multiple consecutive spaces, leading spaces, and trailing spaces are allowed but produce no empty words. Write the words in reverse order, separated by single spaces, followed by exactly one newline. If the input contains no words, write nothing (no output, no newline). Exit with status 0.",
+  "input_schema": {
+    "stdin": "<one line of printable ASCII, up to 1000 chars, terminated by \\n>"
+  },
+  "output_schema": {
+    "stdout": "<words in reverse order, single-space separated, terminated by \\n; empty if no words>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1600,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads the line from argv[1] because Zero 0.1.2 has no exposed stdin capability. All other languages read one line from stdin (terminator stripped). The harness adapts per language."
+}

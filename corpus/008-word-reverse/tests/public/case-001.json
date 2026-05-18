@@ -1,0 +1,8 @@
+{
+  "name": "two-word swap",
+  "stdin": "hello world\n",
+  "argv": ["hello world"],
+  "expected_stdout": "world hello\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

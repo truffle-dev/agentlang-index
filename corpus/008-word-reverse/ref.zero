@@ -1,0 +1,93 @@
+// Reverse the order of words on a line, Zero 0.1.2 direct backend.
+//
+// argv[1] is the line (Zero 0.1.2 has no exposed stdin capability).
+// All logic stays inside `pub fun main` to avoid Span/MutSpan parameter
+// restrictions.
+//
+// Two-pass design: first pass scans the input and records each word's
+// (start, length) into two parallel [500]u32 arrays. Second pass walks
+// from last word to first, appending bytes to an output buffer with
+// single-space separators and a trailing newline. If zero words were
+// found, nothing is written.
+//
+// Zero's `&&` is not assumed to short-circuit, so the inner loops are
+// split into a `while true` with an explicit early-exit setting the
+// loop index to n.
+pub fun main(world: World) -> Void raises {
+    let line_opt = std.args.get(1)
+    let mut bytes: Span<u8> = std.mem.span("")
+    if line_opt.has {
+        bytes = std.mem.span(line_opt.value)
+    }
+    let n: usize = std.mem.len(bytes)
+
+    let mut starts: [500]u32 = [0_u32; 500]
+    let mut lens: [500]u32 = [0_u32; 500]
+    let mut nw: usize = 0
+
+    let mut i: usize = 0
+    while i < n {
+        // Skip spaces. Inner loop avoids relying on && short-circuit.
+        let mut skipping: Bool = true
+        while skipping {
+            if i >= n {
+                skipping = false
+            } else {
+                if bytes[i] == 32_u8 {
+                    i = i + 1
+                } else {
+                    skipping = false
+                }
+            }
+        }
+        if i < n {
+            let start: usize = i
+            let mut scanning: Bool = true
+            while scanning {
+                if i >= n {
+                    scanning = false
+                } else {
+                    if bytes[i] != 32_u8 {
+                        i = i + 1
+                    } else {
+                        scanning = false
+                    }
+                }
+            }
+            let len: usize = i - start
+            starts[nw] = start as u32
+            lens[nw] = len as u32
+            nw = nw + 1
+        }
+    }
+
+    if nw == 0 {
+        return
+    }
+
+    let mut out_buf: [1024]u8 = [0_u8; 1024]
+    let mut written: usize = 0
+
+    let mut w: usize = nw
+    while w > 0 {
+        w = w - 1
+        if written > 0 {
+            out_buf[written] = 32_u8
+            written = written + 1
+        }
+        let s: usize = starts[w] as usize
+        let l: usize = lens[w] as usize
+        let mut k: usize = 0
+        while k < l {
+            out_buf[written] = bytes[s + k]
+            written = written + 1
+            k = k + 1
+        }
+    }
+    out_buf[written] = 10_u8
+    written = written + 1
+
+    let out: Span<u8> = out_buf[0..written]
+    check world.out.write(out)
+    return
+}

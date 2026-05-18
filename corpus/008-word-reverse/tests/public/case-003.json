@@ -1,0 +1,8 @@
+{
+  "name": "single word stays single",
+  "stdin": "single\n",
+  "argv": ["single"],
+  "expected_stdout": "single\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

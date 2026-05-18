@@ -1,0 +1,8 @@
+{
+  "name": "spaces collapse and trim",
+  "stdin": "  multi   spaces  \n",
+  "argv": ["  multi   spaces  "],
+  "expected_stdout": "spaces multi\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,8 @@
+{
+  "name": "four words",
+  "stdin": "the quick brown fox\n",
+  "argv": ["the quick brown fox"],
+  "expected_stdout": "fox brown quick the\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

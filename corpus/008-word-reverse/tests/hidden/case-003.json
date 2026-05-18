@@ -1,0 +1,8 @@
+{
+  "name": "only spaces writes nothing",
+  "stdin": "   \n",
+  "argv": ["   "],
+  "expected_stdout": "",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
