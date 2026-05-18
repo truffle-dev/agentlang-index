@@ -1,0 +1,108 @@
+// Fibonacci with memoization, Zero 0.1.2 direct backend.
+//
+// Two notable adaptations vs the other language references, both
+// dictated by Zero 0.1.2's direct ELF64 MVP backend (CGEN004):
+//   1. The CLI input is read from argv[1] instead of stdin. Zero 0.1.2
+//      exposes World.out and World.err but no World.in capability, so
+//      stdin is not yet reachable from a hosted-world program.
+//   2. The u64 memo is stored as two parallel [N]u32 arrays. The MVP
+//      backend's fixed-array local element types are limited to i32,
+//      u32, and u8, so a [N]u64 array is rejected.
+// All logic stays inside `pub fun main` because the direct backend
+// also rejects Span<u8> and MutSpan<u8> as function parameter types
+// in the single-file run path used by `zero run`.
+pub fun main(world: World) -> Void raises {
+    let arg = std.args.get(1)
+    if arg.has == false {
+        check world.err.write("usage: pass N as argv[1] (Zero 0.1.2 has no stdin capability)\n")
+        return
+    }
+
+    // Parse the argv[1] decimal digits into a u32 N. std.parse.parseU32
+    // is gated behind a literal-text requirement in the MVP backend, so
+    // we walk the bytes manually.
+    let arg_bytes: Span<u8> = std.mem.span(arg.value)
+    let arg_len: usize = std.mem.len(arg_bytes)
+    if arg_len == 0 {
+        check world.err.write("N must be a non-negative integer\n")
+        return
+    }
+    let mut parse_i: usize = 0
+    let mut n: u32 = 0_u32
+    while parse_i < arg_len {
+        let ch: u8 = arg_bytes[parse_i]
+        if ch < 48_u8 || ch > 57_u8 {
+            check world.err.write("N must be a non-negative integer\n")
+            return
+        }
+        n = n * 10_u32 + ((ch - 48_u8) as u32)
+        parse_i = parse_i + 1
+    }
+    if n >= 64_u32 {
+        check world.err.write("N must be < 64 for the u64 memo to remain in-range\n")
+        return
+    }
+
+    // Memoized fib. memo_hi[i] and memo_lo[i] together form fib(i) as a
+    // u64: fib(i) = memo_hi[i] * 2^32 + memo_lo[i]. The recurrence is
+    // computed in u64 to capture the carry across the u32 boundary,
+    // then split back into hi/lo for storage. 4294967296 = 2^32.
+    let mut memo_lo: [64]u32 = [0_u32; 64]
+    let mut memo_hi: [64]u32 = [0_u32; 64]
+    memo_lo[0] = 0_u32
+    memo_hi[0] = 0_u32
+    memo_lo[1] = 1_u32
+    memo_hi[1] = 0_u32
+    let mut i: u32 = 2_u32
+    while i <= n {
+        let idx: usize = i as usize
+        let a_hi: u64 = memo_hi[idx - 1] as u64
+        let a_lo: u64 = memo_lo[idx - 1] as u64
+        let b_hi: u64 = memo_hi[idx - 2] as u64
+        let b_lo: u64 = memo_lo[idx - 2] as u64
+        let a: u64 = a_hi * 4294967296_u64 + a_lo
+        let b: u64 = b_hi * 4294967296_u64 + b_lo
+        let sum: u64 = a + b
+        let sum_hi: u64 = sum / 4294967296_u64
+        let sum_lo: u64 = sum % 4294967296_u64
+        memo_hi[idx] = sum_hi as u32
+        memo_lo[idx] = sum_lo as u32
+        i = i + 1_u32
+    }
+    let n_idx: usize = n as usize
+    let v_hi: u64 = memo_hi[n_idx] as u64
+    let v_lo: u64 = memo_lo[n_idx] as u64
+    let value: u64 = v_hi * 4294967296_u64 + v_lo
+
+    // Render value followed by '\n' into a fixed buffer.
+    let mut buf: [32]u8 = [0_u8; 32]
+    let mut written: usize = 0
+    if value == 0_u64 {
+        buf[0] = 48_u8
+        buf[1] = 10_u8
+        written = 2
+    } else {
+        let mut digits: [24]u8 = [0_u8; 24]
+        let mut rem: u64 = value
+        let mut count: usize = 0
+        while rem > 0_u64 {
+            let dq: u64 = rem / 10_u64
+            let dr: u64 = rem % 10_u64
+            let drb: u8 = dr as u8
+            digits[count] = drb + 48_u8
+            rem = dq
+            count = count + 1
+        }
+        let mut j: usize = 0
+        while j < count {
+            buf[j] = digits[count - 1 - j]
+            j = j + 1
+        }
+        buf[count] = 10_u8
+        written = count + 1
+    }
+
+    let out: Span<u8> = buf[0..written]
+    check world.out.write(out)
+    return
+}

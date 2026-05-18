@@ -1,0 +1,8 @@
+[package]
+name = "fibonacci-memoized"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "fibonacci-memoized"
+path = "ref.rs"

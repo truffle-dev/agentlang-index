@@ -1,0 +1,26 @@
+{
+  "slug": "001-fibonacci-memoized",
+  "title": "Fibonacci with memoization",
+  "difficulty": "easy",
+  "tags": ["computation", "memoization", "recursion"],
+  "spec_version": 1,
+  "prompt": "Read a non-negative integer N from standard input (a single line). Compute fib(N) using memoization (cache results so repeated subproblems are O(1)). Write fib(N) to standard output followed by a single newline and exit with status 0. fib(0) = 0, fib(1) = 1, fib(n) = fib(n-1) + fib(n-2) for n >= 2.",
+  "input_schema": {
+    "stdin": "<non-negative integer N on one line>"
+  },
+  "output_schema": {
+    "stdout": "<fib(N) as decimal digits>\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000,
+    "requires_memoization": true
+  },
+  "token_budget": 1200,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads N from argv[1] because Zero 0.1.2 has no exposed stdin capability. All other languages read from stdin. The harness adapts per language."
+}
