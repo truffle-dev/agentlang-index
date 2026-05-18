@@ -1,0 +1,8 @@
+{
+  "name": "escaped double quote within quoted field",
+  "stdin": "\"a\"\"b\",\"c\"\n",
+  "argv": ["\"a\"\"b\",\"c\""],
+  "expected_stdout": "a\"b\nc\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

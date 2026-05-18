@@ -1,0 +1,8 @@
+[package]
+name = "csv_line_tokenize"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "csv_line_tokenize"
+path = "ref.rs"

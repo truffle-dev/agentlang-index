@@ -1,0 +1,25 @@
+{
+  "slug": "007-csv-line-tokenize",
+  "title": "CSV line tokenizer (RFC 4180 subset)",
+  "difficulty": "easy",
+  "tags": ["parsing", "strings", "state-machine"],
+  "spec_version": 1,
+  "prompt": "Read one line of CSV from standard input, terminated by \\n, up to 1000 printable-ASCII characters. Split it into fields per a simplified RFC 4180 grammar: fields are separated by commas; a field may be quoted by enclosing it in double quotes (`\"`); inside a quoted field, a literal double quote is represented by two consecutive double quotes (`\"\"`), and commas are literal; unquoted fields contain no commas or quotes. Write each field on its own line of stdout terminated by \\n, in input order. If the input line is empty, write nothing. Exit 0.",
+  "input_schema": {
+    "stdin": "<one CSV line, printable ASCII, up to 1000 chars, terminated by \\n>"
+  },
+  "output_schema": {
+    "stdout": "<each field followed by \\n, in input order>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1800,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads the CSV line from argv[1] because Zero 0.1.2 has no exposed stdin capability. All other languages read one line from stdin (terminator stripped). The harness adapts per language."
+}

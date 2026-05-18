@@ -1,0 +1,8 @@
+{
+  "name": "three simple unquoted fields",
+  "stdin": "a,b,c\n",
+  "argv": ["a,b,c"],
+  "expected_stdout": "a\nb\nc\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

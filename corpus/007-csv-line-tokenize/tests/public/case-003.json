@@ -1,0 +1,8 @@
+{
+  "name": "three empty fields from two consecutive commas",
+  "stdin": ",,\n",
+  "argv": [",,"],
+  "expected_stdout": "\n\n\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

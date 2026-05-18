@@ -1,0 +1,89 @@
+// CSV line tokenizer (RFC 4180 subset), Zero 0.1.2 direct backend.
+//
+// argv[1] is the CSV line (Zero 0.1.2 has no exposed stdin capability).
+// All logic stays inside `pub fun main` to avoid Span/MutSpan parameter
+// restrictions.
+//
+// State machine over input bytes:
+//   0 FIELD_START          - start of a field, may begin quoted or not
+//   1 IN_UNQUOTED          - inside an unquoted field
+//   2 IN_QUOTED            - inside a quoted field
+//   3 AFTER_CLOSING_QUOTE  - saw a `"` in a quoted field; deciding
+//                            whether it was an escape ("") or the close
+//
+// Output is written byte-by-byte into a stack [1200]u8 (max 1000 input
+// chars plus one newline per field; a worst-case `,,,...,,` is 501
+// fields => 501 newlines, fits in 1200 with headroom).
+pub fun main(world: World) -> Void raises {
+    let line_opt = std.args.get(1)
+    let mut bytes: Span<u8> = std.mem.span("")
+    if line_opt.has {
+        bytes = std.mem.span(line_opt.value)
+    }
+    let n: usize = std.mem.len(bytes)
+
+    let mut out_buf: [1200]u8 = [0_u8; 1200]
+    let mut written: usize = 0
+
+    if n > 0 {
+        let mut state: u32 = 0_u32
+        let mut i: usize = 0
+        while i < n {
+            let ch: u8 = bytes[i]
+            if state == 0_u32 {
+                if ch == 34_u8 {
+                    state = 2_u32
+                } else {
+                    if ch == 44_u8 {
+                        out_buf[written] = 10_u8
+                        written = written + 1
+                    } else {
+                        out_buf[written] = ch
+                        written = written + 1
+                        state = 1_u32
+                    }
+                }
+            } else {
+                if state == 1_u32 {
+                    if ch == 44_u8 {
+                        out_buf[written] = 10_u8
+                        written = written + 1
+                        state = 0_u32
+                    } else {
+                        out_buf[written] = ch
+                        written = written + 1
+                    }
+                } else {
+                    if state == 2_u32 {
+                        if ch == 34_u8 {
+                            state = 3_u32
+                        } else {
+                            out_buf[written] = ch
+                            written = written + 1
+                        }
+                    } else {
+                        // state == 3 (AFTER_CLOSING_QUOTE)
+                        if ch == 34_u8 {
+                            out_buf[written] = 34_u8
+                            written = written + 1
+                            state = 2_u32
+                        } else {
+                            if ch == 44_u8 {
+                                out_buf[written] = 10_u8
+                                written = written + 1
+                                state = 0_u32
+                            }
+                        }
+                    }
+                }
+            }
+            i = i + 1
+        }
+        out_buf[written] = 10_u8
+        written = written + 1
+    }
+
+    let out: Span<u8> = out_buf[0..written]
+    check world.out.write(out)
+    return
+}
