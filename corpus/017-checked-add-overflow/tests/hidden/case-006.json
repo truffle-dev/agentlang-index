@@ -1,0 +1,8 @@
+{
+  "name": "parse fails on first addend (abc + 5)",
+  "stdin": "abc\n5\n",
+  "argv": ["abc", "5"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

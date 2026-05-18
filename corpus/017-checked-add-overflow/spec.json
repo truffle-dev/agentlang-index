@@ -1,0 +1,25 @@
+{
+  "slug": "017-checked-add-overflow",
+  "title": "Parse two unsigned integers and write their sum, or error on parse failure or u32 overflow",
+  "difficulty": "easy",
+  "tags": ["error-handling", "parsing", "arithmetic", "overflow"],
+  "spec_version": 1,
+  "prompt": "Read two lines from standard input. Each line contains an unsigned decimal integer that fits in u32 (range 0 to 4294967295 inclusive). Parse both. If either parse fails (empty line, non-digit characters, leading sign, leading zero is OK, value exceeds u32 max), write the literal string `error\\n` to standard output and exit. If both parse but `a + b` would exceed 4294967295 (u32 overflow), write `error\\n` to standard output and exit. Otherwise write the sum as decimal followed by a single newline. Do not write to standard error. Exit with status 0 in every case. Trailing whitespace on the digit lines is tolerated (trimmed); a stray leading `+` is not accepted as valid.",
+  "input_schema": {
+    "stdin": "two lines: addend a (u32), addend b (u32)"
+  },
+  "output_schema": {
+    "stdout": "either `<decimal_sum>\\n` on success or `error\\n` on any failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1800,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads a from argv[1] and b from argv[2] because Zero 0.1.2 has no exposed stdin capability; the values are interpreted identically to the two stdin lines other languages read (trailing whitespace trimmed). All other languages read two newline-terminated lines from stdin. This task closes the error-handling arc: three independent failure modes (parse-a, parse-b, u32-add-overflow) all collapse to the same `error\\n` output. Rust uses `u32::checked_add`; Go compares `uint64(a)+uint64(b)` against `math.MaxUint32`; TypeScript/Python compare `a + b > 4294967295` directly; Zero accumulates the sum in u64 and bounds-checks against `4294967295_u64`."
+}

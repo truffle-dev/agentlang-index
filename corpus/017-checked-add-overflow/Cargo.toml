@@ -1,0 +1,14 @@
+[package]
+name = "checked_add_overflow"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "checked_add_overflow"
+path = "ref.rs"
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true

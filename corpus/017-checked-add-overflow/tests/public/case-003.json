@@ -1,0 +1,8 @@
+{
+  "name": "small positive add (1000 + 2000 == 3000)",
+  "stdin": "1000\n2000\n",
+  "argv": ["1000", "2000"],
+  "expected_stdout": "3000\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

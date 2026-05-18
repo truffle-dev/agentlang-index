@@ -1,0 +1,8 @@
+{
+  "name": "smallest u32 overflow (4294967295 + 1)",
+  "stdin": "4294967295\n1\n",
+  "argv": ["4294967295", "1"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

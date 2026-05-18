@@ -1,0 +1,8 @@
+{
+  "name": "exact u32 wrap (2^31 + 2^31 == 2^32)",
+  "stdin": "2147483648\n2147483648\n",
+  "argv": ["2147483648", "2147483648"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,140 @@
+// Checked u32 add-with-overflow reference for AgentLang Index.
+//
+// Zero 0.1.2 has no exposed stdin, so a and b come from argv[1..2].
+// std.parse.parseU32 cannot accept runtime String values on the
+// direct ELF64 backend (CGEN004: requires literal text), so the
+// parse + overflow check is implemented inline: u64 accumulator,
+// digit-by-digit, reject any non-digit byte, reject if final value
+// exceeds u32::MAX.
+//
+// Three failure modes collapse to "error\n":
+//   - argv[1] or argv[2] missing
+//   - either argv has non-digit bytes, is empty, or exceeds u32::MAX
+//   - the sum a + b exceeds u32::MAX (computed in u64 to dodge wrap)
+//
+// main ends with an explicit `return` to dodge the trailing-write
+// byte-count-as-exit-code codegen quirk surfaced on task 012.
+
+pub fun main(world: World) -> Void raises {
+    let maybe_a = std.args.get(1)
+    let maybe_b = std.args.get(2)
+    if maybe_a.has == false {
+        check world.out.write("error\n")
+        return
+    }
+    if maybe_b.has == false {
+        check world.out.write("error\n")
+        return
+    }
+
+    let a_in = std.mem.span(maybe_a.value)
+    let b_in = std.mem.span(maybe_b.value)
+
+    // ---- Parse a as u32, reject non-digit / empty / > u32::MAX ----
+    let a_len = std.mem.len(a_in)
+    let mut a_acc: u64 = 0_u64
+    let mut a_have: Bool = false
+    let mut a_ok: Bool = true
+    let mut a_i: usize = 0
+    while a_i < a_len {
+        let c = a_in[a_i]
+        if c >= 48_u8 {
+            if c <= 57_u8 {
+                let d: u64 = (c - 48_u8) as u64
+                a_acc = a_acc * 10_u64 + d
+                a_have = true
+                a_i = a_i + 1
+            } else {
+                a_ok = false
+                a_i = a_len
+            }
+        } else {
+            a_ok = false
+            a_i = a_len
+        }
+    }
+    if a_ok == false {
+        check world.out.write("error\n")
+        return
+    }
+    if a_have == false {
+        check world.out.write("error\n")
+        return
+    }
+    if a_acc > 4294967295_u64 {
+        check world.out.write("error\n")
+        return
+    }
+
+    // ---- Parse b as u32 ----
+    let b_len = std.mem.len(b_in)
+    let mut b_acc: u64 = 0_u64
+    let mut b_have: Bool = false
+    let mut b_ok: Bool = true
+    let mut b_i: usize = 0
+    while b_i < b_len {
+        let c = b_in[b_i]
+        if c >= 48_u8 {
+            if c <= 57_u8 {
+                let d: u64 = (c - 48_u8) as u64
+                b_acc = b_acc * 10_u64 + d
+                b_have = true
+                b_i = b_i + 1
+            } else {
+                b_ok = false
+                b_i = b_len
+            }
+        } else {
+            b_ok = false
+            b_i = b_len
+        }
+    }
+    if b_ok == false {
+        check world.out.write("error\n")
+        return
+    }
+    if b_have == false {
+        check world.out.write("error\n")
+        return
+    }
+    if b_acc > 4294967295_u64 {
+        check world.out.write("error\n")
+        return
+    }
+
+    // ---- Sum in u64, bounds-check against u32::MAX ----
+    let sum: u64 = a_acc + b_acc
+    if sum > 4294967295_u64 {
+        check world.out.write("error\n")
+        return
+    }
+    let s_val: u32 = sum as u32
+
+    // ---- Render s_val as decimal + newline ----
+    let mut out: [16]u8 = [0_u8; 16]
+    let mut out_n: usize = 0
+    if s_val == 0_u32 {
+        out[out_n] = 48_u8
+        out_n = out_n + 1
+    } else {
+        let mut tmp: [16]u8 = [0_u8; 16]
+        let mut tn: usize = 0
+        let mut v: u32 = s_val
+        while v > 0_u32 {
+            let digit_u32: u32 = 48_u32 + (v % 10_u32)
+            tmp[tn] = digit_u32 as u8
+            tn = tn + 1
+            v = v / 10_u32
+        }
+        let mut wj: usize = 0
+        while wj < tn {
+            out[out_n] = tmp[tn - 1 - wj]
+            out_n = out_n + 1
+            wj = wj + 1
+        }
+    }
+    out[out_n] = 10_u8
+    out_n = out_n + 1
+    check world.out.write(out[0..out_n])
+    return
+}

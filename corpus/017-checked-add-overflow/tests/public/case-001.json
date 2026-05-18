@@ -1,0 +1,8 @@
+{
+  "name": "small positive add (2 + 3 == 5)",
+  "stdin": "2\n3\n",
+  "argv": ["2", "3"],
+  "expected_stdout": "5\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
