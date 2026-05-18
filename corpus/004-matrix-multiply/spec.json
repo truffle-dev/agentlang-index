@@ -1,0 +1,25 @@
+{
+  "slug": "004-matrix-multiply",
+  "title": "Square integer matrix multiply",
+  "difficulty": "easy",
+  "tags": ["computation", "matrix", "loops"],
+  "spec_version": 1,
+  "prompt": "Read two N x N integer matrices A and B from standard input and write the matrix product C = A * B to standard output. Input format: line 1 is N (1 <= N <= 5). The next N lines are the rows of A, each row a space-separated list of N integers. The next N lines are the rows of B, in the same format. Each matrix entry is in the closed interval [-99, 99]. Output format: N lines, each row a space-separated list of N decimal integers, every line terminated by a single newline. Exit with status 0.",
+  "input_schema": {
+    "stdin": "<N on line 1; N rows of A; N rows of B; each row is N space-separated integers in [-99, 99]>"
+  },
+  "output_schema": {
+    "stdout": "<N rows of C, each row N space-separated decimal integers terminated by \\n>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1800,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads all input via argv because Zero 0.1.2 has no exposed stdin capability. The argv layout is: argv[1] = N, argv[2..2+N*N-1] = A entries row-major, argv[2+N*N..2+2*N*N-1] = B entries row-major. All other languages read the stdin schema described in `prompt`. The harness adapts per language."
+}

@@ -1,0 +1,8 @@
+[package]
+name = "matrix-multiply"
+version = "0.0.0"
+edition = "2021"
+
+[[bin]]
+name = "matmul"
+path = "ref.rs"
