@@ -1,0 +1,91 @@
+// Prime count via Sieve of Eratosthenes, Zero 0.1.2 direct backend.
+//
+// Same input convention as task 001: N is read from argv[1] because
+// Zero 0.1.2 has no exposed stdin capability. All logic stays inside
+// `pub fun main` to avoid the Span/MutSpan-as-parameter restriction.
+//
+// The composite-flag table is fixed-size [10001]u8 so the spec cap
+// of N <= 10000 is enforced at the type level. Element type is u8
+// to stay inside the direct backend's allowed local-array element
+// types (u8, u32, i32).
+pub fun main(world: World) -> Void raises {
+    let arg = std.args.get(1)
+    if arg.has == false {
+        check world.err.write("usage: pass N as argv[1] (Zero 0.1.2 has no stdin capability)\n")
+        return
+    }
+
+    let arg_bytes: Span<u8> = std.mem.span(arg.value)
+    let arg_len: usize = std.mem.len(arg_bytes)
+    if arg_len == 0 {
+        check world.err.write("N must be a non-negative integer\n")
+        return
+    }
+    let mut parse_i: usize = 0
+    let mut n: u32 = 0_u32
+    while parse_i < arg_len {
+        let ch: u8 = arg_bytes[parse_i]
+        if ch < 48_u8 || ch > 57_u8 {
+            check world.err.write("N must be a non-negative integer\n")
+            return
+        }
+        n = n * 10_u32 + ((ch - 48_u8) as u32)
+        parse_i = parse_i + 1
+    }
+    if n > 10000_u32 {
+        check world.err.write("N must be <= 10000\n")
+        return
+    }
+
+    let mut count: u32 = 0_u32
+    if n >= 2_u32 {
+        let mut composite: [10001]u8 = [0_u8; 10001]
+        let mut i: u32 = 2_u32
+        while i * i <= n {
+            if composite[i as usize] == 0_u8 {
+                let mut j: u32 = i * i
+                while j <= n {
+                    composite[j as usize] = 1_u8
+                    j = j + i
+                }
+            }
+            i = i + 1_u32
+        }
+        let mut k: u32 = 2_u32
+        while k <= n {
+            if composite[k as usize] == 0_u8 {
+                count = count + 1_u32
+            }
+            k = k + 1_u32
+        }
+    }
+
+    let mut buf: [16]u8 = [0_u8; 16]
+    let mut written: usize = 0
+    if count == 0_u32 {
+        buf[0] = 48_u8
+        buf[1] = 10_u8
+        written = 2
+    } else {
+        let mut digits: [16]u8 = [0_u8; 16]
+        let mut rem: u32 = count
+        let mut digit_count: usize = 0
+        while rem > 0_u32 {
+            let dq: u32 = rem / 10_u32
+            let dr: u32 = rem % 10_u32
+            digits[digit_count] = (dr as u8) + 48_u8
+            rem = dq
+            digit_count = digit_count + 1
+        }
+        let mut o: usize = 0
+        while o < digit_count {
+            buf[o] = digits[digit_count - 1 - o]
+            o = o + 1
+        }
+        buf[digit_count] = 10_u8
+        written = digit_count + 1
+    }
+    let out: Span<u8> = buf[0..written]
+    check world.out.write(out)
+    return
+}

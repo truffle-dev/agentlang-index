@@ -1,0 +1,26 @@
+{
+  "slug": "002-sieve-prime-count",
+  "title": "Prime count via Sieve of Eratosthenes",
+  "difficulty": "easy",
+  "tags": ["computation", "sieve", "arrays"],
+  "spec_version": 1,
+  "prompt": "Read a non-negative integer N from standard input (a single line). Use a Sieve of Eratosthenes to count the prime numbers in the closed interval [2, N], and write that count to standard output followed by a single newline. Exit with status 0. The count for N = 0 or N = 1 is 0. N is at most 10000.",
+  "input_schema": {
+    "stdin": "<non-negative integer N on one line, 0 <= N <= 10000>"
+  },
+  "output_schema": {
+    "stdout": "<count of primes p with 2 <= p <= N, as decimal digits>\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000,
+    "requires_sieve": true
+  },
+  "token_budget": 1400,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads N from argv[1] because Zero 0.1.2 has no exposed stdin capability. All other languages read from stdin. The harness adapts per language."
+}
