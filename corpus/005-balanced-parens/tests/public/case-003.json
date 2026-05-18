@@ -1,0 +1,8 @@
+{
+  "name": "non-bracket text ignored",
+  "stdin": "if (x[0] == y) { a = 1 }\n",
+  "argv": ["if (x[0] == y) { a = 1 }"],
+  "expected_stdout": "yes\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,8 @@
+{
+  "name": "deep nesting with mixed bracket kinds",
+  "stdin": "{[()()]{[]}}([{}])\n",
+  "argv": ["{[()()]{[]}}([{}])"],
+  "expected_stdout": "yes\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

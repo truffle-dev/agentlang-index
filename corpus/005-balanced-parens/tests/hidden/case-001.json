@@ -1,0 +1,8 @@
+{
+  "name": "crossing pairs are not balanced",
+  "stdin": "([)]\n",
+  "argv": ["([)]"],
+  "expected_stdout": "no\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

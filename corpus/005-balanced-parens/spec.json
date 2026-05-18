@@ -1,0 +1,25 @@
+{
+  "slug": "005-balanced-parens",
+  "title": "Balanced bracket checker",
+  "difficulty": "easy",
+  "tags": ["parsing", "stack", "strings"],
+  "spec_version": 1,
+  "prompt": "Read a single line of input from standard input and decide whether the bracket characters ( ) [ ] { } are balanced. A string is balanced when every opener has a later matching closer of the same kind, every closer matches the most recent unmatched opener, and the openers/closers nest without crossing. All non-bracket characters are ignored. The empty string is balanced. Write yes followed by a newline if the input is balanced, otherwise write no followed by a newline. Exit with status 0. The input is at most 1000 characters and uses only printable ASCII.",
+  "input_schema": {
+    "stdin": "<one line of printable ASCII, up to 1000 characters, terminated by \\n>"
+  },
+  "output_schema": {
+    "stdout": "<yes\\n or no\\n>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1400,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads the input from argv[1] because Zero 0.1.2 has no exposed stdin capability. All other languages read one line from stdin (terminator stripped). The harness adapts per language."
+}
