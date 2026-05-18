@@ -1,0 +1,8 @@
+{
+  "name": "response missing sum field surfaces as error",
+  "stdin": "http://127.0.0.1:18013/missing\n1\n2\n",
+  "argv": ["http://127.0.0.1:18013/missing", "1", "2"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

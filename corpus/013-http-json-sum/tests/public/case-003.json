@@ -1,0 +1,8 @@
+{
+  "name": "million-scale integers",
+  "stdin": "http://127.0.0.1:18013/sum\n1000000\n2000000\n",
+  "argv": ["http://127.0.0.1:18013/sum", "1000000", "2000000"],
+  "expected_stdout": "3000000\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,8 @@
+{
+  "name": "small positive pair sums to 7",
+  "stdin": "http://127.0.0.1:18013/sum\n3\n4\n",
+  "argv": ["http://127.0.0.1:18013/sum", "3", "4"],
+  "expected_stdout": "7\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

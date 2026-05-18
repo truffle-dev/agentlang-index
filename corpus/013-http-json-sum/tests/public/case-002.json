@@ -1,0 +1,8 @@
+{
+  "name": "negative + positive integers",
+  "stdin": "http://127.0.0.1:18013/sum\n-10\n25\n",
+  "argv": ["http://127.0.0.1:18013/sum", "-10", "25"],
+  "expected_stdout": "15\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

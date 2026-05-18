@@ -1,0 +1,25 @@
+{
+  "slug": "013-http-json-sum",
+  "title": "POST a JSON pair and extract the sum",
+  "difficulty": "medium",
+  "tags": ["networking", "http", "json", "stdlib-breadth"],
+  "spec_version": 1,
+  "prompt": "Read three lines from standard input: a URL, an integer a, and an integer b (each line is newline-terminated; trailing whitespace allowed on the digit lines). Issue an HTTP POST request to that URL with a 5000 ms transport timeout, header `Content-Type: application/json`, and JSON body `{\"a\":<a>,\"b\":<b>}` (no spaces around the colons or commas). On a transport-successful HTTP 200 response with a JSON body containing an integer `sum` field, write that integer as decimal followed by a newline, e.g. `7\\n`. On any failure (transport error, non-200 status, JSON parse error, `sum` field missing or non-integer), write the literal string `error\\n` to standard output. Do not write to standard error. Exit with status 0 in every case. Integers a, b, and sum fit in i32.",
+  "input_schema": {
+    "stdin": "three lines: URL, a, b"
+  },
+  "output_schema": {
+    "stdout": "either `<decimal_sum>\\n` on a successful round-trip or `error\\n` on any failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 10000
+  },
+  "token_budget": 2800,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads URL from argv[1], a from argv[2], b from argv[3] because Zero 0.1.2 has no exposed stdin capability; the values are interpreted identically to the three stdin lines other languages read (trailing whitespace trimmed). All other languages read three newline-terminated lines from stdin. The verifier spins up a local HTTP fixture server before each language run and tears it down after; the fixture serves `/sum` (returns `{\"sum\":a+b}`), `/missing` (returns `{\"other\":99}`), `/badjson` (returns `not-json`), and `/404` (returns 404). The verifier passes inputs via stdin for non-Zero refs and via argv for Zero."
+}
