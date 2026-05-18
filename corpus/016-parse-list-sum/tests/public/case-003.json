@@ -1,0 +1,8 @@
+{
+  "name": "N=5 with multiples-of-ten sums to 150",
+  "stdin": "5\n10\n20\n30\n40\n50\n",
+  "argv": ["5", "10", "20", "30", "40", "50"],
+  "expected_stdout": "150\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

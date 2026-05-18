@@ -1,0 +1,8 @@
+{
+  "name": "second value is non-digit (abc)",
+  "stdin": "2\n1\nabc\n",
+  "argv": ["2", "1", "abc"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

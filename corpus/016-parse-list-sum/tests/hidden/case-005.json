@@ -1,0 +1,8 @@
+{
+  "name": "N=2 but only one value provided",
+  "stdin": "2\n1\n",
+  "argv": ["2", "1"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

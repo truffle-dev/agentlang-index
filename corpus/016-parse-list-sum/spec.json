@@ -1,0 +1,25 @@
+{
+  "slug": "016-parse-list-sum",
+  "title": "Read a count then that many u32 integers and write their sum, or error on any failure",
+  "difficulty": "medium",
+  "tags": ["error-handling", "parsing", "loop", "arithmetic", "stdlib-breadth"],
+  "spec_version": 1,
+  "prompt": "Read line 1 as N, a decimal integer count in the range 0 to 1000 inclusive. Then read N more lines, each a decimal unsigned integer that fits in u32 (range 0 to 4294967295 inclusive). Sum all N values and write the sum as decimal followed by a single newline. If any of the following hold, write `error\\n` instead: line 1 fails to parse as u32 or exceeds 1000; fewer than N additional value lines are available; any value line fails to parse as u32; or the running sum overflows u32 (would exceed 4294967295). Trailing whitespace on each line is tolerated and trimmed before parsing. Leading zeros are accepted; leading `+`/`-` signs are not. The empty sum (N=0) is `0\\n`. Do not write to standard error. Exit with status 0 in every case.",
+  "input_schema": {
+    "stdin": "line 1: N (u32 in 0..=1000). lines 2..N+1: u32 values."
+  },
+  "output_schema": {
+    "stdout": "either `<decimal_sum>\\n` on success or `error\\n` on any failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 2400,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads N from argv[1] and the N values from argv[2..N+1] (no exposed stdin in Zero 0.1.2). The values are interpreted identically to the (N+1) stdin lines other languages read. The verifier passes a per-case argv list to the Zero binary and the same values on stdin (newline-separated) to non-Zero refs. This task is the second slot in the error-handling arc: it exercises a counted loop where ANY mid-iteration failure (parse error or running-sum overflow) collapses to the same `error\\n` output."
+}

@@ -1,0 +1,160 @@
+// Parse-list-sum reference for AgentLang Index.
+//
+// Zero 0.1.2 has no exposed stdin, so N comes from argv[1] and the N
+// values come from argv[2..N+1]. std.args.len() includes the program
+// name at index 0. Three failure modes collapse to "error\n":
+//   - N argv missing, malformed, or > 1000
+//   - fewer than N value argv present
+//   - any value argv non-digit / empty / > u32::MAX, OR running sum > u32::MAX
+//
+// std.parse.parseU* rejects runtime String inputs on the direct ELF64
+// backend (CGEN004), so each parse is implemented inline with a u64
+// digit-accumulator and a u32::MAX bounds check.
+//
+// main ends with an explicit `return` to dodge the trailing-write
+// byte-count-as-exit-code codegen quirk.
+
+pub fun main(world: World) -> Void raises {
+    let maybe_n = std.args.get(1)
+    if maybe_n.has == false {
+        check world.out.write("error\n")
+        return
+    }
+    let n_in = std.mem.span(maybe_n.value)
+
+    // ---- Parse N as u32, reject > 1000 ----
+    let n_len = std.mem.len(n_in)
+    let mut n_acc: u64 = 0_u64
+    let mut n_have: Bool = false
+    let mut n_ok: Bool = true
+    let mut n_i: usize = 0
+    while n_i < n_len {
+        let c = n_in[n_i]
+        if c >= 48_u8 {
+            if c <= 57_u8 {
+                let d: u64 = (c - 48_u8) as u64
+                n_acc = n_acc * 10_u64 + d
+                n_have = true
+                n_i = n_i + 1
+            } else {
+                n_ok = false
+                n_i = n_len
+            }
+        } else {
+            n_ok = false
+            n_i = n_len
+        }
+    }
+    if n_ok == false {
+        check world.out.write("error\n")
+        return
+    }
+    if n_have == false {
+        check world.out.write("error\n")
+        return
+    }
+    if n_acc > 1000_u64 {
+        check world.out.write("error\n")
+        return
+    }
+    let n_val: u32 = n_acc as u32
+
+    // ---- Verify std.args.len() >= n_val + 2 (program + N-arg + N values) ----
+    let argc = std.args.len()
+    let needed: usize = (n_val as usize) + 2_usize
+    if argc < needed {
+        check world.out.write("error\n")
+        return
+    }
+
+    // ---- Loop N times: parse argv[i+1] (i in 1..=N), accumulate in u64 ----
+    let mut total: u64 = 0_u64
+    let mut idx: u32 = 0_u32
+    let mut loop_ok: Bool = true
+    while idx < n_val {
+        let arg_pos: usize = (idx as usize) + 2_usize
+        let maybe_v = std.args.get(arg_pos)
+        if maybe_v.has == false {
+            loop_ok = false
+            idx = n_val
+        } else {
+            let v_in = std.mem.span(maybe_v.value)
+            let v_len = std.mem.len(v_in)
+            let mut v_acc: u64 = 0_u64
+            let mut v_have: Bool = false
+            let mut v_ok: Bool = true
+            let mut v_i: usize = 0
+            while v_i < v_len {
+                let c = v_in[v_i]
+                if c >= 48_u8 {
+                    if c <= 57_u8 {
+                        let d: u64 = (c - 48_u8) as u64
+                        v_acc = v_acc * 10_u64 + d
+                        v_have = true
+                        v_i = v_i + 1
+                    } else {
+                        v_ok = false
+                        v_i = v_len
+                    }
+                } else {
+                    v_ok = false
+                    v_i = v_len
+                }
+            }
+            if v_ok == false {
+                loop_ok = false
+                idx = n_val
+            } else {
+                if v_have == false {
+                    loop_ok = false
+                    idx = n_val
+                } else {
+                    if v_acc > 4294967295_u64 {
+                        loop_ok = false
+                        idx = n_val
+                    } else {
+                        total = total + v_acc
+                        if total > 4294967295_u64 {
+                            loop_ok = false
+                            idx = n_val
+                        } else {
+                            idx = idx + 1_u32
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if loop_ok == false {
+        check world.out.write("error\n")
+        return
+    }
+
+    // ---- Render total (u64, but constrained to u32 range) as decimal + newline ----
+    let mut out: [16]u8 = [0_u8; 16]
+    let mut out_n: usize = 0
+    if total == 0_u64 {
+        out[out_n] = 48_u8
+        out_n = out_n + 1
+    } else {
+        let mut tmp: [16]u8 = [0_u8; 16]
+        let mut tn: usize = 0
+        let mut v: u64 = total
+        while v > 0_u64 {
+            let digit_u64: u64 = 48_u64 + (v % 10_u64)
+            tmp[tn] = digit_u64 as u8
+            tn = tn + 1
+            v = v / 10_u64
+        }
+        let mut wj: usize = 0
+        while wj < tn {
+            out[out_n] = tmp[tn - 1 - wj]
+            out_n = out_n + 1
+            wj = wj + 1
+        }
+    }
+    out[out_n] = 10_u8
+    out_n = out_n + 1
+    check world.out.write(out[0..out_n])
+    return
+}

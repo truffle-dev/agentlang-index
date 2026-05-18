@@ -1,0 +1,8 @@
+{
+  "name": "running sum overflows u32 (2^32-1 + 1 = 2^32)",
+  "stdin": "2\n4294967295\n1\n",
+  "argv": ["2", "4294967295", "1"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
