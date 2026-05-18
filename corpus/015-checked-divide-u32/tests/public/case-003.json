@@ -1,0 +1,8 @@
+{
+  "name": "integer floor division (10 / 3 == 3)",
+  "stdin": "10\n3\n",
+  "argv": ["10", "3"],
+  "expected_stdout": "3\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

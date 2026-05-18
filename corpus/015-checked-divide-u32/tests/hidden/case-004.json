@@ -1,0 +1,8 @@
+{
+  "name": "divide by zero",
+  "stdin": "42\n0\n",
+  "argv": ["42", "0"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

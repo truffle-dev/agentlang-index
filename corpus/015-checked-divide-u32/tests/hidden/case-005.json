@@ -1,0 +1,8 @@
+{
+  "name": "non-digit divisor",
+  "stdin": "9\nabc\n",
+  "argv": ["9", "abc"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

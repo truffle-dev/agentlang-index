@@ -1,0 +1,8 @@
+{
+  "name": "small positive divide (20 / 4 == 5)",
+  "stdin": "20\n4\n",
+  "argv": ["20", "4"],
+  "expected_stdout": "5\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

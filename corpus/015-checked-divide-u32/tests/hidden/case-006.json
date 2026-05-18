@@ -1,0 +1,8 @@
+{
+  "name": "dividend exceeds u32::MAX",
+  "stdin": "4294967296\n1\n",
+  "argv": ["4294967296", "1"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

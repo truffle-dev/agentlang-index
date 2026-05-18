@@ -1,0 +1,25 @@
+{
+  "slug": "015-checked-divide-u32",
+  "title": "Parse two unsigned integers and write their integer quotient, or error on any failure",
+  "difficulty": "easy",
+  "tags": ["error-handling", "parsing", "arithmetic", "stdlib-breadth"],
+  "spec_version": 1,
+  "prompt": "Read two lines from standard input. Each line contains an unsigned decimal integer that fits in u32 (range 0 to 4294967295 inclusive). Parse both. If either parse fails (empty line, non-digit characters, leading sign, leading zero is OK, value exceeds u32 max), write the literal string `error\\n` to standard output and exit. If both parse and the second value is 0, write `error\\n` to standard output and exit. Otherwise compute the integer floor quotient `a / b` and write the result as decimal followed by a single newline. Do not write to standard error. Exit with status 0 in every case. Trailing whitespace on the digit lines is tolerated (trimmed); a stray leading `+` is not accepted as valid.",
+  "input_schema": {
+    "stdin": "two lines: dividend a (u32), divisor b (u32)"
+  },
+  "output_schema": {
+    "stdout": "either `<decimal_quotient>\\n` on success or `error\\n` on any failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1800,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads a from argv[1] and b from argv[2] because Zero 0.1.2 has no exposed stdin capability; the values are interpreted identically to the two stdin lines other languages read (trailing whitespace trimmed). All other languages read two newline-terminated lines from stdin. This task opens the error-handling arc: three independent failure modes (parse-a, parse-b, divide-by-zero) all collapse to the same `error\\n` output. Zero exercises its `Maybe<T>` parse shape via `std.parse.parseU32`; other languages use their idiomatic parse-or-fail primitive."
+}
