@@ -5,10 +5,16 @@ description = "AgentLang Index benchmark harness — orchestrates one-shot and a
 readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "anthropic>=0.40.0",
+    "pydantic>=2.7",
+]
 
 [project.optional-dependencies]
 test = ["pytest>=8.0"]
+
+[project.scripts]
+agentlang-run = "agentlang_harness.cli:main"
 
 [build-system]
 requires = ["hatchling"]

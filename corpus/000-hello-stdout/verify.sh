@@ -3,10 +3,37 @@
 # six bytes `hello\n` on stdout with empty stderr and exit code 0.
 # Uses file-based comparison so trailing newlines survive (bash command
 # substitution strips them).
+#
+# Usage:
+#   verify.sh                  # check every language whose toolchain is present
+#   verify.sh --lang <lang>    # check only one language (zero|ts|rust|go|python)
 set -uo pipefail
 
 cd "$(dirname "$0")"
 EXIT=0
+
+ONLY_LANG=""
+while (( $# > 0 )); do
+  case "$1" in
+    --lang)
+      ONLY_LANG="${2:-}"
+      shift 2
+      ;;
+    --lang=*)
+      ONLY_LANG="${1#*=}"
+      shift
+      ;;
+    *)
+      echo "verify.sh: unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+
+want_lang() {
+  [[ -z "$ONLY_LANG" || "$ONLY_LANG" == "$1" ]]
+}
+
 expected=$(mktemp)
 printf 'hello\n' > "$expected"
 trap 'rm -f "$expected"' EXIT
@@ -39,55 +66,65 @@ check() {
 }
 
 # Zero
-ZERO=/home/phantom/repos/zero/bin/zero
-if [[ -x "$ZERO" ]]; then
-  check zero "$ZERO run ref.zero"
-else
-  echo "SKIP: zero (bin/zero not found)"
+if want_lang zero; then
+  ZERO=/home/phantom/repos/zero/bin/zero
+  if [[ -x "$ZERO" ]]; then
+    check zero "$ZERO run ref.zero"
+  else
+    echo "SKIP: zero (bin/zero not found)"
+  fi
 fi
 
 # TypeScript via tsx or ts-node — fall back to node against a .mjs copy
-if command -v tsx >/dev/null 2>&1; then
-  check ts "tsx ref.ts"
-elif command -v ts-node >/dev/null 2>&1; then
-  check ts "ts-node ref.ts"
-elif command -v node >/dev/null 2>&1; then
-  tmp_ts=$(mktemp --suffix=.mjs)
-  cp ref.ts "$tmp_ts"
-  check ts "node $tmp_ts"
-  rm -f "$tmp_ts"
-else
-  echo "SKIP: ts (no tsx, ts-node, or node)"
+if want_lang ts; then
+  if command -v tsx >/dev/null 2>&1; then
+    check ts "tsx ref.ts"
+  elif command -v ts-node >/dev/null 2>&1; then
+    check ts "ts-node ref.ts"
+  elif command -v node >/dev/null 2>&1; then
+    tmp_ts=$(mktemp --suffix=.mjs)
+    cp ref.ts "$tmp_ts"
+    check ts "node $tmp_ts"
+    rm -f "$tmp_ts"
+  else
+    echo "SKIP: ts (no tsx, ts-node, or node)"
+  fi
 fi
 
 # Rust — use rustc directly to avoid Cargo overhead for a one-liner
-if command -v rustc >/dev/null 2>&1; then
-  tmp=$(mktemp -d)
-  if rustc ref.rs -o "$tmp/hello" 2>/dev/null; then
-    check rust "$tmp/hello"
+if want_lang rust; then
+  if command -v rustc >/dev/null 2>&1; then
+    tmp=$(mktemp -d)
+    if rustc ref.rs -o "$tmp/hello" 2>/dev/null; then
+      check rust "$tmp/hello"
+    else
+      echo "FAIL: rust (rustc compilation failed)"
+      EXIT=1
+    fi
+    rm -rf "$tmp"
   else
-    echo "FAIL: rust (rustc compilation failed)"
-    EXIT=1
+    echo "SKIP: rust (rustc not found)"
   fi
-  rm -rf "$tmp"
-else
-  echo "SKIP: rust (rustc not found)"
 fi
 
 # Go
-if command -v go >/dev/null 2>&1; then
-  check go "go run ref.go"
-else
-  echo "SKIP: go (go not found)"
+if want_lang go; then
+  if command -v go >/dev/null 2>&1; then
+    check go "go run ref.go"
+  else
+    echo "SKIP: go (go not found)"
+  fi
 fi
 
 # Python
-if command -v python3 >/dev/null 2>&1; then
-  check python "python3 ref.py"
-elif command -v python >/dev/null 2>&1; then
-  check python "python ref.py"
-else
-  echo "SKIP: python (python3 not found)"
+if want_lang python; then
+  if command -v python3 >/dev/null 2>&1; then
+    check python "python3 ref.py"
+  elif command -v python >/dev/null 2>&1; then
+    check python "python ref.py"
+  else
+    echo "SKIP: python (python3 not found)"
+  fi
 fi
 
 exit $EXIT

@@ -2,10 +2,36 @@
 # Run each reference implementation against every test case and verify
 # exact stdout / empty stderr / exit 0. Zero takes N as argv[1] because
 # Zero 0.1.2 has no exposed stdin capability; the rest read stdin.
+#
+# Usage:
+#   verify.sh                  # check every language whose toolchain is present
+#   verify.sh --lang <lang>    # check only one language (zero|ts|rust|go|python)
 set -uo pipefail
 
 cd "$(dirname "$0")"
 EXIT=0
+
+ONLY_LANG=""
+while (( $# > 0 )); do
+  case "$1" in
+    --lang)
+      ONLY_LANG="${2:-}"
+      shift 2
+      ;;
+    --lang=*)
+      ONLY_LANG="${1#*=}"
+      shift
+      ;;
+    *)
+      echo "verify.sh: unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+
+want_lang() {
+  [[ -z "$ONLY_LANG" || "$ONLY_LANG" == "$1" ]]
+}
 
 # Test matrix: (label, N, expected). Includes the hidden N=15 case so
 # this script is the canonical reference-impl sanity check.
@@ -66,56 +92,66 @@ check_lang() {
 }
 
 # Zero — argv[1]
-ZERO=/home/phantom/repos/zero/bin/zero
-if [[ -x "$ZERO" ]]; then
-  check_lang zero argv "$ZERO run ref.zero %N%"
-else
-  echo "SKIP: zero (bin/zero not found)"
+if want_lang zero; then
+  ZERO=/home/phantom/repos/zero/bin/zero
+  if [[ -x "$ZERO" ]]; then
+    check_lang zero argv "$ZERO run ref.zero %N%"
+  else
+    echo "SKIP: zero (bin/zero not found)"
+  fi
 fi
 
 # TypeScript: prefer tsx, then bun (native TS), then node on a .mjs copy.
 # ref.ts is written so plain node accepts it after a .ts -> .mjs rename.
-if command -v tsx >/dev/null 2>&1; then
-  check_lang ts stdin "tsx ref.ts"
-elif command -v bun >/dev/null 2>&1; then
-  check_lang ts stdin "bun run ref.ts"
-elif command -v node >/dev/null 2>&1; then
-  tmp_ts=$(mktemp --suffix=.mjs)
-  cp ref.ts "$tmp_ts"
-  check_lang ts stdin "node $tmp_ts"
-  rm -f "$tmp_ts"
-else
-  echo "SKIP: ts (no tsx, bun, or node)"
+if want_lang ts; then
+  if command -v tsx >/dev/null 2>&1; then
+    check_lang ts stdin "tsx ref.ts"
+  elif command -v bun >/dev/null 2>&1; then
+    check_lang ts stdin "bun run ref.ts"
+  elif command -v node >/dev/null 2>&1; then
+    tmp_ts=$(mktemp --suffix=.mjs)
+    cp ref.ts "$tmp_ts"
+    check_lang ts stdin "node $tmp_ts"
+    rm -f "$tmp_ts"
+  else
+    echo "SKIP: ts (no tsx, bun, or node)"
+  fi
 fi
 
 # Rust — rustc directly, drop the binary into a tmp dir
-if command -v rustc >/dev/null 2>&1; then
-  tmp=$(mktemp -d)
-  if rustc ref.rs -o "$tmp/fib" 2>/dev/null; then
-    check_lang rust stdin "$tmp/fib"
+if want_lang rust; then
+  if command -v rustc >/dev/null 2>&1; then
+    tmp=$(mktemp -d)
+    if rustc ref.rs -o "$tmp/fib" 2>/dev/null; then
+      check_lang rust stdin "$tmp/fib"
+    else
+      echo "FAIL: rust (rustc compilation failed)"
+      EXIT=1
+    fi
+    rm -rf "$tmp"
   else
-    echo "FAIL: rust (rustc compilation failed)"
-    EXIT=1
+    echo "SKIP: rust (rustc not found)"
   fi
-  rm -rf "$tmp"
-else
-  echo "SKIP: rust (rustc not found)"
 fi
 
 # Go
-if command -v go >/dev/null 2>&1; then
-  check_lang go stdin "go run ref.go"
-else
-  echo "SKIP: go (go not found)"
+if want_lang go; then
+  if command -v go >/dev/null 2>&1; then
+    check_lang go stdin "go run ref.go"
+  else
+    echo "SKIP: go (go not found)"
+  fi
 fi
 
 # Python
-if command -v python3 >/dev/null 2>&1; then
-  check_lang python stdin "python3 ref.py"
-elif command -v python >/dev/null 2>&1; then
-  check_lang python stdin "python ref.py"
-else
-  echo "SKIP: python (python3 not found)"
+if want_lang python; then
+  if command -v python3 >/dev/null 2>&1; then
+    check_lang python stdin "python3 ref.py"
+  elif command -v python >/dev/null 2>&1; then
+    check_lang python stdin "python ref.py"
+  else
+    echo "SKIP: python (python3 not found)"
+  fi
 fi
 
 exit $EXIT
