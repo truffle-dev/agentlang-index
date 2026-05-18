@@ -1,0 +1,8 @@
+{
+  "name": "three distinct bytes",
+  "stdin": "abc",
+  "argv": ["abc"],
+  "expected_stdout": "1 97\n1 98\n1 99\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

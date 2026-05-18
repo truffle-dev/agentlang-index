@@ -1,0 +1,8 @@
+{
+  "name": "single repeated run",
+  "stdin": "aaa",
+  "argv": ["aaa"],
+  "expected_stdout": "3 97\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,8 @@
+{
+  "name": "mixed runs",
+  "stdin": "aaabbc",
+  "argv": ["aaabbc"],
+  "expected_stdout": "3 97\n2 98\n1 99\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

@@ -1,0 +1,8 @@
+[package]
+name = "rle_encode"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "rle_encode"
+path = "ref.rs"

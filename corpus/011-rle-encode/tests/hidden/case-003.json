@@ -1,0 +1,8 @@
+{
+  "name": "single byte run of length one",
+  "stdin": "x",
+  "argv": ["x"],
+  "expected_stdout": "1 120\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

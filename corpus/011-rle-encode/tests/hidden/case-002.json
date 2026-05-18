@@ -1,0 +1,8 @@
+{
+  "name": "recurring byte after gap forms a new run",
+  "stdin": "aabbaa",
+  "argv": ["aabbaa"],
+  "expected_stdout": "2 97\n2 98\n2 97\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

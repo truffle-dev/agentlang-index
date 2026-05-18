@@ -1,0 +1,25 @@
+{
+  "slug": "011-rle-encode",
+  "title": "Run-length encode the input as count/byte pairs",
+  "difficulty": "easy",
+  "tags": ["io", "encoding", "single-pass", "multi-record-output"],
+  "spec_version": 1,
+  "prompt": "Read all bytes from standard input. Walk left to right; for every maximal run of identical consecutive bytes, write one line of the form `<count> <byte_decimal>\\n` to standard output where `<count>` is the run length in decimal and `<byte_decimal>` is the byte value (0..255) in decimal. The lines must appear in input order. Empty input produces empty output. Exit with status 0.",
+  "input_schema": {
+    "stdin": "<input bytes, possibly empty, up to 1000 bytes>"
+  },
+  "output_schema": {
+    "stdout": "<zero or more lines of '<count> <byte_decimal>\\n' in input order>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1600,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads the input bytes from argv[1] because Zero 0.1.2 has no exposed stdin capability; the bytes are interpreted identically to stdin reads in the other languages. All other languages read all bytes from stdin until EOF. The harness adapts per language."
+}

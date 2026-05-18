@@ -1,0 +1,87 @@
+// Run-length encode the input, Zero 0.1.2 direct backend.
+//
+// argv[1] is the input bytes (Zero 0.1.2 has no exposed stdin capability).
+// All logic stays inside `pub fun main` to avoid Span/MutSpan parameter
+// restrictions.
+//
+// Outer loop steps run-by-run: pick up the current byte, walk forward
+// while it matches, then emit `<count> <byte_decimal>\n`. Inner scan
+// uses the explicit-flag pattern (no `&&` short-circuit available in
+// Zero 0.1.2). Two inline decimal renderers per run because the MVP
+// subset cannot factor them into a function that writes back into the
+// outer output buffer (no MutSpan parameters).
+pub fun main(world: World) -> Void raises {
+    let line_opt = std.args.get(1)
+    let mut bytes: Span<u8> = std.mem.span("")
+    if line_opt.has {
+        bytes = std.mem.span(line_opt.value)
+    }
+    let n: usize = std.mem.len(bytes)
+
+    let mut out_buf: [8192]u8 = [0_u8; 8192]
+    let mut written: usize = 0
+
+    let mut i: usize = 0
+    while i < n {
+        let cur_byte: u8 = bytes[i]
+        let mut cur_count: u32 = 1_u32
+        i = i + 1
+        let mut scanning: Bool = true
+        while scanning {
+            if i >= n {
+                scanning = false
+            } else {
+                if bytes[i] == cur_byte {
+                    cur_count = cur_count + 1_u32
+                    i = i + 1
+                } else {
+                    scanning = false
+                }
+            }
+        }
+
+        let mut tmp: [16]u8 = [0_u8; 16]
+        let mut tn: usize = 0
+        let mut v: u32 = cur_count
+        while v > 0_u32 {
+            tmp[tn] = (48_u32 + (v % 10_u32)) as u8
+            tn = tn + 1
+            v = v / 10_u32
+        }
+        let mut j: usize = 0
+        while j < tn {
+            out_buf[written] = tmp[tn - 1 - j]
+            written = written + 1
+            j = j + 1
+        }
+        out_buf[written] = 32_u8
+        written = written + 1
+
+        let b_val: u32 = cur_byte as u32
+        if b_val == 0_u32 {
+            out_buf[written] = 48_u8
+            written = written + 1
+        } else {
+            let mut tmp2: [4]u8 = [0_u8; 4]
+            let mut tn2: usize = 0
+            let mut v2: u32 = b_val
+            while v2 > 0_u32 {
+                tmp2[tn2] = (48_u32 + (v2 % 10_u32)) as u8
+                tn2 = tn2 + 1
+                v2 = v2 / 10_u32
+            }
+            let mut j2: usize = 0
+            while j2 < tn2 {
+                out_buf[written] = tmp2[tn2 - 1 - j2]
+                written = written + 1
+                j2 = j2 + 1
+            }
+        }
+        out_buf[written] = 10_u8
+        written = written + 1
+    }
+
+    let out: Span<u8> = out_buf[0..written]
+    check world.out.write(out)
+    return
+}
