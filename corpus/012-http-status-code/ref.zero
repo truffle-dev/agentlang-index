@@ -1,0 +1,89 @@
+// HTTP GET status-code reference for AgentLang Index.
+//
+// Zero 0.1.2 has no exposed stdin, so the URL is read from argv[1].
+// std.http.fetch is invoked with a `GET <url>\n\n` envelope and a
+// 5000 ms timeout. On transport success the HTTP status code is
+// written to stdout as decimal+newline; on any transport failure the
+// literal string `error\n` is written instead. Exit is always 0.
+
+pub fun main(world: World) -> Void raises {
+    let maybe_url = std.args.get(1)
+    if maybe_url.has == false {
+        check world.out.write("error\n")
+        return
+    }
+    let url_arg = maybe_url.value
+
+    // Build the request envelope: "GET <url>\n\n" in a fixed buffer.
+    // 256 bytes URL cap + 6 bytes overhead leaves room comfortably.
+    let mut envelope: [320]u8 = [0_u8; 320]
+    let mut env_n: usize = 0
+    envelope[0] = 71_u8
+    envelope[1] = 69_u8
+    envelope[2] = 84_u8
+    envelope[3] = 32_u8
+    env_n = 4
+    let mut i: usize = 0
+    let url_n = std.mem.len(url_arg)
+    while i < url_n {
+        let b = url_arg[i]
+        if b == 10_u8 {
+            i = url_n
+        } else {
+            if b == 13_u8 {
+                i = url_n
+            } else {
+                envelope[env_n] = b
+                env_n = env_n + 1
+                i = i + 1
+            }
+        }
+    }
+    envelope[env_n] = 10_u8
+    env_n = env_n + 1
+    envelope[env_n] = 10_u8
+    env_n = env_n + 1
+
+    let net = std.net.host()
+    let client = std.http.client(net)
+    let mut response: [8192]u8 = [0_u8; 8192]
+    let result = std.http.fetch(client, envelope[0..env_n], response, std.time.ms(5000))
+    let err = std.http.resultError(result)
+
+    let mut out: [32]u8 = [0_u8; 32]
+    let mut out_n: usize = 0
+    if err == std.http.errorNone() {
+        let status = std.http.resultStatus(result)
+        let mut v: u32 = status as u32
+        if v == 0_u32 {
+            out[0] = 48_u8
+            out_n = 1
+        } else {
+            let mut tmp: [16]u8 = [0_u8; 16]
+            let mut tn: usize = 0
+            while v > 0_u32 {
+                tmp[tn] = (48_u32 + (v % 10_u32)) as u8
+                tn = tn + 1
+                v = v / 10_u32
+            }
+            let mut j: usize = 0
+            while j < tn {
+                out[out_n] = tmp[tn - 1 - j]
+                out_n = out_n + 1
+                j = j + 1
+            }
+        }
+        out[out_n] = 10_u8
+        out_n = out_n + 1
+    } else {
+        out[0] = 101_u8
+        out[1] = 114_u8
+        out[2] = 114_u8
+        out[3] = 111_u8
+        out[4] = 114_u8
+        out[5] = 10_u8
+        out_n = 6
+    }
+    check world.out.write(out[0..out_n])
+    return
+}

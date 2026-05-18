@@ -1,0 +1,8 @@
+{
+  "name": "fixture root path defaults to 200",
+  "stdin": "http://127.0.0.1:18012/\n",
+  "argv": ["http://127.0.0.1:18012/"],
+  "expected_stdout": "200\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

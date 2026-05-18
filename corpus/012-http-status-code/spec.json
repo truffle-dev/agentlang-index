@@ -1,0 +1,25 @@
+{
+  "slug": "012-http-status-code",
+  "title": "GET a URL and write the HTTP status code",
+  "difficulty": "medium",
+  "tags": ["networking", "http", "stdlib-breadth"],
+  "spec_version": 1,
+  "prompt": "Read a URL from standard input (a single line, trailing newline allowed). Issue an HTTP GET request to that URL with a 5000 ms transport timeout. Write the HTTP response status code as decimal followed by a newline to standard output, e.g. `200\\n`. If the transport fails for any reason (DNS, connect, TLS, timeout, invalid URL, unsupported protocol, provider unavailable, I/O), write the literal string `error\\n` to standard output. Do not write to standard error. Exit with status 0 in every case.",
+  "input_schema": {
+    "stdin": "<one URL, up to 256 bytes including optional trailing newline>"
+  },
+  "output_schema": {
+    "stdout": "either `<decimal_status>\\n` on transport success or `error\\n` on any transport failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 10000
+  },
+  "token_budget": 2400,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads the URL from argv[1] because Zero 0.1.2 has no exposed stdin capability; the URL is interpreted identically to a stdin read in the other languages (trailing newline trimmed if present). All other languages read the URL from stdin until newline or EOF. The verifier spins up a local HTTP fixture server before each language run and tears it down after; tests reference its base URL. The verifier passes the URL in stdin for non-Zero refs and in argv[1] for Zero."
+}

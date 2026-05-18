@@ -1,0 +1,8 @@
+{
+  "name": "500 Internal Server Error from fixture",
+  "stdin": "http://127.0.0.1:18012/status/500\n",
+  "argv": ["http://127.0.0.1:18012/status/500"],
+  "expected_stdout": "500\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

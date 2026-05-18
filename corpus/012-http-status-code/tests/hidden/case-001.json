@@ -1,0 +1,8 @@
+{
+  "name": "503 Service Unavailable from fixture",
+  "stdin": "http://127.0.0.1:18012/status/503\n",
+  "argv": ["http://127.0.0.1:18012/status/503"],
+  "expected_stdout": "503\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

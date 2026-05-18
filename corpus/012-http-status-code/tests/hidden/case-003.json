@@ -1,0 +1,8 @@
+{
+  "name": "unresolvable host surfaces as error",
+  "stdin": "http://this-host-does-not-resolve.invalid/\n",
+  "argv": ["http://this-host-does-not-resolve.invalid/"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
