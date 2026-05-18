@@ -1,0 +1,8 @@
+{
+  "name": "collapse leading trailing and internal spaces",
+  "stdin": "  the   quick brown   fox  \n",
+  "argv": ["  the   quick brown   fox  "],
+  "expected_stdout": "4\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

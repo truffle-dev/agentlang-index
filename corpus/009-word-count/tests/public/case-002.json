@@ -1,0 +1,8 @@
+{
+  "name": "single word",
+  "stdin": "hello\n",
+  "argv": ["hello"],
+  "expected_stdout": "1\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

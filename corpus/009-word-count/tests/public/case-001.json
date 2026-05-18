@@ -1,0 +1,8 @@
+{
+  "name": "two-word line",
+  "stdin": "hello world\n",
+  "argv": ["hello world"],
+  "expected_stdout": "2\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

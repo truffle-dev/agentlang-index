@@ -1,0 +1,25 @@
+{
+  "slug": "009-word-count",
+  "title": "Count whitespace-separated tokens in input",
+  "difficulty": "easy",
+  "tags": ["io", "parsing", "counting"],
+  "spec_version": 1,
+  "prompt": "Read all bytes from standard input. A `word` is a maximal run of non-whitespace bytes; the whitespace bytes are space (0x20), tab (0x09), newline (0x0A), and carriage return (0x0D). Write the total word count as a decimal integer to standard output, followed by exactly one newline. Empty input and all-whitespace input must produce \"0\\n\". Exit with status 0.",
+  "input_schema": {
+    "stdin": "<input bytes, possibly empty, up to 100000 bytes>"
+  },
+  "output_schema": {
+    "stdout": "<decimal word count followed by one newline>",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 1200,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads the input bytes from argv[1] because Zero 0.1.2 has no exposed stdin capability; embedded tabs and newlines inside argv[1] (passed as $'a\\tb\\nc' from bash) count as whitespace just like stdin reads in the other languages. All other languages read all bytes from stdin until EOF. The harness adapts per language."
+}

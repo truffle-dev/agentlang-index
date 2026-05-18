@@ -1,0 +1,8 @@
+{
+  "name": "five words separated by single spaces",
+  "stdin": "alpha beta gamma delta epsilon\n",
+  "argv": ["alpha beta gamma delta epsilon"],
+  "expected_stdout": "5\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

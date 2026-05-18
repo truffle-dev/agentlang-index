@@ -1,0 +1,8 @@
+{
+  "name": "mixed whitespace (tab newline cr) counts as separator",
+  "stdin": "a\tb c\nd\re\n",
+  "argv": ["a\tb c\nd\re"],
+  "expected_stdout": "5\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

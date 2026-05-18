@@ -1,0 +1,8 @@
+{
+  "name": "empty line writes zero",
+  "stdin": "\n",
+  "argv": [""],
+  "expected_stdout": "0\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}
