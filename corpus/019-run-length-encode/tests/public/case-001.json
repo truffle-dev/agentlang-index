@@ -1,0 +1,8 @@
+{
+  "name": "aaabbc -> a3b2c1",
+  "stdin": "aaabbc\n",
+  "argv": ["aaabbc"],
+  "expected_stdout": "a3b2c1\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

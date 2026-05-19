@@ -1,0 +1,8 @@
+{
+  "name": "z -> z1 (single byte)",
+  "stdin": "z\n",
+  "argv": ["z"],
+  "expected_stdout": "z1\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

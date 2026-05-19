@@ -1,0 +1,8 @@
+{
+  "name": "uppercase H rejects",
+  "stdin": "Hello\n",
+  "argv": ["Hello"],
+  "expected_stdout": "error\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

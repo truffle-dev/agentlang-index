@@ -1,0 +1,8 @@
+{
+  "name": "thirteen a's -> a13 (multi-digit count)",
+  "stdin": "aaaaaaaaaaaaa\n",
+  "argv": ["aaaaaaaaaaaaa"],
+  "expected_stdout": "a13\n",
+  "expected_stderr": "",
+  "expected_exit": 0
+}

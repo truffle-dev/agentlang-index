@@ -1,0 +1,25 @@
+{
+  "slug": "019-run-length-encode",
+  "title": "Run-length encode a lowercase ASCII string, or error on bad input",
+  "difficulty": "easy",
+  "tags": ["string-transform", "module-boundary", "multi-file", "run-length-encoding"],
+  "spec_version": 1,
+  "prompt": "Read one line from standard input. It is a non-empty string of lowercase ASCII letters (bytes in `a` through `z`), terminated by a single `\\n`. Walk the input from left to right grouping consecutive identical bytes into maximal runs. For each run, write the byte followed by the decimal run length (no leading zeros). After all runs are written, append a single trailing `\\n`. If the input line is empty or contains any byte outside `a` through `z`, write `error\\n` instead and exit. Do not write to standard error. Exit with status 0 in every case.",
+  "input_schema": {
+    "stdin": "one line: plaintext (lowercase a-z, non-empty)"
+  },
+  "output_schema": {
+    "stdout": "either `<run-length-encoded>\\n` on success or `error\\n` on any failure",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "acceptance": {
+    "stdout_exact_per_case": true,
+    "stderr_exact": "",
+    "exit_code": 0,
+    "wall_time_max_ms": 5000
+  },
+  "token_budget": 2000,
+  "languages": ["zero", "ts", "rust", "go", "python"],
+  "notes_input_convention": "Zero reads `plaintext` from argv[1] because Zero 0.1.2 has no exposed stdin capability; the value is interpreted identically to the stdin line other languages read (taken verbatim, with the trailing `\\n` stripped). All other languages read one newline-terminated line from stdin. This task closes the multi-file arc: the Zero implementation is a multi-file project under `zero/` with `zero.json`, `src/main.0` (driver), and `src/lib.0` (`is_lowercase_letter`, `digit_byte`, `decimal_length` helpers). Lib signatures are scalar-only (u8 + Bool + u32) because Zero 0.1.2's direct backend forbids user functions over Span<u8>/MutSpan<u8>/shape values. The Zero project is invoked as `zero run zero -- <plaintext>` (project directory + double-dash + single argv)."
+}
