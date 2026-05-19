@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "005-balanced-parens",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "empty input is balanced",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "yes\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 267
+    },
+    {
+      "name": "simple nested triple",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "yes\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 101
+    },
+    {
+      "name": "non-bracket text ignored",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "yes\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 99
+    },
+    {
+      "name": "crossing pairs are not balanced",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "no\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 97
+    },
+    {
+      "name": "lone closer with no opener",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "no\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 95
+    },
+    {
+      "name": "deep nesting with mixed bracket kinds",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "yes\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 95
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 1413,
+  "build_ms": 0,
+  "exec_ms": 754,
+  "total_ms": 2173,
+  "prompt_tokens": 565,
+  "completion_tokens": 193
+}

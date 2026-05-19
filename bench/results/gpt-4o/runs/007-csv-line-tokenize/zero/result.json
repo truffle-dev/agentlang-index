@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "007-csv-line-tokenize",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "three simple unquoted fields",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 86
+    },
+    {
+      "name": "quoted field with embedded comma",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 76
+    },
+    {
+      "name": "three empty fields from two consecutive commas",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 60
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 50
+    },
+    {
+      "name": "escaped double quote within quoted field",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 45
+    },
+    {
+      "name": "mixed quoted unquoted with embedded comma and space",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 60
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2668,
+  "build_ms": 0,
+  "exec_ms": 377,
+  "total_ms": 3049,
+  "prompt_tokens": 737,
+  "completion_tokens": 301
+}

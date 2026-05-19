@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "010-byte-frequency",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "single byte",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "97 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 70
+    },
+    {
+      "name": "three distinct bytes",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "97 1\n98 1\n99 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 66
+    },
+    {
+      "name": "three byte pairs",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "97 2\n98 2\n99 2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 53
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 42
+    },
+    {
+      "name": "hello has four distinct bytes",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "101 1\n104 1\n108 2\n111 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 37
+    },
+    {
+      "name": "uppercase and lowercase are distinct",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "65 2\n97 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 66
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 1288,
+  "build_ms": 0,
+  "exec_ms": 335,
+  "total_ms": 1629,
+  "prompt_tokens": 545,
+  "completion_tokens": 88
+}

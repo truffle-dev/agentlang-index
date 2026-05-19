@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "007-csv-line-tokenize",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "three simple unquoted fields",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 78
+    },
+    {
+      "name": "quoted field with embedded comma",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 58
+    },
+    {
+      "name": "three empty fields from two consecutive commas",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 47
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 45
+    },
+    {
+      "name": "escaped double quote within quoted field",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 47
+    },
+    {
+      "name": "mixed quoted unquoted with embedded comma and space",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/007-csv-line-tokenize/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 80
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2091,
+  "build_ms": 0,
+  "exec_ms": 355,
+  "total_ms": 2451,
+  "prompt_tokens": 737,
+  "completion_tokens": 172
+}

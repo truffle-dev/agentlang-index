@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "018-caesar-cipher",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "shift 3, abc -> def",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/018-caesar-cipher/zero/scratch/zero/src/lib.0:8:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 79
+    },
+    {
+      "name": "shift 0 is identity, hello -> hello",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/018-caesar-cipher/zero/scratch/zero/src/lib.0:8:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 79
+    },
+    {
+      "name": "shift 25, abc -> zab (wrap)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/018-caesar-cipher/zero/scratch/zero/src/lib.0:8:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 69
+    },
+    {
+      "name": "shift 13, xyz -> klm (rot13)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/018-caesar-cipher/zero/scratch/zero/src/lib.0:8:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 74
+    },
+    {
+      "name": "shift 26 rejects (out of range)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/018-caesar-cipher/zero/scratch/zero/src/lib.0:8:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 78
+    },
+    {
+      "name": "uppercase H in plaintext rejects",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/018-caesar-cipher/zero/scratch/zero/src/lib.0:8:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 82
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3870,
+  "build_ms": 0,
+  "exec_ms": 461,
+  "total_ms": 4340,
+  "prompt_tokens": 1053,
+  "completion_tokens": 540
+}

@@ -1,0 +1,40 @@
+{
+  "model": "gpt-5",
+  "task": "000-hello-stdout",
+  "lang": "rust",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "hello\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 3
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "hello\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 2,
+  "num_passed": 2,
+  "api_ms": 17839,
+  "build_ms": 280,
+  "exec_ms": 4,
+  "total_ms": 18124,
+  "prompt_tokens": 327,
+  "completion_tokens": 1484
+}

@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o",
+  "task": "012-http-status-code",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 1415,
+  "build_ms": 159,
+  "exec_ms": 0,
+  "total_ms": 1639,
+  "prompt_tokens": 723,
+  "completion_tokens": 160,
+  "error": "build_error: cargo build failed: error[E0433]: cannot find module or crate `reqwest` in this scope\n --> ref.rs:3:5\n  |\n3 | use reqwest::blocking::Client;\n  |     ^^^^^^^ use of unresolved module or unlinked crate `reqwest`\n  |\n  = help: if you wanted to use a crate named `reqwest`, use `cargo add reqwest` to add it to your `Cargo.toml`\n\nerror[E0432]: unresolved import `reqwest`\n --> ref.rs:4:5\n  |\n4 | use reqwest::Error;\n  |     ^^^^^^^ use of unresolved module or unlinked crate `reqwest`\n  |\n  = help: if you wanted to use a cr"
+}

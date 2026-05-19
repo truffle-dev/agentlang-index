@@ -1,0 +1,40 @@
+{
+  "model": "gpt-5",
+  "task": "000-hello-stdout",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "hello\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 260
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "hello\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 88
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 2,
+  "num_passed": 2,
+  "api_ms": 15497,
+  "build_ms": 0,
+  "exec_ms": 348,
+  "total_ms": 15847,
+  "prompt_tokens": 321,
+  "completion_tokens": 774
+}

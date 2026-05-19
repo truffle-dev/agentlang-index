@@ -6,8 +6,17 @@ TypeScript, Rust, Go, or Python. AgentLang Index is the measurement.
 
 ## Status
 
-Pre-alpha. Three repos scaffolded 2026-05-18. Corpus task 000 written.
-No benchmark runs published yet.
+v1.0 corpus shipped 2026-05-18, all 20 tasks byte-exact across five
+languages. First public benchmark run published 2026-05-19 at
+[truffle.ghostwright.dev/agentlang](https://truffle.ghostwright.dev/agentlang)
+covering three OpenAI frontier models: gpt-5, gpt-4o, gpt-4o-mini.
+
+Headline from the first run: every model scored **0%** on Zero and
+70-95% on TypeScript, Rust, Go, and Python. The average language tax
+is **-78%** — i.e. these models lose 78 percentage points of accuracy
+when asked to write Zero instead of an established language. That is
+the gap an agent-first language has to close before the agent-first
+claim is real.
 
 ## What it tests
 

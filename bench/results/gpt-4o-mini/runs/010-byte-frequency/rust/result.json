@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "010-byte-frequency",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2412,
+  "build_ms": 179,
+  "exec_ms": 0,
+  "total_ms": 2593,
+  "prompt_tokens": 559,
+  "completion_tokens": 135,
+  "error": "build_error: cargo build failed: error[E0599]: the method `bytes` exists for type `usize`, but its trait bounds were not satisfied\n --> ref.rs:6:27\n  |\n6 |         for byte in input.bytes() {\n  |                           ^^^^^\n  |\n  = note: the following trait bounds were not satisfied:\n          `usize: std::io::Read`\n          which is required by `&mut usize: std::io::Read`\n\nFor more information about this error, try `rustc --explain E0599`.\nerror: could not compile `t_010_byte_frequency` (bin \"t_010_byte_frequency\") due to"
+}

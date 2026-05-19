@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "003-levenshtein-distance",
+  "lang": "ts",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 65
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "3 |     const A = input[0];\n4 |     const B = input[1];\n5 | \n6 |     const distance = (a: string, b: string): number => {\n7 |         const m = a.length;\n8 |         const n = b.length;\n                      ^\nTypeError: undefined is not an object (evaluating 'b.length')\n      at <anonymous> (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/003-levenshtein-distance/ts/scratch/ref.ts:8:19)\n      at /home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/003-levenshtein-distance/ts/scratch/ref.ts:28:22\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 55
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "3 |     const A = input[0];\n4 |     const B = input[1];\n5 | \n6 |     const distance = (a: string, b: string): number => {\n7 |         const m = a.length;\n8 |         const n = b.length;\n                      ^\nTypeError: undefined is not an object (evaluating 'b.length')\n      at <anonymous> (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/003-levenshtein-distance/ts/scratch/ref.ts:8:19)\n      at /home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/003-levenshtein-distance/ts/scratch/ref.ts:28:22\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 63
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 48
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "5\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 35
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "4\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 34
+    }
+  ],
+  "pass_rate": 0.6666666666666666,
+  "num_cases": 6,
+  "num_passed": 4,
+  "api_ms": 5437,
+  "build_ms": 0,
+  "exec_ms": 301,
+  "total_ms": 5744,
+  "prompt_tokens": 561,
+  "completion_tokens": 333
+}

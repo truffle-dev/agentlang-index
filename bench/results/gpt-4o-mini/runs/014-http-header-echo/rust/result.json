@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "014-http-header-echo",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 6453,
+  "build_ms": 192,
+  "exec_ms": 0,
+  "total_ms": 6652,
+  "prompt_tokens": 920,
+  "completion_tokens": 273,
+  "error": "build_error: cargo build failed: error[E0433]: cannot find module or crate `reqwest` in this scope\n --> ref.rs:2:5\n  |\n2 | use reqwest::header::{HeaderMap, HeaderName};\n  |     ^^^^^^^ use of unresolved module or unlinked crate `reqwest`\n  |\n  = help: if you wanted to use a crate named `reqwest`, use `cargo add reqwest` to add it to your `Cargo.toml`\n\nerror[E0433]: cannot find module or crate `reqwest` in this scope\n  --> ref.rs:16:18\n   |\n16 |     let client = reqwest::Client::builder()\n   |                  ^^^^^^^ use of unr"
+}

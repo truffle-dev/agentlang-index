@@ -1,0 +1,90 @@
+{
+  "model": "gpt-5",
+  "task": "006-substring-count",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "simple repetition",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/006-substring-count/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "greedy non-overlap on aa over aaaa",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/006-substring-count/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 73
+    },
+    {
+      "name": "no occurrences",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/006-substring-count/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 55
+    },
+    {
+      "name": "banana with na pattern",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/006-substring-count/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 44
+    },
+    {
+      "name": "pattern equals text",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/006-substring-count/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 75
+    },
+    {
+      "name": "longer pattern in mixed text",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/006-substring-count/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 61
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 51183,
+  "build_ms": 0,
+  "exec_ms": 391,
+  "total_ms": 51577,
+  "prompt_tokens": 762,
+  "completion_tokens": 5589
+}

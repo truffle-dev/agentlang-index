@@ -1,0 +1,84 @@
+{
+  "model": "gpt-5",
+  "task": "004-matrix-multiply",
+  "lang": "rust",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "6\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "19 22\n43 50\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 3
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "4 -3 2\n0 5 -1\n7 8 9\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "30 24 18\n84 69 54\n138 114 90\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "12 -5 3 -1\n23 53 -23 3\n-16 -13 5 10\n51 9 7 -36\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 3
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "-15 44 -33 4 -15\n35 39 -13 -61 35\n16 -54 40 -2 16\n0 -2 0 2 0\n12 -31 6 13 12\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 36248,
+  "build_ms": 430,
+  "exec_ms": 14,
+  "total_ms": 36694,
+  "prompt_tokens": 581,
+  "completion_tokens": 3477
+}

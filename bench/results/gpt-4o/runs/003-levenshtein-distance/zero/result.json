@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o",
+  "task": "003-levenshtein-distance",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 80
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 89
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 48
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 68
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 80
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 74
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3616,
+  "build_ms": 0,
+  "exec_ms": 439,
+  "total_ms": 4064,
+  "prompt_tokens": 699,
+  "completion_tokens": 520
+}

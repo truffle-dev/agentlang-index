@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "011-rle-encode",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "single repeated run",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/011-rle-encode/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "three distinct bytes",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/011-rle-encode/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 72
+    },
+    {
+      "name": "mixed runs",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/011-rle-encode/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 85
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/011-rle-encode/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 84
+    },
+    {
+      "name": "recurring byte after gap forms a new run",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/011-rle-encode/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 79
+    },
+    {
+      "name": "single byte run of length one",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/011-rle-encode/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 77
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2956,
+  "build_ms": 0,
+  "exec_ms": 480,
+  "total_ms": 3441,
+  "prompt_tokens": 778,
+  "completion_tokens": 229
+}

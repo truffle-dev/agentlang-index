@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "007-csv-line-tokenize",
+  "lang": "go",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "three simple unquoted fields",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/007-csv-line-tokenize/go/scratch/ref.go:51:66: bytes.ReplaceAll([]byte(field), []byte{…}, []byte{}).String undefined (type []byte has no field or method String)\n",
+      "exit_code": 1,
+      "ms": 104
+    },
+    {
+      "name": "quoted field with embedded comma",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/007-csv-line-tokenize/go/scratch/ref.go:51:66: bytes.ReplaceAll([]byte(field), []byte{…}, []byte{}).String undefined (type []byte has no field or method String)\n",
+      "exit_code": 1,
+      "ms": 101
+    },
+    {
+      "name": "three empty fields from two consecutive commas",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/007-csv-line-tokenize/go/scratch/ref.go:51:66: bytes.ReplaceAll([]byte(field), []byte{…}, []byte{}).String undefined (type []byte has no field or method String)\n",
+      "exit_code": 1,
+      "ms": 95
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/007-csv-line-tokenize/go/scratch/ref.go:51:66: bytes.ReplaceAll([]byte(field), []byte{…}, []byte{}).String undefined (type []byte has no field or method String)\n",
+      "exit_code": 1,
+      "ms": 105
+    },
+    {
+      "name": "escaped double quote within quoted field",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/007-csv-line-tokenize/go/scratch/ref.go:51:66: bytes.ReplaceAll([]byte(field), []byte{…}, []byte{}).String undefined (type []byte has no field or method String)\n",
+      "exit_code": 1,
+      "ms": 104
+    },
+    {
+      "name": "mixed quoted unquoted with embedded comma and space",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/007-csv-line-tokenize/go/scratch/ref.go:51:66: bytes.ReplaceAll([]byte(field), []byte{…}, []byte{}).String undefined (type []byte has no field or method String)\n",
+      "exit_code": 1,
+      "ms": 104
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 4448,
+  "build_ms": 0,
+  "exec_ms": 613,
+  "total_ms": 5077,
+  "prompt_tokens": 607,
+  "completion_tokens": 251
+}

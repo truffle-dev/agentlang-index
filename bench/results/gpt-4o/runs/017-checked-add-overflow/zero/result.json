@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "017-checked-add-overflow",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive add (2 + 3 == 5)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/017-checked-add-overflow/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 76
+    },
+    {
+      "name": "boundary just under wrap (0 + 4294967295 == 4294967295)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/017-checked-add-overflow/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 78
+    },
+    {
+      "name": "small positive add (1000 + 2000 == 3000)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/017-checked-add-overflow/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 68
+    },
+    {
+      "name": "smallest u32 overflow (4294967295 + 1)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/017-checked-add-overflow/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "exact u32 wrap (2^31 + 2^31 == 2^32)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/017-checked-add-overflow/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 85
+    },
+    {
+      "name": "parse fails on first addend (abc + 5)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/017-checked-add-overflow/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'std'\n  expected: src/std.0 or src/std/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 79
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2529,
+  "build_ms": 0,
+  "exec_ms": 469,
+  "total_ms": 3004,
+  "prompt_tokens": 761,
+  "completion_tokens": 331
+}

@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "016-parse-list-sum",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "N=3 with values [1,2,3] sums to 6",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/016-parse-list-sum/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 82
+    },
+    {
+      "name": "N=0 is the empty sum (0)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/016-parse-list-sum/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 85
+    },
+    {
+      "name": "N=5 with multiples-of-ten sums to 150",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/016-parse-list-sum/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 63
+    },
+    {
+      "name": "second value is non-digit (abc)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/016-parse-list-sum/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 54
+    },
+    {
+      "name": "N=2 but only one value provided",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/016-parse-list-sum/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 44
+    },
+    {
+      "name": "running sum overflows u32 (2^32-1 + 1 = 2^32)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/016-parse-list-sum/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 45
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3785,
+  "build_ms": 0,
+  "exec_ms": 373,
+  "total_ms": 4168,
+  "prompt_tokens": 777,
+  "completion_tokens": 516
+}

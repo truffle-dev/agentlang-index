@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "015-checked-divide-u32",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive divide (20 / 4 == 5)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "5\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 286
+    },
+    {
+      "name": "zero dividend (0 / 7 == 0)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 103
+    },
+    {
+      "name": "integer floor division (10 / 3 == 3)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 99
+    },
+    {
+      "name": "divide by zero",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 98
+    },
+    {
+      "name": "non-digit divisor",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 94
+    },
+    {
+      "name": "dividend exceeds u32::MAX",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 95
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 2357,
+  "build_ms": 0,
+  "exec_ms": 775,
+  "total_ms": 3139,
+  "prompt_tokens": 587,
+  "completion_tokens": 285
+}

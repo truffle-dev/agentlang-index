@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "018-caesar-cipher",
+  "lang": "go",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "shift 3, abc -> def",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/018-caesar-cipher/go/scratch/ref.go:53:26: invalid operation: ch - 'a' + byte(shift) (mismatched types rune and byte)\n",
+      "exit_code": 1,
+      "ms": 68
+    },
+    {
+      "name": "shift 0 is identity, hello -> hello",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/018-caesar-cipher/go/scratch/ref.go:53:26: invalid operation: ch - 'a' + byte(shift) (mismatched types rune and byte)\n",
+      "exit_code": 1,
+      "ms": 93
+    },
+    {
+      "name": "shift 25, abc -> zab (wrap)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/018-caesar-cipher/go/scratch/ref.go:53:26: invalid operation: ch - 'a' + byte(shift) (mismatched types rune and byte)\n",
+      "exit_code": 1,
+      "ms": 106
+    },
+    {
+      "name": "shift 13, xyz -> klm (rot13)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/018-caesar-cipher/go/scratch/ref.go:53:26: invalid operation: ch - 'a' + byte(shift) (mismatched types rune and byte)\n",
+      "exit_code": 1,
+      "ms": 105
+    },
+    {
+      "name": "shift 26 rejects (out of range)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/018-caesar-cipher/go/scratch/ref.go:53:26: invalid operation: ch - 'a' + byte(shift) (mismatched types rune and byte)\n",
+      "exit_code": 1,
+      "ms": 94
+    },
+    {
+      "name": "uppercase H in plaintext rejects",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o-mini/runs/018-caesar-cipher/go/scratch/ref.go:53:26: invalid operation: ch - 'a' + byte(shift) (mismatched types rune and byte)\n",
+      "exit_code": 1,
+      "ms": 96
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 6586,
+  "build_ms": 0,
+  "exec_ms": 563,
+  "total_ms": 7152,
+  "prompt_tokens": 761,
+  "completion_tokens": 341
+}

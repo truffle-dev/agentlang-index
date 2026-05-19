@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "019-run-length-encode",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "aaabbc -> a3b2c1",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a3b2c1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 261
+    },
+    {
+      "name": "abcdef -> a1b1c1d1e1f1 (no repeats)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a1b1c1d1e1f1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 103
+    },
+    {
+      "name": "z -> z1 (single byte)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "z1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 93
+    },
+    {
+      "name": "thirteen a's -> a13 (multi-digit count)",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a13\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 99
+    },
+    {
+      "name": "empty line rejects",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 99
+    },
+    {
+      "name": "uppercase H rejects",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 95
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 4121,
+  "build_ms": 0,
+  "exec_ms": 750,
+  "total_ms": 4877,
+  "prompt_tokens": 654,
+  "completion_tokens": 263
+}

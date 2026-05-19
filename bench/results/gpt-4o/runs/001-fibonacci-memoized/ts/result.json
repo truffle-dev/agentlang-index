@@ -1,0 +1,73 @@
+{
+  "model": "gpt-4o",
+  "task": "001-fibonacci-memoized",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 66
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 52
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "55\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 62
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "12586269025\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 59
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "610\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 48
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 5,
+  "num_passed": 5,
+  "api_ms": 1921,
+  "build_ms": 0,
+  "exec_ms": 287,
+  "total_ms": 2217,
+  "prompt_tokens": 481,
+  "completion_tokens": 180
+}

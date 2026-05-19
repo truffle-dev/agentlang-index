@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "013-http-json-sum",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive pair sums to 7",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'lib http'\n  expected: src/lib http.0 or src/lib http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "negative + positive integers",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'lib http'\n  expected: src/lib http.0 or src/lib http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 59
+    },
+    {
+      "name": "million-scale integers",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'lib http'\n  expected: src/lib http.0 or src/lib http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 78
+    },
+    {
+      "name": "response missing sum field surfaces as error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'lib http'\n  expected: src/lib http.0 or src/lib http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 60
+    },
+    {
+      "name": "non-JSON response body surfaces as error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'lib http'\n  expected: src/lib http.0 or src/lib http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 76
+    },
+    {
+      "name": "HTTP 404 response surfaces as error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'lib http'\n  expected: src/lib http.0 or src/lib http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 71
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2076,
+  "build_ms": 0,
+  "exec_ms": 427,
+  "total_ms": 2588,
+  "prompt_tokens": 1059,
+  "completion_tokens": 199
+}

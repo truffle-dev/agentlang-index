@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "017-checked-add-overflow",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive add (2 + 3 == 5)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/017-checked-add-overflow/zero/scratch/ref.zero:3:13 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 80
+    },
+    {
+      "name": "boundary just under wrap (0 + 4294967295 == 4294967295)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/017-checked-add-overflow/zero/scratch/ref.zero:3:13 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 71
+    },
+    {
+      "name": "small positive add (1000 + 2000 == 3000)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/017-checked-add-overflow/zero/scratch/ref.zero:3:13 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 82
+    },
+    {
+      "name": "smallest u32 overflow (4294967295 + 1)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/017-checked-add-overflow/zero/scratch/ref.zero:3:13 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 66
+    },
+    {
+      "name": "exact u32 wrap (2^31 + 2^31 == 2^32)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/017-checked-add-overflow/zero/scratch/ref.zero:3:13 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 81
+    },
+    {
+      "name": "parse fails on first addend (abc + 5)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/017-checked-add-overflow/zero/scratch/ref.zero:3:13 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 87
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3290,
+  "build_ms": 0,
+  "exec_ms": 467,
+  "total_ms": 3764,
+  "prompt_tokens": 761,
+  "completion_tokens": 294
+}

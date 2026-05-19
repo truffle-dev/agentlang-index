@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "016-parse-list-sum",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 7052,
+  "build_ms": 171,
+  "exec_ms": 0,
+  "total_ms": 7229,
+  "prompt_tokens": 653,
+  "completion_tokens": 324,
+  "error": "build_error: cargo build failed: error[E0382]: use of moved value: `lines`\n  --> ref.rs:45:8\n   |\n10 |     let mut lines = input.lines();\n   |         --------- move occurs because `lines` has type `std::str::Lines<'_>`, which does not implement the `Copy` trait\n...\n23 |     for line in lines.take(n as usize) {\n   |                       ---------------- `lines` moved due to this method call\n...\n45 |     if lines.count() > 0 {\n   |        ^^^^^ value used here after move\n   |\nnote: `std::iter::Iterator::take` takes ownership of"
+}

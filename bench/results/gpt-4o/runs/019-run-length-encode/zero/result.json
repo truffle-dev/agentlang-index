@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "019-run-length-encode",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "aaabbc -> a3b2c1",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/019-run-length-encode/zero/scratch/zero/src/lib.0:28:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "abcdef -> a1b1c1d1e1f1 (no repeats)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/019-run-length-encode/zero/scratch/zero/src/lib.0:28:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 49
+    },
+    {
+      "name": "z -> z1 (single byte)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/019-run-length-encode/zero/scratch/zero/src/lib.0:28:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 54
+    },
+    {
+      "name": "thirteen a's -> a13 (multi-digit count)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/019-run-length-encode/zero/scratch/zero/src/lib.0:28:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 88
+    },
+    {
+      "name": "empty line rejects",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/019-run-length-encode/zero/scratch/zero/src/lib.0:28:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "uppercase H rejects",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/019-run-length-encode/zero/scratch/zero/src/lib.0:28:1 PAR100: unexpected character '`'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 69
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3114,
+  "build_ms": 0,
+  "exec_ms": 427,
+  "total_ms": 3552,
+  "prompt_tokens": 946,
+  "completion_tokens": 526
+}

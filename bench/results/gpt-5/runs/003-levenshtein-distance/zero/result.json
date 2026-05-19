@@ -1,0 +1,84 @@
+{
+  "model": "gpt-5",
+  "task": "003-levenshtein-distance",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/003-levenshtein-distance/zero/scratch/ref.zero:3:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 84
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/003-levenshtein-distance/zero/scratch/ref.zero:3:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 77
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/003-levenshtein-distance/zero/scratch/ref.zero:3:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 82
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/003-levenshtein-distance/zero/scratch/ref.zero:3:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 79
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/003-levenshtein-distance/zero/scratch/ref.zero:3:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 79
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/003-levenshtein-distance/zero/scratch/ref.zero:3:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 68
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 87553,
+  "build_ms": 0,
+  "exec_ms": 469,
+  "total_ms": 88023,
+  "prompt_tokens": 698,
+  "completion_tokens": 6128
+}

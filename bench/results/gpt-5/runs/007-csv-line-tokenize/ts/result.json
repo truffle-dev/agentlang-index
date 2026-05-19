@@ -1,0 +1,90 @@
+{
+  "model": "gpt-5",
+  "task": "007-csv-line-tokenize",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "three simple unquoted fields",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a\nb\nc\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 72
+    },
+    {
+      "name": "quoted field with embedded comma",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a,b\nc\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 64
+    },
+    {
+      "name": "three empty fields from two consecutive commas",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\n\n\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 67
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 63
+    },
+    {
+      "name": "escaped double quote within quoted field",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a\"b\nc\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 48
+    },
+    {
+      "name": "mixed quoted unquoted with embedded comma and space",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1\nhello, world\nfoo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 45
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 35561,
+  "build_ms": 0,
+  "exec_ms": 359,
+  "total_ms": 35923,
+  "prompt_tokens": 598,
+  "completion_tokens": 3620
+}

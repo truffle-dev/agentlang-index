@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "010-byte-frequency",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "single byte",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/010-byte-frequency/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "three distinct bytes",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/010-byte-frequency/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 78
+    },
+    {
+      "name": "three byte pairs",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/010-byte-frequency/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 81
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/010-byte-frequency/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 59
+    },
+    {
+      "name": "hello has four distinct bytes",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/010-byte-frequency/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 76
+    },
+    {
+      "name": "uppercase and lowercase are distinct",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/010-byte-frequency/zero/scratch/ref.zero:6:8 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 73
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3499,
+  "build_ms": 0,
+  "exec_ms": 450,
+  "total_ms": 3958,
+  "prompt_tokens": 683,
+  "completion_tokens": 379
+}

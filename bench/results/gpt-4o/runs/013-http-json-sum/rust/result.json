@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o",
+  "task": "013-http-json-sum",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2392,
+  "build_ms": 163,
+  "exec_ms": 0,
+  "total_ms": 2566,
+  "prompt_tokens": 935,
+  "completion_tokens": 283,
+  "error": "build_error: cargo build failed: error[E0433]: cannot find module or crate `reqwest` in this scope\n --> ref.rs:3:5\n  |\n3 | use reqwest::blocking::Client;\n  |     ^^^^^^^ use of unresolved module or unlinked crate `reqwest`\n  |\n  = help: if you wanted to use a crate named `reqwest`, use `cargo add reqwest` to add it to your `Cargo.toml`\n\nerror[E0432]: unresolved import `serde_json`\n --> ref.rs:4:5\n  |\n4 | use serde_json::Value;\n  |     ^^^^^^^^^^ use of unresolved module or unlinked crate `serde_json`\n  |\n  = help: if you wanted"
+}

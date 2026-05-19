@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "019-run-length-encode",
+  "lang": "ts",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "aaabbc -> a3b2c1",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a3b2c1\n1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 82
+    },
+    {
+      "name": "abcdef -> a1b1c1d1e1f1 (no repeats)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a1b1c1d1e1f1\n1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 54
+    },
+    {
+      "name": "z -> z1 (single byte)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "z1\n1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 38
+    },
+    {
+      "name": "thirteen a's -> a13 (multi-digit count)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a13\n1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 34
+    },
+    {
+      "name": "empty line rejects",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\n1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 37
+    },
+    {
+      "name": "uppercase H rejects",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 37
+    }
+  ],
+  "pass_rate": 0.16666666666666666,
+  "num_cases": 6,
+  "num_passed": 1,
+  "api_ms": 1966,
+  "build_ms": 0,
+  "exec_ms": 282,
+  "total_ms": 2253,
+  "prompt_tokens": 646,
+  "completion_tokens": 167
+}

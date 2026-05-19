@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "012-http-status-code",
+  "lang": "ts",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "200 OK from fixture",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 76
+    },
+    {
+      "name": "404 Not Found from fixture",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 49
+    },
+    {
+      "name": "500 Internal Server Error from fixture",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 65
+    },
+    {
+      "name": "503 Service Unavailable from fixture",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 56
+    },
+    {
+      "name": "fixture root path defaults to 200",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 43
+    },
+    {
+      "name": "unresolvable host surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 36
+    }
+  ],
+  "pass_rate": 0.16666666666666666,
+  "num_cases": 6,
+  "num_passed": 1,
+  "api_ms": 3299,
+  "build_ms": 0,
+  "exec_ms": 325,
+  "total_ms": 3705,
+  "prompt_tokens": 709,
+  "completion_tokens": 215
+}

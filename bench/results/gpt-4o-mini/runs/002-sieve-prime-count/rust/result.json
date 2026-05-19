@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "002-sieve-prime-count",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 3
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    }
+  ],
+  "pass_rate": 0.3333333333333333,
+  "num_cases": 6,
+  "num_passed": 2,
+  "api_ms": 24368,
+  "build_ms": 391,
+  "exec_ms": 11,
+  "total_ms": 24772,
+  "prompt_tokens": 545,
+  "completion_tokens": 205
+}

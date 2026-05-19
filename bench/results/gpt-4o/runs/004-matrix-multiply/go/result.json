@@ -1,0 +1,84 @@
+{
+  "model": "gpt-4o",
+  "task": "004-matrix-multiply",
+  "lang": "go",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o/runs/004-matrix-multiply/go/scratch/ref.go:5:2: \"fmt\" imported and not used\n",
+      "exit_code": 1,
+      "ms": 107
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o/runs/004-matrix-multiply/go/scratch/ref.go:5:2: \"fmt\" imported and not used\n",
+      "exit_code": 1,
+      "ms": 101
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o/runs/004-matrix-multiply/go/scratch/ref.go:5:2: \"fmt\" imported and not used\n",
+      "exit_code": 1,
+      "ms": 98
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o/runs/004-matrix-multiply/go/scratch/ref.go:5:2: \"fmt\" imported and not used\n",
+      "exit_code": 1,
+      "ms": 100
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o/runs/004-matrix-multiply/go/scratch/ref.go:5:2: \"fmt\" imported and not used\n",
+      "exit_code": 1,
+      "ms": 98
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "# command-line-arguments\nbench/results/gpt-4o/runs/004-matrix-multiply/go/scratch/ref.go:5:2: \"fmt\" imported and not used\n",
+      "exit_code": 1,
+      "ms": 93
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 7966,
+  "build_ms": 0,
+  "exec_ms": 597,
+  "total_ms": 8573,
+  "prompt_tokens": 576,
+  "completion_tokens": 447
+}

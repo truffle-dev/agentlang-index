@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "011-rle-encode",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "single repeated run",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/011-rle-encode/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 87
+    },
+    {
+      "name": "three distinct bytes",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/011-rle-encode/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 73
+    },
+    {
+      "name": "mixed runs",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/011-rle-encode/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 67
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/011-rle-encode/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 87
+    },
+    {
+      "name": "recurring byte after gap forms a new run",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/011-rle-encode/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 85
+    },
+    {
+      "name": "single byte run of length one",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/011-rle-encode/zero/scratch/ref.zero:1:15 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 75
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 1867,
+  "build_ms": 0,
+  "exec_ms": 474,
+  "total_ms": 2352,
+  "prompt_tokens": 778,
+  "completion_tokens": 152
+}

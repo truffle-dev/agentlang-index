@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "014-http-header-echo",
+  "lang": "ts",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "X-Echo header on /headers route returns hello-world",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "28 |         input.push(chunk.toString());\n29 |         if (input.length === 2) break;\n30 |     }\n31 | \n32 |     const url = input[0].trim();\n33 |     const headerName = input[1].trim();\n                                  ^\nTypeError: undefined is not an object (evaluating 'input[1].trim')\n      at main (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/014-http-header-echo/ts/scratch/ref.ts:33:30)\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 69
+    },
+    {
+      "name": "lowercase content-type on /headers route returns application/json (case-insensitive name match)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "28 |         input.push(chunk.toString());\n29 |         if (input.length === 2) break;\n30 |     }\n31 | \n32 |     const url = input[0].trim();\n33 |     const headerName = input[1].trim();\n                                  ^\nTypeError: undefined is not an object (evaluating 'input[1].trim')\n      at main (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/014-http-header-echo/ts/scratch/ref.ts:33:30)\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 54
+    },
+    {
+      "name": "X-Custom-Name header on /headers route returns first-value",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "28 |         input.push(chunk.toString());\n29 |         if (input.length === 2) break;\n30 |     }\n31 | \n32 |     const url = input[0].trim();\n33 |     const headerName = input[1].trim();\n                                  ^\nTypeError: undefined is not an object (evaluating 'input[1].trim')\n      at main (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/014-http-header-echo/ts/scratch/ref.ts:33:30)\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 45
+    },
+    {
+      "name": "missing header on /empty route returns error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "28 |         input.push(chunk.toString());\n29 |         if (input.length === 2) break;\n30 |     }\n31 | \n32 |     const url = input[0].trim();\n33 |     const headerName = input[1].trim();\n                                  ^\nTypeError: undefined is not an object (evaluating 'input[1].trim')\n      at main (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/014-http-header-echo/ts/scratch/ref.ts:33:30)\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 42
+    },
+    {
+      "name": "non-200 status on /404 route returns error even though X-Echo header is present",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "28 |         input.push(chunk.toString());\n29 |         if (input.length === 2) break;\n30 |     }\n31 | \n32 |     const url = input[0].trim();\n33 |     const headerName = input[1].trim();\n                                  ^\nTypeError: undefined is not an object (evaluating 'input[1].trim')\n      at main (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/014-http-header-echo/ts/scratch/ref.ts:33:30)\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 74
+    },
+    {
+      "name": "non-200 status on /no-such-route returns error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "28 |         input.push(chunk.toString());\n29 |         if (input.length === 2) break;\n30 |     }\n31 | \n32 |     const url = input[0].trim();\n33 |     const headerName = input[1].trim();\n                                  ^\nTypeError: undefined is not an object (evaluating 'input[1].trim')\n      at main (/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/014-http-header-echo/ts/scratch/ref.ts:33:30)\n\nBun v1.3.13 (Linux x64)\n",
+      "exit_code": 1,
+      "ms": 56
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3596,
+  "build_ms": 0,
+  "exec_ms": 341,
+  "total_ms": 4035,
+  "prompt_tokens": 906,
+  "completion_tokens": 309
+}

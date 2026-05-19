@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "011-rle-encode",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "single repeated run",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3 97\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 281
+    },
+    {
+      "name": "three distinct bytes",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1 97\n1 98\n1 99\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 89
+    },
+    {
+      "name": "mixed runs",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3 97\n2 98\n1 99\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 74
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 64
+    },
+    {
+      "name": "recurring byte after gap forms a new run",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "2 97\n2 98\n2 97\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 72
+    },
+    {
+      "name": "single byte run of length one",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1 120\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 74
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 1552,
+  "build_ms": 0,
+  "exec_ms": 655,
+  "total_ms": 2212,
+  "prompt_tokens": 648,
+  "completion_tokens": 192
+}

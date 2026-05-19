@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "019-run-length-encode",
+  "lang": "go",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "aaabbc -> a3b2c1",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 267
+    },
+    {
+      "name": "abcdef -> a1b1c1d1e1f1 (no repeats)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 90
+    },
+    {
+      "name": "z -> z1 (single byte)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 94
+    },
+    {
+      "name": "thirteen a's -> a13 (multi-digit count)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 100
+    },
+    {
+      "name": "empty line rejects",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 83
+    },
+    {
+      "name": "uppercase H rejects",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 78
+    }
+  ],
+  "pass_rate": 0.3333333333333333,
+  "num_cases": 6,
+  "num_passed": 2,
+  "api_ms": 3502,
+  "build_ms": 0,
+  "exec_ms": 713,
+  "total_ms": 4220,
+  "prompt_tokens": 654,
+  "completion_tokens": 268
+}

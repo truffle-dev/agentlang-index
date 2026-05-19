@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "012-http-status-code",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 6132,
+  "build_ms": 162,
+  "exec_ms": 0,
+  "total_ms": 6296,
+  "prompt_tokens": 723,
+  "completion_tokens": 187,
+  "error": "build_error: cargo build failed: error[E0432]: unresolved import `reqwest`\n --> ref.rs:2:5\n  |\n2 | use reqwest::Client;\n  |     ^^^^^^^ use of unresolved module or unlinked crate `reqwest`\n  |\n  = help: if you wanted to use a crate named `reqwest`, use `cargo add reqwest` to add it to your `Cargo.toml`\n\nerror[E0433]: cannot find module or crate `tokio` in this scope\n --> ref.rs:5:3\n  |\n5 | #[tokio::main]\n  |   ^^^^^ use of unresolved module or unlinked crate `tokio`\n\nerror[E0752]: `main` function is not allowed to be `async`\n -"
+}

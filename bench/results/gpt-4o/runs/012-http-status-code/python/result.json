@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "012-http-status-code",
+  "lang": "python",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "200 OK from fixture",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/012-http-status-code/python/scratch/ref.py\", line 2, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 25
+    },
+    {
+      "name": "404 Not Found from fixture",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/012-http-status-code/python/scratch/ref.py\", line 2, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 13
+    },
+    {
+      "name": "500 Internal Server Error from fixture",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/012-http-status-code/python/scratch/ref.py\", line 2, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 26
+    },
+    {
+      "name": "503 Service Unavailable from fixture",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/012-http-status-code/python/scratch/ref.py\", line 2, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 26
+    },
+    {
+      "name": "fixture root path defaults to 200",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/012-http-status-code/python/scratch/ref.py\", line 2, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 28
+    },
+    {
+      "name": "unresolvable host surfaces as error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/012-http-status-code/python/scratch/ref.py\", line 2, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 14
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 942,
+  "build_ms": 0,
+  "exec_ms": 133,
+  "total_ms": 1177,
+  "prompt_tokens": 699,
+  "completion_tokens": 73
+}

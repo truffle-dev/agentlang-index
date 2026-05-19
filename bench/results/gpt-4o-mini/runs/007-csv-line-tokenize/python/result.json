@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "007-csv-line-tokenize",
+  "lang": "python",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "three simple unquoted fields",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "a\nb\nc\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 42
+    },
+    {
+      "name": "quoted field with embedded comma",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\"a,b\"\nc\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 36
+    },
+    {
+      "name": "three empty fields from two consecutive commas",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 41
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 39
+    },
+    {
+      "name": "escaped double quote within quoted field",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\"a\"\"b\"\n\"c\"\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 40
+    },
+    {
+      "name": "mixed quoted unquoted with embedded comma and space",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1\n\"hello, world\"\nfoo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 38
+    }
+  ],
+  "pass_rate": 0.3333333333333333,
+  "num_cases": 6,
+  "num_passed": 2,
+  "api_ms": 3840,
+  "build_ms": 0,
+  "exec_ms": 236,
+  "total_ms": 4087,
+  "prompt_tokens": 589,
+  "completion_tokens": 162
+}

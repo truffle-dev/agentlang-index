@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "005-balanced-parens",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "empty input is balanced",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/005-balanced-parens/zero/scratch/ref.zero:3:18 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 79
+    },
+    {
+      "name": "simple nested triple",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/005-balanced-parens/zero/scratch/ref.zero:3:18 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 87
+    },
+    {
+      "name": "non-bracket text ignored",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/005-balanced-parens/zero/scratch/ref.zero:3:18 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 79
+    },
+    {
+      "name": "crossing pairs are not balanced",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/005-balanced-parens/zero/scratch/ref.zero:3:18 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 76
+    },
+    {
+      "name": "lone closer with no opener",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/005-balanced-parens/zero/scratch/ref.zero:3:18 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 74
+    },
+    {
+      "name": "deep nesting with mixed bracket kinds",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/005-balanced-parens/zero/scratch/ref.zero:3:18 PAR100: expected expression\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 80
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 1865,
+  "build_ms": 0,
+  "exec_ms": 475,
+  "total_ms": 2345,
+  "prompt_tokens": 695,
+  "completion_tokens": 159
+}

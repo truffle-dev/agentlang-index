@@ -1,0 +1,18 @@
+{
+  "model": "gpt-5",
+  "task": "007-csv-line-tokenize",
+  "lang": "zero",
+  "passed": false,
+  "extracted": false,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 99937,
+  "build_ms": 0,
+  "exec_ms": 0,
+  "total_ms": 99937,
+  "prompt_tokens": 736,
+  "completion_tokens": 8192,
+  "error": "no_code_extracted"
+}

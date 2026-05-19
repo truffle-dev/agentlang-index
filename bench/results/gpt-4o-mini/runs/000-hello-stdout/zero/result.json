@@ -1,0 +1,40 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "000-hello-stdout",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/000-hello-stdout/zero/scratch/ref.zero:1:1 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 52
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/000-hello-stdout/zero/scratch/ref.zero:1:1 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 62
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 2,
+  "num_passed": 0,
+  "api_ms": 596,
+  "build_ms": 0,
+  "exec_ms": 114,
+  "total_ms": 718,
+  "prompt_tokens": 452,
+  "completion_tokens": 14
+}

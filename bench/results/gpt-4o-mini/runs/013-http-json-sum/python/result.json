@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "013-http-json-sum",
+  "lang": "python",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive pair sums to 7",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/python/scratch/ref.py\", line 3, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 44
+    },
+    {
+      "name": "negative + positive integers",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/python/scratch/ref.py\", line 3, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 36
+    },
+    {
+      "name": "million-scale integers",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/python/scratch/ref.py\", line 3, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 47
+    },
+    {
+      "name": "response missing sum field surfaces as error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/python/scratch/ref.py\", line 3, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 40
+    },
+    {
+      "name": "non-JSON response body surfaces as error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/python/scratch/ref.py\", line 3, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 43
+    },
+    {
+      "name": "HTTP 404 response surfaces as error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/phantom/repos/agentlang-index/bench/results/gpt-4o-mini/runs/013-http-json-sum/python/scratch/ref.py\", line 3, in <module>\n    import requests\nModuleNotFoundError: No module named 'requests'\n",
+      "exit_code": 1,
+      "ms": 30
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 3297,
+  "build_ms": 0,
+  "exec_ms": 240,
+  "total_ms": 3633,
+  "prompt_tokens": 911,
+  "completion_tokens": 169
+}

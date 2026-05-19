@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "013-http-json-sum",
+  "lang": "ts",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive pair sums to 7",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 81
+    },
+    {
+      "name": "negative + positive integers",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 59
+    },
+    {
+      "name": "million-scale integers",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 44
+    },
+    {
+      "name": "response missing sum field surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 44
+    },
+    {
+      "name": "non-JSON response body surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 42
+    },
+    {
+      "name": "HTTP 404 response surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 44
+    }
+  ],
+  "pass_rate": 0.5,
+  "num_cases": 6,
+  "num_passed": 3,
+  "api_ms": 4586,
+  "build_ms": 0,
+  "exec_ms": 315,
+  "total_ms": 4986,
+  "prompt_tokens": 921,
+  "completion_tokens": 446
+}

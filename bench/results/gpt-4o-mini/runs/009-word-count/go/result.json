@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o-mini",
+  "task": "009-word-count",
+  "lang": "go",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "two-word line",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\u0002\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 264
+    },
+    {
+      "name": "single word",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\u0001\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 84
+    },
+    {
+      "name": "empty line writes zero",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\u0000\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 91
+    },
+    {
+      "name": "collapse leading trailing and internal spaces",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\u0004\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 87
+    },
+    {
+      "name": "five words separated by single spaces",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\u0005\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 93
+    },
+    {
+      "name": "mixed whitespace (tab newline cr) counts as separator",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "\u0005\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 86
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 1707,
+  "build_ms": 0,
+  "exec_ms": 705,
+  "total_ms": 2420,
+  "prompt_tokens": 494,
+  "completion_tokens": 81
+}

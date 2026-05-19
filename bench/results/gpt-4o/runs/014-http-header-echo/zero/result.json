@@ -1,0 +1,90 @@
+{
+  "model": "gpt-4o",
+  "task": "014-http-header-echo",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "X-Echo header on /headers route returns hello-world",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/014-http-header-echo/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'http'\n  expected: src/http.0 or src/http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 77
+    },
+    {
+      "name": "lowercase content-type on /headers route returns application/json (case-insensitive name match)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/014-http-header-echo/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'http'\n  expected: src/http.0 or src/http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 78
+    },
+    {
+      "name": "X-Custom-Name header on /headers route returns first-value",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/014-http-header-echo/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'http'\n  expected: src/http.0 or src/http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 70
+    },
+    {
+      "name": "missing header on /empty route returns error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/014-http-header-echo/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'http'\n  expected: src/http.0 or src/http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 91
+    },
+    {
+      "name": "non-200 status on /404 route returns error even though X-Echo header is present",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/014-http-header-echo/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'http'\n  expected: src/http.0 or src/http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 78
+    },
+    {
+      "name": "non-200 status on /no-such-route returns error",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-4o/runs/014-http-header-echo/zero/scratch/ref.zero:1:1 IMP001: unknown package-local import 'http'\n  expected: src/http.0 or src/http/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 61
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 2220,
+  "build_ms": 0,
+  "exec_ms": 455,
+  "total_ms": 2758,
+  "prompt_tokens": 1044,
+  "completion_tokens": 235
+}
