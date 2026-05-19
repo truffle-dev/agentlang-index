@@ -1,0 +1,90 @@
+{
+  "model": "gpt-5",
+  "task": "019-run-length-encode",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "aaabbc -> a3b2c1",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/019-run-length-encode/zero/scratch/zero/src/main.0:1:1 IMP001: unknown package-local import 'world'\n  expected: src/world.0 or src/world/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 80
+    },
+    {
+      "name": "abcdef -> a1b1c1d1e1f1 (no repeats)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/019-run-length-encode/zero/scratch/zero/src/main.0:1:1 IMP001: unknown package-local import 'world'\n  expected: src/world.0 or src/world/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 83
+    },
+    {
+      "name": "z -> z1 (single byte)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/019-run-length-encode/zero/scratch/zero/src/main.0:1:1 IMP001: unknown package-local import 'world'\n  expected: src/world.0 or src/world/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 62
+    },
+    {
+      "name": "thirteen a's -> a13 (multi-digit count)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/019-run-length-encode/zero/scratch/zero/src/main.0:1:1 IMP001: unknown package-local import 'world'\n  expected: src/world.0 or src/world/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 58
+    },
+    {
+      "name": "empty line rejects",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/019-run-length-encode/zero/scratch/zero/src/main.0:1:1 IMP001: unknown package-local import 'world'\n  expected: src/world.0 or src/world/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 51
+    },
+    {
+      "name": "uppercase H rejects",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/gpt-5/runs/019-run-length-encode/zero/scratch/zero/src/main.0:1:1 IMP001: unknown package-local import 'world'\n  expected: src/world.0 or src/world/mod.0\n  actual: missing source file\n  help: create the module source file or remove the import\n  explain: zero explain IMP001\n",
+      "exit_code": 1,
+      "ms": 46
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 54477,
+  "build_ms": 0,
+  "exec_ms": 381,
+  "total_ms": 54859,
+  "prompt_tokens": 945,
+  "completion_tokens": 5978
+}

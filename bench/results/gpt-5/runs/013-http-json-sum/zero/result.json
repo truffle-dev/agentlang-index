@@ -1,0 +1,18 @@
+{
+  "model": "gpt-5",
+  "task": "013-http-json-sum",
+  "lang": "zero",
+  "passed": false,
+  "extracted": false,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 74731,
+  "build_ms": 0,
+  "exec_ms": 0,
+  "total_ms": 74732,
+  "prompt_tokens": 1058,
+  "completion_tokens": 8192,
+  "error": "no_code_extracted"
+}

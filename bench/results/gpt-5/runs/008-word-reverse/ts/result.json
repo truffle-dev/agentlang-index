@@ -1,0 +1,90 @@
+{
+  "model": "gpt-5",
+  "task": "008-word-reverse",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "two-word swap",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "world hello\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 68
+    },
+    {
+      "name": "four words",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "fox brown quick the\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 49
+    },
+    {
+      "name": "single word stays single",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "single\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 59
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 67
+    },
+    {
+      "name": "spaces collapse and trim",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "spaces multi\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 51
+    },
+    {
+      "name": "only spaces writes nothing",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 44
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 21345,
+  "build_ms": 0,
+  "exec_ms": 338,
+  "total_ms": 21684,
+  "prompt_tokens": 573,
+  "completion_tokens": 2040
+}

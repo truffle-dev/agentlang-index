@@ -1,6 +1,48 @@
 {
-  "generatedAt": "2026-05-19T00:49:19.491Z",
+  "generatedAt": "2026-05-19T01:33:47.846Z",
   "models": [
+    {
+      "model": "gpt-5",
+      "perLang": {
+        "zero": {
+          "passed": 0,
+          "total": 20,
+          "rate": 0
+        },
+        "ts": {
+          "passed": 20,
+          "total": 20,
+          "rate": 1
+        },
+        "rust": {
+          "passed": 19,
+          "total": 20,
+          "rate": 0.95
+        },
+        "go": {
+          "passed": 20,
+          "total": 20,
+          "rate": 1
+        },
+        "python": {
+          "passed": 20,
+          "total": 20,
+          "rate": 1
+        }
+      },
+      "totalPassed": 79,
+      "totalAttempts": 100,
+      "passRate": 0.79,
+      "langTax": {
+        "ts": 1,
+        "rust": 0.95,
+        "go": 1,
+        "python": 1
+      },
+      "timestamp": "2026-05-19T01:32:49.245Z",
+      "totalPromptTokens": 64510,
+      "totalCompletionTokens": 348714
+    },
     {
       "model": "gpt-4o",
       "perLang": {
@@ -311,6 +353,13 @@
         "rust": 1,
         "go": 1,
         "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "001-fibonacci-memoized": {
@@ -322,6 +371,13 @@
         "python": 1
       },
       "gpt-4o-mini": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
+      },
+      "gpt-5": {
         "zero": 0,
         "ts": 1,
         "rust": 1,
@@ -343,6 +399,13 @@
         "rust": 0,
         "go": 1,
         "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "003-levenshtein-distance": {
@@ -356,6 +419,13 @@
       "gpt-4o-mini": {
         "zero": 0,
         "ts": 0,
+        "rust": 1,
+        "go": 1,
+        "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
         "rust": 1,
         "go": 1,
         "python": 1
@@ -375,6 +445,13 @@
         "rust": 1,
         "go": 0,
         "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "005-balanced-parens": {
@@ -386,6 +463,13 @@
         "python": 1
       },
       "gpt-4o-mini": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
+      },
+      "gpt-5": {
         "zero": 0,
         "ts": 1,
         "rust": 1,
@@ -407,6 +491,13 @@
         "rust": 1,
         "go": 1,
         "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "007-csv-line-tokenize": {
@@ -423,6 +514,13 @@
         "rust": 1,
         "go": 0,
         "python": 0
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "008-word-reverse": {
@@ -434,6 +532,13 @@
         "python": 1
       },
       "gpt-4o-mini": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
+      },
+      "gpt-5": {
         "zero": 0,
         "ts": 1,
         "rust": 1,
@@ -455,6 +560,13 @@
         "rust": 1,
         "go": 0,
         "python": 0
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "010-byte-frequency": {
@@ -471,6 +583,13 @@
         "rust": 0,
         "go": 1,
         "python": 0
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "011-rle-encode": {
@@ -482,6 +601,13 @@
         "python": 1
       },
       "gpt-4o-mini": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
+      },
+      "gpt-5": {
         "zero": 0,
         "ts": 1,
         "rust": 1,
@@ -503,6 +629,13 @@
         "rust": 0,
         "go": 1,
         "python": 0
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "013-http-json-sum": {
@@ -519,6 +652,13 @@
         "rust": 0,
         "go": 1,
         "python": 0
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 0,
+        "go": 1,
+        "python": 1
       }
     },
     "014-http-header-echo": {
@@ -535,6 +675,13 @@
         "rust": 0,
         "go": 1,
         "python": 0
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "015-checked-divide-u32": {
@@ -548,6 +695,13 @@
       "gpt-4o-mini": {
         "zero": 0,
         "ts": 0,
+        "rust": 1,
+        "go": 1,
+        "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
         "rust": 1,
         "go": 1,
         "python": 1
@@ -567,6 +721,13 @@
         "rust": 0,
         "go": 1,
         "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "017-checked-add-overflow": {
@@ -578,6 +739,13 @@
         "python": 1
       },
       "gpt-4o-mini": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
+      },
+      "gpt-5": {
         "zero": 0,
         "ts": 1,
         "rust": 1,
@@ -599,6 +767,13 @@
         "rust": 1,
         "go": 0,
         "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
+        "python": 1
       }
     },
     "019-run-length-encode": {
@@ -614,6 +789,13 @@
         "ts": 0,
         "rust": 0,
         "go": 0,
+        "python": 1
+      },
+      "gpt-5": {
+        "zero": 0,
+        "ts": 1,
+        "rust": 1,
+        "go": 1,
         "python": 1
       }
     }

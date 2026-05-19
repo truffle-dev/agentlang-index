@@ -1,0 +1,90 @@
+{
+  "model": "gpt-5",
+  "task": "012-http-status-code",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "200 OK from fixture",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "200\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 569
+    },
+    {
+      "name": "404 Not Found from fixture",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "404\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 135
+    },
+    {
+      "name": "500 Internal Server Error from fixture",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "500\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 133
+    },
+    {
+      "name": "503 Service Unavailable from fixture",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "503\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 126
+    },
+    {
+      "name": "fixture root path defaults to 200",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "200\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 135
+    },
+    {
+      "name": "unresolvable host surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 122
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 24884,
+  "build_ms": 0,
+  "exec_ms": 1221,
+  "total_ms": 26188,
+  "prompt_tokens": 716,
+  "completion_tokens": 2866
+}
