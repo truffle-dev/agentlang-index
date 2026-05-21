@@ -70,6 +70,86 @@ function loadModelSummary(model: string): ModelSummary | null {
   return JSON.parse(readFileSync(p, "utf8"));
 }
 
+function firstNonEmptyLine(s: string | undefined): string {
+  if (!s) return "";
+  for (const line of s.split("\n")) {
+    const t = line.trim();
+    if (t.length > 0) return t;
+  }
+  return "";
+}
+
+function cleanExcerpt(s: string): string {
+  return s
+    .replace(/\/home\/phantom\/repos\/agentlang-index\/bench\/results\/[^\/]+\/runs\/[^\/]+\/[^\/]+\/scratch\//g, "")
+    .replace(/\/tmp\/[^ :]*\//g, "");
+}
+
+function classifyFailure(stderr: string, exitCode: number, stdoutMatch: boolean): string {
+  if (stderr.match(/PAR\d{3}|TYP\d{3}|CGEN\d{3}|BLD\d{3}/)) return "compile";
+  if (stderr.match(/SyntaxError|SyntaxError:|panic\.go:|error\[E\d{4}\]|cannot find|expected|unexpected/)) return "compile";
+  if (stderr.match(/SIGFPE|SIGSEGV|SIGILL|panic:|RuntimeError|TypeError|ValueError|IndexError|KeyError|ZeroDivisionError|stack overflow/)) return "runtime";
+  if (exitCode === 0 && !stdoutMatch) return "wrong-output";
+  if (exitCode !== 0 && stderr.length === 0) return "wrong-output";
+  return "other";
+}
+
+function buildModelsPayload(modelDirs: string[], tasks: { slug: string; title: string; tags: string[]; difficulty: string }[]) {
+  const taskBySlug = new Map(tasks.map((t) => [t.slug, t]));
+  const out: any = { generatedAt: new Date().toISOString(), models: [] };
+
+  for (const model of modelDirs) {
+    const sum = loadModelSummary(model);
+    if (!sum) continue;
+
+    const failureCountsByLang: Record<string, Record<string, number>> = {};
+    for (const lang of LANGS) failureCountsByLang[lang] = { compile: 0, runtime: 0, "wrong-output": 0, other: 0, pass: 0 };
+
+    const attempts: any[] = [];
+    for (const a of sum.attempts as any[]) {
+      const cr0 = (a.case_results ?? [])[0] ?? {};
+      const stderr = cr0.stderr ?? "";
+      const exitCode = cr0.exit_code ?? 0;
+      const stdoutMatch = cr0.stdout_match ?? false;
+      const mode = a.passed ? "pass" : classifyFailure(stderr, exitCode, stdoutMatch);
+      failureCountsByLang[a.lang][mode] = (failureCountsByLang[a.lang][mode] ?? 0) + 1;
+
+      const taskMeta = taskBySlug.get(a.task);
+      attempts.push({
+        task: a.task,
+        taskTitle: taskMeta?.title ?? a.task,
+        lang: a.lang,
+        passed: a.passed,
+        numCases: a.num_cases,
+        numPassed: a.num_passed,
+        failureMode: mode,
+        failureExcerpt: a.passed ? "" : cleanExcerpt(firstNonEmptyLine(stderr)).slice(0, 240),
+        apiMs: a.api_ms,
+        execMs: a.exec_ms,
+        promptTokens: a.prompt_tokens,
+        completionTokens: a.completion_tokens,
+      });
+    }
+
+    out.models.push({
+      model,
+      timestamp: sum.timestamp,
+      perLang: sum.perLang,
+      passRate: sum.passRate,
+      totalPassed: sum.totalPassed,
+      totalAttempts: sum.totalAttempts,
+      totalPromptTokens: sum.totalPromptTokens,
+      totalCompletionTokens: sum.totalCompletionTokens,
+      langTax: sum.langTax,
+      failureCountsByLang,
+      attempts,
+    });
+  }
+
+  out.models.sort((a: any, b: any) => b.passRate - a.passRate);
+  return out;
+}
+
 function main() {
   const args = process.argv.slice(2);
   const toSite = args.includes("--site");
@@ -133,6 +213,11 @@ function main() {
     const siteOut = join(SITE_DATA_DIR, "agentlang-results.json");
     writeFileSync(siteOut, JSON.stringify(dashboard, null, 2));
     console.log(`Wrote ${siteOut}`);
+
+    const modelsOut = join(SITE_DATA_DIR, "agentlang-models.json");
+    const modelsPayload = buildModelsPayload(models, tasks);
+    writeFileSync(modelsOut, JSON.stringify(modelsPayload, null, 2));
+    console.log(`Wrote ${modelsOut}`);
   }
 
   // Print a quick table.
