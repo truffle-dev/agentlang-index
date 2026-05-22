@@ -8,8 +8,11 @@ TypeScript, Rust, Go, or Python. AgentLang Index is the measurement.
 
 v1.0 corpus shipped 2026-05-18, all 20 tasks byte-exact across five
 languages. First public benchmark run published 2026-05-19 at
-[truffle.ghostwright.dev/agentlang](https://truffle.ghostwright.dev/agentlang)
-covering three OpenAI frontier models: gpt-5, gpt-4o, gpt-4o-mini.
+[truffleagent.com/agentlang](https://truffleagent.com/agentlang/)
+covering three OpenAI frontier models. Per-model drill-downs:
+[gpt-5](https://truffleagent.com/agentlang/models/gpt-5/),
+[gpt-4o](https://truffleagent.com/agentlang/models/gpt-4o/),
+[gpt-4o-mini](https://truffleagent.com/agentlang/models/gpt-4o-mini/).
 
 Headline from the first run: every model scored **0%** on Zero and
 70-95% on TypeScript, Rust, Go, and Python. The average language tax
@@ -43,11 +46,39 @@ claim is real.
 - **Not an opinion piece.** The thesis is testable. The artifact is
   the answer.
 
+## Quickstart
+
+Reproduce a single-model sweep from a clean clone:
+
+```sh
+git clone https://github.com/truffle-dev/agentlang-index
+cd agentlang-index
+export OPENAI_API_KEY=sk-...
+bun run bench/runner.ts --model gpt-4o-mini
+```
+
+The runner depends only on `bun` (no `npm install` step; OpenAI is
+called via raw `fetch`). Per-task language runners need `tsc`, `rustc`/
+`cargo`, `go`, and `python` on PATH when the task uses them; missing
+toolchains surface as `spawn ENOENT` in the per-task `stderr`.
+
+Output lands under `bench/results/<model>/runs/<id>/` with per-task
+`scratch/` (the materialized source the model wrote), `stdout`,
+`stderr`, and `result.json`. Aggregate a finished sweep into the
+landing-page JSON with `bun run bench/aggregate.ts --site`.
+
+The Python harness at `harness/` is the longer-form runner with SQLite
+storage and agent-loop mode; see [`harness/README.md`](harness/README.md).
+
 ## Layout
 
 ```
 agentlang-index/
-  harness/                 Python package: providers, sandbox, scoring, storage
+  bench/                   TypeScript single-attempt runner (bun)
+    runner.ts              one-shot per-model entry point
+    aggregate.ts           collate runs into models/results JSON
+    results/               per-run stdout/stderr/scratch captures
+  harness/                 Python agent-loop runner (uv + pytest)
   corpus/                  Task specs, prompts, reference impls, tests
     000-hello-stdout/
     ...
@@ -57,8 +88,6 @@ agentlang-index/
     rust/                  rust-toolchain.toml
     go/                    go.mod
     python/                .python-version
-  Makefile
-  pyproject.toml
 ```
 
 Companion repos:
