@@ -94,6 +94,158 @@ function classifyFailure(stderr: string, exitCode: number, stdoutMatch: boolean)
   return "other";
 }
 
+const LANG_EXT: Record<string, string> = {
+  zero: "zero",
+  ts: "ts",
+  rust: "rs",
+  go: "go",
+  python: "py",
+};
+
+const HARDEST_TIEBREAK: Record<string, number> = {
+  zero: 0,
+  rust: 1,
+  go: 2,
+  ts: 3,
+  python: 4,
+};
+
+function readRefForLang(slug: string, lang: string): string {
+  if (lang === "zero") {
+    const refZero = join(CORPUS_DIR, slug, "ref.zero");
+    if (existsSync(refZero)) return readFileSync(refZero, "utf8");
+    const zeroDir = join(CORPUS_DIR, slug, "zero", "src");
+    if (existsSync(zeroDir)) {
+      const main = join(zeroDir, "main.0");
+      const lib = join(zeroDir, "lib.0");
+      const parts: string[] = [];
+      if (existsSync(main)) parts.push(`// src/main.0\n${readFileSync(main, "utf8")}`);
+      if (existsSync(lib)) parts.push(`// src/lib.0\n${readFileSync(lib, "utf8")}`);
+      return parts.join("\n\n");
+    }
+    return "";
+  }
+  const ext = LANG_EXT[lang];
+  if (!ext) return "";
+  const p = join(CORPUS_DIR, slug, `ref.${ext}`);
+  if (!existsSync(p)) return "";
+  return readFileSync(p, "utf8");
+}
+
+function readPromptForTask(slug: string): string {
+  const p = join(CORPUS_DIR, slug, "prompt.md");
+  if (!existsSync(p)) return "";
+  return readFileSync(p, "utf8");
+}
+
+function readSpecForTask(slug: string): any {
+  const p = join(CORPUS_DIR, slug, "spec.json");
+  if (!existsSync(p)) return {};
+  return JSON.parse(readFileSync(p, "utf8"));
+}
+
+function buildTasksPayload(
+  modelDirs: string[],
+  tasks: { slug: string; title: string; tags: string[]; difficulty: string }[],
+) {
+  // Pivot per-model attempts into per-task attempts.
+  const perTaskAttempts: Record<string, any[]> = {};
+  for (const t of tasks) perTaskAttempts[t.slug] = [];
+
+  for (const model of modelDirs) {
+    const sum = loadModelSummary(model);
+    if (!sum) continue;
+    for (const a of sum.attempts as any[]) {
+      const cr0 = (a.case_results ?? [])[0] ?? {};
+      const stderr = cr0.stderr ?? "";
+      const exitCode = cr0.exit_code ?? 0;
+      const stdoutMatch = cr0.stdout_match ?? false;
+      const mode = a.passed ? "pass" : classifyFailure(stderr, exitCode, stdoutMatch);
+
+      if (!perTaskAttempts[a.task]) perTaskAttempts[a.task] = [];
+      perTaskAttempts[a.task].push({
+        model,
+        lang: a.lang,
+        passed: a.passed,
+        numCases: a.num_cases,
+        numPassed: a.num_passed,
+        failureMode: mode,
+        failureExcerpt: a.passed ? "" : cleanExcerpt(firstNonEmptyLine(stderr)).slice(0, 240),
+        apiMs: a.api_ms,
+        execMs: a.exec_ms,
+        promptTokens: a.prompt_tokens,
+        completionTokens: a.completion_tokens,
+      });
+    }
+  }
+
+  const out: any = { generatedAt: new Date().toISOString(), tasks: [] };
+
+  for (const t of tasks) {
+    const attempts = perTaskAttempts[t.slug] ?? [];
+    const spec = readSpecForTask(t.slug);
+    const prompt = readPromptForTask(t.slug);
+    const refs: Record<string, string> = {};
+    for (const lang of LANGS) {
+      refs[lang] = readRefForLang(t.slug, lang);
+    }
+
+    // Hardest lang: lowest pass rate across models for this task. Ties: zero > rust > go > ts > python.
+    const langPass: Record<string, { passed: number; total: number }> = {};
+    for (const lang of LANGS) langPass[lang] = { passed: 0, total: 0 };
+    for (const a of attempts) {
+      if (!langPass[a.lang]) langPass[a.lang] = { passed: 0, total: 0 };
+      langPass[a.lang].total += 1;
+      if (a.passed) langPass[a.lang].passed += 1;
+    }
+    let hardestLang = "";
+    let hardestRate = Infinity;
+    for (const lang of LANGS) {
+      const lp = langPass[lang];
+      if (lp.total === 0) continue;
+      const rate = lp.passed / lp.total;
+      if (
+        rate < hardestRate ||
+        (rate === hardestRate && HARDEST_TIEBREAK[lang] < (HARDEST_TIEBREAK[hardestLang] ?? Infinity))
+      ) {
+        hardestRate = rate;
+        hardestLang = lang;
+      }
+    }
+
+    // Most common failure mode across failing attempts.
+    const failureCounts: Record<string, number> = {};
+    for (const a of attempts) {
+      if (a.passed) continue;
+      failureCounts[a.failureMode] = (failureCounts[a.failureMode] ?? 0) + 1;
+    }
+    let mostCommonFailureMode = "";
+    let mostCommonCount = 0;
+    for (const [mode, count] of Object.entries(failureCounts)) {
+      if (count > mostCommonCount) {
+        mostCommonCount = count;
+        mostCommonFailureMode = mode;
+      }
+    }
+
+    out.tasks.push({
+      slug: t.slug,
+      title: t.title,
+      tags: t.tags,
+      difficulty: t.difficulty,
+      prompt,
+      acceptance: spec.acceptance ?? {},
+      refs,
+      attempts,
+      hardestLang,
+      mostCommonFailureMode,
+    });
+  }
+
+  out.tasks.sort((a: any, b: any) => a.slug.localeCompare(b.slug));
+  return out;
+}
+
 function buildModelsPayload(modelDirs: string[], tasks: { slug: string; title: string; tags: string[]; difficulty: string }[]) {
   const taskBySlug = new Map(tasks.map((t) => [t.slug, t]));
   const out: any = { generatedAt: new Date().toISOString(), models: [] };
@@ -218,6 +370,11 @@ function main() {
     const modelsPayload = buildModelsPayload(models, tasks);
     writeFileSync(modelsOut, JSON.stringify(modelsPayload, null, 2));
     console.log(`Wrote ${modelsOut}`);
+
+    const tasksOut = join(SITE_DATA_DIR, "agentlang-tasks.json");
+    const tasksPayload = buildTasksPayload(models, tasks);
+    writeFileSync(tasksOut, JSON.stringify(tasksPayload, null, 2));
+    console.log(`Wrote ${tasksOut}`);
   }
 
   // Print a quick table.
