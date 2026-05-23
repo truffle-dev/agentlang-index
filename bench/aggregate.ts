@@ -10,14 +10,24 @@
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from "fs";
+import { execSync } from "child_process";
 import { join } from "path";
 
 const REPO_ROOT = "/home/phantom/repos/agentlang-index";
 const RESULTS_DIR = join(REPO_ROOT, "bench", "results");
 const CORPUS_DIR = join(REPO_ROOT, "corpus");
+const ZERO_VENDOR_DIR = join(REPO_ROOT, "vendor", "zero");
 const SITE_DATA_DIR = "/home/phantom/repos/truffleagent-site/src/data";
 
 const LANGS = ["zero", "ts", "rust", "go", "python"];
+
+// Published OpenAI pricing (USD per 1M tokens). Used to surface per-run cost.
+// Update when model prices change.
+const PRICING: Record<string, { prompt: number; completion: number; provider: string }> = {
+  "gpt-5": { prompt: 5.0, completion: 15.0, provider: "OpenAI" },
+  "gpt-4o": { prompt: 2.5, completion: 10.0, provider: "OpenAI" },
+  "gpt-4o-mini": { prompt: 0.15, completion: 0.6, provider: "OpenAI" },
+};
 
 type Attempt = {
   model: string;
@@ -310,6 +320,152 @@ function buildModelsPayload(modelDirs: string[], tasks: { slug: string; title: s
   return out;
 }
 
+function captureHarnessSha(): string {
+  try {
+    return execSync("git rev-parse --short HEAD", { cwd: REPO_ROOT })
+      .toString()
+      .trim();
+  } catch (e: any) {
+    throw new Error(`Failed to capture harness SHA from ${REPO_ROOT}: ${e.message}`);
+  }
+}
+
+function readZeroVersion(): string {
+  // Prefer the CURRENT symlink target (the active vendored release), then fall
+  // back to walking the vendor dir for a versioned subdir with a version.txt.
+  const currentLink = join(ZERO_VENDOR_DIR, "CURRENT");
+  let versionDir = "";
+  try {
+    if (existsSync(currentLink)) {
+      // readlinkSync would resolve the link; existsSync(currentLink) is
+      // true for both symlink targets and regular dirs.
+      const target = execSync(`readlink ${currentLink}`).toString().trim();
+      if (target) versionDir = join(ZERO_VENDOR_DIR, target);
+    }
+  } catch {
+    // fall through
+  }
+  if (!versionDir || !existsSync(versionDir)) {
+    // Pick the first numerically-named subdir.
+    if (existsSync(ZERO_VENDOR_DIR)) {
+      const candidates = readdirSync(ZERO_VENDOR_DIR).filter((d) =>
+        /^\d+\.\d+\.\d+$/.test(d)
+      );
+      if (candidates.length > 0) {
+        candidates.sort();
+        versionDir = join(ZERO_VENDOR_DIR, candidates[candidates.length - 1]);
+      }
+    }
+  }
+  if (!versionDir) return "unknown";
+  const vfile = join(versionDir, "version.txt");
+  if (!existsSync(vfile)) return "unknown";
+  const raw = readFileSync(vfile, "utf8").split("\n")[0].trim();
+  // version.txt starts with e.g. "zero 0.1.2"; reduce to the bare semver.
+  const m = raw.match(/(\d+\.\d+\.\d+)/);
+  return m ? m[1] : raw;
+}
+
+function buildRunsPayload(
+  modelDirs: string[],
+  tasks: { slug: string; title: string; tags: string[]; difficulty: string }[],
+  harnessSha: string,
+  zeroVersion: string,
+) {
+  const taskBySlug = new Map(tasks.map((t) => [t.slug, t]));
+  const corpusSize = tasks.length;
+  const out: any = {
+    generatedAt: new Date().toISOString(),
+    harnessSha,
+    zeroVersion,
+    corpusSize,
+    runs: [] as any[],
+  };
+
+  for (const model of modelDirs) {
+    const sum = loadModelSummary(model);
+    if (!sum) continue;
+
+    const pricing = PRICING[model];
+    let costUSD: number | null = null;
+    let pricingNotAvailable = false;
+    if (pricing) {
+      costUSD =
+        (sum.totalPromptTokens / 1_000_000) * pricing.prompt +
+        (sum.totalCompletionTokens / 1_000_000) * pricing.completion;
+    } else {
+      pricingNotAvailable = true;
+    }
+
+    // Per-attempt cards: mirror the shape buildModelsPayload emits so the
+    // runs page can reuse the same cell renderer.
+    const failureCountsByLang: Record<string, Record<string, number>> = {};
+    for (const lang of LANGS)
+      failureCountsByLang[lang] = { compile: 0, runtime: 0, "wrong-output": 0, other: 0, pass: 0 };
+
+    const attempts: any[] = [];
+    let totalApiMs = 0;
+    let totalBuildMs = 0;
+    let totalExecMs = 0;
+    for (const a of sum.attempts as any[]) {
+      const cr0 = (a.case_results ?? [])[0] ?? {};
+      const stderr = cr0.stderr ?? "";
+      const exitCode = cr0.exit_code ?? 0;
+      const stdoutMatch = cr0.stdout_match ?? false;
+      const mode = a.passed ? "pass" : classifyFailure(stderr, exitCode, stdoutMatch);
+      failureCountsByLang[a.lang][mode] = (failureCountsByLang[a.lang][mode] ?? 0) + 1;
+      totalApiMs += a.api_ms ?? 0;
+      totalBuildMs += a.build_ms ?? 0;
+      totalExecMs += a.exec_ms ?? 0;
+
+      const taskMeta = taskBySlug.get(a.task);
+      attempts.push({
+        task: a.task,
+        taskTitle: taskMeta?.title ?? a.task,
+        lang: a.lang,
+        passed: a.passed,
+        numCases: a.num_cases,
+        numPassed: a.num_passed,
+        failureMode: mode,
+        failureExcerpt: a.passed ? "" : cleanExcerpt(firstNonEmptyLine(stderr)).slice(0, 240),
+        apiMs: a.api_ms,
+        execMs: a.exec_ms,
+        promptTokens: a.prompt_tokens,
+        completionTokens: a.completion_tokens,
+      });
+    }
+
+    const runId = `${harnessSha}-${model}`;
+    out.runs.push({
+      runId,
+      harnessSha,
+      model,
+      modelProvider: pricing?.provider ?? "unknown",
+      timestamp: sum.timestamp,
+      zeroVersion,
+      corpusSize,
+      command: `bun run bench/runner.ts --model ${model}`,
+      perLang: sum.perLang,
+      passRate: sum.passRate,
+      totalPassed: sum.totalPassed,
+      totalAttempts: sum.totalAttempts,
+      totalPromptTokens: sum.totalPromptTokens,
+      totalCompletionTokens: sum.totalCompletionTokens,
+      totalApiMs,
+      totalBuildMs,
+      totalExecMs,
+      costUSD,
+      pricingNotAvailable,
+      langTax: sum.langTax,
+      failureCountsByLang,
+      attempts,
+    });
+  }
+
+  out.runs.sort((a: any, b: any) => b.passRate - a.passRate);
+  return out;
+}
+
 function main() {
   const args = process.argv.slice(2);
   const toSite = args.includes("--site");
@@ -383,6 +539,14 @@ function main() {
     const tasksPayload = buildTasksPayload(models, tasks);
     writeFileSync(tasksOut, JSON.stringify(tasksPayload, null, 2));
     console.log(`Wrote ${tasksOut}`);
+
+    const harnessSha = captureHarnessSha();
+    const zeroVersion = readZeroVersion();
+    const runsOut = join(SITE_DATA_DIR, "agentlang-runs.json");
+    const runsPayload = buildRunsPayload(models, tasks, harnessSha, zeroVersion);
+    writeFileSync(runsOut, JSON.stringify(runsPayload, null, 2));
+    console.log(`Wrote ${runsOut}`);
+    console.log(`Harness SHA: ${harnessSha}, Zero: ${zeroVersion}, Runs: ${runsPayload.runs.length}`);
   }
 
   // Print a quick table.
