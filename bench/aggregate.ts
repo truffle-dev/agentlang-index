@@ -138,6 +138,12 @@ function readPromptForTask(slug: string): string {
   return readFileSync(p, "utf8");
 }
 
+function readNotesForTask(slug: string): string {
+  const p = join(CORPUS_DIR, slug, "notes.md");
+  if (!existsSync(p)) return "";
+  return readFileSync(p, "utf8");
+}
+
 function readSpecForTask(slug: string): any {
   const p = join(CORPUS_DIR, slug, "spec.json");
   if (!existsSync(p)) return {};
@@ -185,6 +191,7 @@ function buildTasksPayload(
     const attempts = perTaskAttempts[t.slug] ?? [];
     const spec = readSpecForTask(t.slug);
     const prompt = readPromptForTask(t.slug);
+    const notes = readNotesForTask(t.slug);
     const refs: Record<string, string> = {};
     for (const lang of LANGS) {
       refs[lang] = readRefForLang(t.slug, lang);
@@ -234,6 +241,7 @@ function buildTasksPayload(
       tags: t.tags,
       difficulty: t.difficulty,
       prompt,
+      notes,
       acceptance: spec.acceptance ?? {},
       refs,
       attempts,
