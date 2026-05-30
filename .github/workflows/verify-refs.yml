@@ -44,10 +44,19 @@ jobs:
       - name: Install tsx for TypeScript ref impls
         run: npm install -g tsx
 
-      - name: Clone, install, and build Zero v0.1.2 (matches vendor/zero/CURRENT/version.txt)
+      - name: Clone, install, and build Zero (pinned SHA past v0.1.2)
+        # vendor/zero/CURRENT/version.txt nominally reads 0.1.2, but the corpus's
+        # ref.zero files use language features (`[expr; size]` array syntax, std.http
+        # client) that landed on main after the v0.1.2 tag. The pin below is the
+        # exact SHA used to author the corpus locally: PR #79 merge on vercel-labs/zero.
+        # Refresh both this SHA and vendor/zero/CURRENT when the corpus is re-authored
+        # against a newer Zero.
+        env:
+          ZERO_PINNED_SHA: 2f182253d15c34335d70ab80aef6d7a794803fd6
         run: |
-          git clone --depth 1 --branch v0.1.2 https://github.com/vercel-labs/zero.git "${{ github.workspace }}/zero-src"
+          git clone https://github.com/vercel-labs/zero.git "${{ github.workspace }}/zero-src"
           cd "${{ github.workspace }}/zero-src"
+          git checkout "$ZERO_PINNED_SHA"
           npm install
           make -C native/zero-c
           test -x bin/zero
