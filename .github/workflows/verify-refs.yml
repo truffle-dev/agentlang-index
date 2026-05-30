@@ -41,12 +41,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev
 
-      - name: Clone and install Zero v0.1.2 (matches vendor/zero/CURRENT/version.txt)
+      - name: Install tsx for TypeScript ref impls
+        run: npm install -g tsx
+
+      - name: Clone, install, and build Zero v0.1.2 (matches vendor/zero/CURRENT/version.txt)
         run: |
           git clone --depth 1 --branch v0.1.2 https://github.com/vercel-labs/zero.git "${{ github.workspace }}/zero-src"
           cd "${{ github.workspace }}/zero-src"
           npm install
+          make -C native/zero-c
           test -x bin/zero
+          ./bin/zero --version
 
       - name: Run verify.sh across every corpus task
         env:
