@@ -126,7 +126,7 @@ check_zero_argv() {
 
 # Zero - argv[1]=P, argv[2]=T
 if want_lang zero; then
-  ZERO=/home/phantom/repos/zero/bin/zero
+  ZERO="${ZERO:-/home/phantom/repos/zero/bin/zero}"
   if [[ -x "$ZERO" ]]; then
     check_zero_argv "$ZERO"
   else

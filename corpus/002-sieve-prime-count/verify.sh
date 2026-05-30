@@ -84,7 +84,7 @@ check_lang() {
 
 # Zero - argv[1]
 if want_lang zero; then
-  ZERO=/home/phantom/repos/zero/bin/zero
+  ZERO="${ZERO:-/home/phantom/repos/zero/bin/zero}"
   if [[ -x "$ZERO" ]]; then
     check_lang zero argv "$ZERO run ref.zero %N%"
   else
