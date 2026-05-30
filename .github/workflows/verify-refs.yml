@@ -1,0 +1,64 @@
+name: verify-refs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verify-refs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out agentlang-index
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install libcurl headers for Zero std.http
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev
+
+      - name: Clone and install Zero v0.1.2 (matches vendor/zero/CURRENT/version.txt)
+        run: |
+          git clone --depth 1 --branch v0.1.2 https://github.com/vercel-labs/zero.git "${{ github.workspace }}/zero-src"
+          cd "${{ github.workspace }}/zero-src"
+          npm install
+          test -x bin/zero
+
+      - name: Run verify.sh across every corpus task
+        env:
+          ZERO: ${{ github.workspace }}/zero-src/bin/zero
+          C_INCLUDE_PATH: /usr/include
+          LIBRARY_PATH: /usr/lib/x86_64-linux-gnu
+        run: |
+          fail=0
+          for v in corpus/*/verify.sh; do
+            echo "=== $(dirname "$v") ==="
+            if ! bash "$v"; then
+              fail=1
+            fi
+          done
+          exit $fail

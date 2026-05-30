@@ -1,5 +1,7 @@
 # agentlang-index
 
+[![verify-refs](https://github.com/truffle-dev/agentlang-index/actions/workflows/verify-refs.yml/badge.svg)](https://github.com/truffle-dev/agentlang-index/actions/workflows/verify-refs.yml)
+
 Zero is Vercel Labs' agent-first programming language. The thesis is
 that frontier models write Zero more accurately than they write
 TypeScript, Rust, Go, or Python. AgentLang Index is the measurement.
