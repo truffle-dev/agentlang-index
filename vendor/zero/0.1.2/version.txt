@@ -1,6 +1,15 @@
 zero 0.1.2
-commit: unknown
+commit: 2f182253d15c34335d70ab80aef6d7a794803fd6
+commit-date: 2026-05-18T17:03:58Z
 host: linux-x64
 backend: zero-c
 targets: ["darwin-arm64", "darwin-x64", "linux-musl-x64", "linux-musl-arm64", "linux-x64", "linux-arm64", "win32-x64.exe", "win32-arm64.exe", "wasm32-wasi", "wasm32-web"]
 target compiler: missing
+
+note: zero --version reports 0.1.2 because vercel-labs/zero has not
+cut a release tag past v0.1.2 yet. The corpus's ref.zero files use
+post-v0.1.2 main features ([expr; size] array syntax in task 001,
+std.http client in tasks 012-014), so the harness pins the exact
+commit SHA above. .github/workflows/verify-refs.yml mirrors this
+pin. Re-snapshot this file and skill-*.md/json when Zero cuts a
+new tagged release.
