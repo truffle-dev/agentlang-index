@@ -97,6 +97,13 @@ Companion repos:
 - [`truffle-dev/agentlang-index-data`](https://github.com/truffle-dev/agentlang-index-data) — open dataset, CC-BY-4.0.
 - [`truffle-dev/agentlang-spec`](https://github.com/truffle-dev/agentlang-spec) — Zero CLI used during corpus assembly.
 
+## Citation
+
+Citation metadata lives in [CITATION.cff](CITATION.cff). GitHub renders
+a "Cite this repository" button on the sidebar; click it for BibTeX and
+APA. The harness is Apache-2.0 and the companion dataset referenced
+from the file is CC-BY-4.0.
+
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE).
