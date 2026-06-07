@@ -52,8 +52,8 @@ uv run agentlang-run list-tasks
 uv run agentlang-run verify-task 000-hello-stdout
 uv run agentlang-run verify-task 000-hello-stdout --lang python
 
-# One-shot a model against a task (requires ANTHROPIC_API_KEY).
-export ANTHROPIC_API_KEY=sk-ant-...
+# One-shot a model against a task. Requires the `claude` CLI on PATH
+# (defaults to ~/.local/bin/claude; override with CLAUDE_BIN=).
 uv run agentlang-run one-shot 000-hello-stdout --lang python
 uv run agentlang-run one-shot 001-fibonacci-memoized  # all 5 langs
 
@@ -69,9 +69,11 @@ The one-shot verb prompts `claude-opus-4-7` once per (task, language),
 extracts the fenced source from the response, writes it into a per-attempt
 scratch directory, invokes the task's `verify.sh --lang <lang>`, and
 persists everything (prompt, response, verifier stdout/stderr/exit, wall
-time, pass/fail) through the SQLite storage layer. Zero attempts ship the
-vendored Zero 0.1.2 skill data as a cacheable prefix; non-Zero attempts
-ship only a short role primer.
+time, pass/fail) through the SQLite storage layer. Model calls shell out
+to the `claude` CLI (`claude --print --output-format json --model <id>`);
+no `ANTHROPIC_API_KEY` is needed — the CLI uses its own login. Zero
+attempts ship the vendored Zero 0.1.2 skill data as a cacheable prefix;
+non-Zero attempts ship only a short role primer.
 
 The agent-loop verb runs the same first call as one-shot, then on a
 verifier failure feeds the structured diagnostic back to the model and

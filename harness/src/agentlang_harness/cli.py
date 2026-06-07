@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import os
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Sequence
 
 from .agent_loop import DEFAULT_MAX_ITERS, AgentLoopRunner
+from .providers.claude_cli import ClaudeCliClient
 from .runner import (
     DEFAULT_MAX_TOKENS,
     DEFAULT_MODEL,
@@ -97,15 +97,8 @@ def _cmd_verify_task(args: argparse.Namespace) -> int:
     return 0 if all_passed else 1
 
 
-def _make_anthropic_client() -> object:
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise SystemExit(
-            "ANTHROPIC_API_KEY is not set. Export it before running one-shot."
-        )
-    from anthropic import Anthropic
-
-    return Anthropic(api_key=api_key)
+def _make_claude_cli_client() -> object:
+    return ClaudeCliClient()
 
 
 @dataclass
@@ -184,7 +177,7 @@ def _cmd_one_shot(args: argparse.Namespace) -> int:
     if not languages:
         print(f"no matching languages for task {args.task!r}", file=sys.stderr)
         return 2
-    client = _make_anthropic_client()
+    client = _make_claude_cli_client()
     with Storage(args.db) as store:
         run_id = store.start_run(
             model=args.model,
@@ -231,7 +224,7 @@ def _cmd_agent_loop(args: argparse.Namespace) -> int:
         fixtures = _load_mock_fixtures(args.mock_fixture_dir, args.task, languages)
         client: Any = _MockClient(fixtures=fixtures)
     else:
-        client = _make_anthropic_client()
+        client = _make_claude_cli_client()
     zero_binary = args.zero_binary if args.zero_binary.exists() else None
     with Storage(args.db) as store:
         run_id = store.start_run(
