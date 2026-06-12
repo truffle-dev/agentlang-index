@@ -80,7 +80,7 @@ class OneShotRunner:
         system_blocks = build_system_blocks(
             language=language, zero_vendor_dir=self.zero_vendor_dir
         )
-        user_text = render_user_prompt(prompt_template, language)
+        user_text = render_user_prompt(prompt_template, language, self.corpus_dir)
         messages = [{"role": "user", "content": [{"type": "text", "text": user_text}]}]
         return system_blocks, messages, user_text
 

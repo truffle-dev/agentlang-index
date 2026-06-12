@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "placeholder": "{language_scaffold}",
+  "scaffolds": {
+    "zero": "Write a single Zero 0.1.2 source file named `ref.zero`. Define `pub fun main(world: World) -> Void raises`. Use `world.out.write` for stdout and `world.err.write` for stderr. Zero 0.1.2's direct ELF64 backend exposes no stdin capability; if the task requires input, read it from `std.args.get(1)` instead. Fixed-array element types are restricted to i32, u32, and u8; emulate larger integer memos with parallel u32 arrays. Return only the source inside a single ```zero fenced code block.",
+    "ts": "Write a single TypeScript source file named `ref.ts`. Read from `process.stdin` if the task requires input and write the answer to `process.stdout`. Keep type annotations minimal so the same source runs under tsx, bun, or plain node. Return only the source inside a single ```ts fenced code block.",
+    "rust": "Write a single Rust source file named `ref.rs` that compiles with `rustc ref.rs -o prog` (no Cargo manifest used at runtime). Read from `std::io::stdin` if input is required and write to `std::io::stdout`. Prefer `print!` over `println!` when the spec is byte-exact. Return only the source inside a single ```rust fenced code block.",
+    "go": "Write a single Go source file named `ref.go` in `package main`. Read stdin via `bufio.NewReader(os.Stdin)` if input is required. Use `fmt.Print` (not `fmt.Println`) when the spec is byte-exact. The harness runs `go run ref.go`. Return only the source inside a single ```go fenced code block.",
+    "python": "Write a single Python 3.12 source file named `ref.py`. Use `sys.stdin.read()` or `input()` for input and `sys.stdout.write` for output (not `print`) when the spec is byte-exact. The harness runs `python3 ref.py`. Return only the source inside a single ```python fenced code block."
+  }
+}

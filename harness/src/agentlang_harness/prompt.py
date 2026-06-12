@@ -2,66 +2,62 @@
 
 from __future__ import annotations
 
+import json
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 from .types import Language
 
-# Per-language scaffold blocks injected at the `{language_scaffold}` site
-# in each task's prompt.md. They tell the model what file to produce, what
-# the runtime contract is, and the language-specific gotchas the harness
-# expects the model to respect (e.g. Zero 0.1.2 has no stdin).
-_SCAFFOLDS: dict[Language, str] = {
-    "zero": (
-        "Write a single Zero 0.1.2 source file named `ref.zero`. Define "
-        "`pub fun main(world: World) -> Void raises`. Use `world.out.write` "
-        "for stdout and `world.err.write` for stderr. Zero 0.1.2's direct "
-        "ELF64 backend exposes no stdin capability; if the task requires "
-        "input, read it from `std.args.get(1)` instead. Fixed-array element "
-        "types are restricted to i32, u32, and u8; emulate larger integer "
-        "memos with parallel u32 arrays. Return only the source inside a "
-        "single ```zero fenced code block."
-    ),
-    "ts": (
-        "Write a single TypeScript source file named `ref.ts`. Read from "
-        "`process.stdin` if the task requires input and write the answer "
-        "to `process.stdout`. Keep type annotations minimal so the same "
-        "source runs under tsx, bun, or plain node. Return only the source "
-        "inside a single ```ts fenced code block."
-    ),
-    "rust": (
-        "Write a single Rust source file named `ref.rs` that compiles with "
-        "`rustc ref.rs -o prog` (no Cargo manifest used at runtime). Read "
-        "from `std::io::stdin` if input is required and write to "
-        "`std::io::stdout`. Prefer `print!` over `println!` when the spec "
-        "is byte-exact. Return only the source inside a single ```rust "
-        "fenced code block."
-    ),
-    "go": (
-        "Write a single Go source file named `ref.go` in `package main`. "
-        "Read stdin via `bufio.NewReader(os.Stdin)` if input is required. "
-        "Use `fmt.Print` (not `fmt.Println`) when the spec is byte-exact. "
-        "The harness runs `go run ref.go`. Return only the source inside "
-        "a single ```go fenced code block."
-    ),
-    "python": (
-        "Write a single Python 3.12 source file named `ref.py`. Use "
-        "`sys.stdin.read()` or `input()` for input and `sys.stdout.write` "
-        "for output (not `print`) when the spec is byte-exact. The harness "
-        "runs `python3 ref.py`. Return only the source inside a single "
-        "```python fenced code block."
-    ),
-}
+# Per-language scaffold blocks are injected at the `{language_scaffold}`
+# site in each task's prompt.md. They tell the model what file to produce,
+# what the runtime contract is, and the language-specific gotchas the
+# harness expects the model to respect (e.g. Zero 0.1.2 has no stdin).
+#
+# The canonical strings live in `corpus/scaffolds.json` so the corpus is
+# self-describing and external consumers (e.g. the agentlang-spec CLI's
+# `emit` verb) read the same file instead of carrying a copy.
+DEFAULT_SCAFFOLDS_PATH = (
+    Path(__file__).resolve().parents[3] / "corpus" / "scaffolds.json"
+)
 
 
-def scaffold_for(language: Language) -> str:
-    """Return the per-language scaffold string injected into the prompt."""
-    return _SCAFFOLDS[language]
+@lru_cache(maxsize=None)
+def _load_scaffolds(scaffolds_path: Path) -> dict[str, str]:
+    try:
+        doc = json.loads(scaffolds_path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            f"scaffolds file not found: {scaffolds_path} — the corpus must "
+            "ship a scaffolds.json (see corpus/scaffolds.json on main)"
+        ) from None
+    scaffolds = doc.get("scaffolds")
+    if not isinstance(scaffolds, dict):
+        raise ValueError(f"malformed scaffolds file (no 'scaffolds' map): {scaffolds_path}")
+    return scaffolds
 
 
-def render_user_prompt(prompt_template: str, language: Language) -> str:
+def _scaffolds_path_for(corpus_dir: Path | None) -> Path:
+    if corpus_dir is None:
+        return DEFAULT_SCAFFOLDS_PATH
+    return corpus_dir / "scaffolds.json"
+
+
+def scaffold_for(language: Language, corpus_dir: Path | None = None) -> str:
+    """Return the per-language scaffold string injected into the prompt.
+
+    Reads `<corpus_dir>/scaffolds.json` (default: this repo's corpus).
+    """
+    return _load_scaffolds(_scaffolds_path_for(corpus_dir))[language]
+
+
+def render_user_prompt(
+    prompt_template: str, language: Language, corpus_dir: Path | None = None
+) -> str:
     """Substitute the `{language_scaffold}` placeholder in a task prompt."""
-    return prompt_template.replace("{language_scaffold}", scaffold_for(language))
+    return prompt_template.replace(
+        "{language_scaffold}", scaffold_for(language, corpus_dir)
+    )
 
 
 def zero_skill_blocks(vendor_dir: Path) -> list[dict[str, Any]]:

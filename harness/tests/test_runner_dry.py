@@ -95,6 +95,25 @@ def test_render_user_prompt_substitutes_scaffold(corpus_dir: Path) -> None:
         assert scaffold_for(lang) in rendered
 
 
+def test_scaffolds_load_from_corpus_json(corpus_dir: Path, tmp_path: Path) -> None:
+    """Scaffolds come from corpus/scaffolds.json and cover every language."""
+    import json
+
+    doc = json.loads((corpus_dir / "scaffolds.json").read_text(encoding="utf-8"))
+    assert doc["placeholder"] == "{language_scaffold}"
+    assert sorted(doc["scaffolds"]) == sorted(LANGUAGES)
+    for lang in LANGUAGES:
+        assert scaffold_for(lang, corpus_dir) == doc["scaffolds"][lang]
+    # An explicit corpus_dir override reads that corpus's file.
+    alt = {"version": 1, "scaffolds": {lang: f"ALT-{lang}" for lang in LANGUAGES}}
+    (tmp_path / "scaffolds.json").write_text(json.dumps(alt), encoding="utf-8")
+    assert scaffold_for("zero", tmp_path) == "ALT-zero"
+    assert render_user_prompt("x {language_scaffold} y", "go", tmp_path) == "x ALT-go y"
+    # A corpus without scaffolds.json fails with a pointed error.
+    with pytest.raises(FileNotFoundError, match="scaffolds.json"):
+        scaffold_for("zero", tmp_path / "missing")
+
+
 def test_extract_fenced_code_prefers_language_tag() -> None:
     """A ```python fence beats a tag-less fence when extracting a Python answer."""
     response = (
