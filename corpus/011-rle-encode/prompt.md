@@ -46,3 +46,7 @@ must exit 0.
 ## Token budget
 
 1600 tokens.
+
+## Language scaffold
+
+{language_scaffold}

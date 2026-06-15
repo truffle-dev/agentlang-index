@@ -77,3 +77,7 @@ to `/` with 200 OK, and to any other path with 200 OK. References
 target `http://localhost:18012/...` for the happy-path cases. For
 the transport-failure cases the URL points at a name that does not
 resolve, so the reference must surface the failure as `error\n`.
+
+## Language scaffold
+
+{language_scaffold}

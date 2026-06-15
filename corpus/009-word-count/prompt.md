@@ -37,3 +37,7 @@ and the process must exit 0.
 ## Token budget
 
 1200 tokens.
+
+## Language scaffold
+
+{language_scaffold}

@@ -116,3 +116,7 @@ The verifier starts a local Python HTTP fixture server on port
 References target `http://127.0.0.1:18013/<path>` for the
 happy-path and structured-failure cases. The transport-failure
 case points at a name that does not resolve.
+
+## Language scaffold
+
+{language_scaffold}

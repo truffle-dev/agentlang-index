@@ -93,3 +93,7 @@ from `argv[1]` and the plaintext from `argv[2]`; values are
 interpreted exactly as the two stdin lines for other languages
 (line 1 trimmed, line 2 verbatim). Invoked as
 `zero run zero -- <shift> <plaintext>`.
+
+## Language scaffold
+
+{language_scaffold}

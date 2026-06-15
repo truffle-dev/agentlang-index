@@ -50,3 +50,7 @@ multi-file project under `zero/`: `zero.json` is the package manifest,
 reads the plaintext from `argv[1]`; the value is interpreted exactly
 as the stdin line for other languages (taken verbatim). Invoked as
 `zero run zero -- <plaintext>`.
+
+## Language scaffold
+
+{language_scaffold}

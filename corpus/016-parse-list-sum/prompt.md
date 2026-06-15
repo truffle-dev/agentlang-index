@@ -67,3 +67,7 @@ Zero 0.1.2 has no exposed stdin capability. The Zero reference reads
 `N` from `argv[1]` and the `N` values from `argv[2]`, `argv[3]`, etc.;
 values are interpreted exactly as the corresponding stdin lines for
 other languages.
+
+## Language scaffold
+
+{language_scaffold}

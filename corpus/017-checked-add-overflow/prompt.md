@@ -71,3 +71,7 @@ Output: `error\n` (parse fails on first line)
 Zero 0.1.2 has no exposed stdin capability. The Zero reference
 reads `a` from `argv[1]` and `b` from `argv[2]`; values are
 interpreted exactly as the two stdin lines for other languages.
+
+## Language scaffold
+
+{language_scaffold}
