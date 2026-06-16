@@ -149,6 +149,18 @@ Output ONLY the source code, fenced in a single \`\`\`${lang}-tagged code block.
 If the task is a multi-file Zero project, output ALL files separated by file markers like \`=== src/main.0 ===\` (a header line) followed by the file contents. Use this only for Zero multi-file projects; single-file languages emit one code block.`;
 }
 
+// The `{language_scaffold}` marker is the Python harness's per-language
+// substitution site (it reads corpus/scaffolds.json). This TS runner conveys
+// the same per-language contract through LANG_CALL_NOTES in the system prompt,
+// so the marker is dead weight here: strip its section rather than leak the
+// literal token into the model prompt. Tasks 000-018 keep the section as the
+// final block of prompt.md; 019 too after the 2026-06-15 corpus fix.
+function stripScaffoldMarker(md: string): string {
+  return md
+    .replace(/\n*## Language scaffold[ \t]*\n+\{language_scaffold\}\s*$/, "\n")
+    .trimEnd();
+}
+
 function buildUserPrompt(task: Task, lang: string): string {
   let convention = "";
   if (lang === "zero" && task.hasZeroProject) {
@@ -156,7 +168,7 @@ function buildUserPrompt(task: Task, lang: string): string {
   } else if (lang === "zero") {
     convention = `\n\n## Single-file Zero layout\n\nWrite a single-file Zero program (ref.zero). Read arguments from std.args (no stdin available). Invoked as: zero run ref.zero <argv...>\n`;
   }
-  return `## Spec\n\n${task.promptMd}${convention}`;
+  return `## Spec\n\n${stripScaffoldMarker(task.promptMd)}${convention}`;
 }
 
 async function callOpenAI(
@@ -651,12 +663,14 @@ function parseArgs(): {
   tasks: string[];
   langs: string[];
   skipExisting: boolean;
+  printPrompt: boolean;
 } {
   const argv = process.argv.slice(2);
   let models: string[] = [];
   let tasks: string[] = [];
   let langs: string[] = ["zero", "ts", "rust", "go", "python"];
   let skipExisting = false;
+  let printPrompt = false;
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--model") {
       models = [argv[++i]];
@@ -672,9 +686,11 @@ function parseArgs(): {
       langs = argv[++i].split(",");
     } else if (argv[i] === "--skip-existing") {
       skipExisting = true;
+    } else if (argv[i] === "--print-prompt") {
+      printPrompt = true;
     }
   }
-  if (models.length === 0) {
+  if (models.length === 0 && !printPrompt) {
     console.error("Error: --model or --models required");
     process.exit(2);
   }
@@ -688,16 +704,33 @@ function parseArgs(): {
       return matches.length > 0 ? matches : [t];
     });
   }
-  return { models, tasks, langs, skipExisting };
+  return { models, tasks, langs, skipExisting, printPrompt };
 }
 
 async function main() {
+  const { models, tasks, langs, skipExisting, printPrompt } = parseArgs();
+  if (printPrompt) {
+    // Dry run: assemble and print the exact system + user prompts without
+    // calling the API. Useful for auditing prompt parity against the harness.
+    for (const taskSlug of tasks) {
+      const task = loadTask(taskSlug);
+      for (const lang of langs) {
+        if (!task.spec.languages?.includes(lang)) continue;
+        console.log(`===== ${taskSlug} / ${lang} =====`);
+        console.log("----- system -----");
+        console.log(buildSystemPrompt(task, lang));
+        console.log("----- user -----");
+        console.log(buildUserPrompt(task, lang));
+        console.log("");
+      }
+    }
+    return;
+  }
   const apiKey = (process.env.OPENAI_API_KEY ?? "").trim();
   if (!apiKey) {
     console.error("Error: OPENAI_API_KEY not set");
     process.exit(2);
   }
-  const { models, tasks, langs, skipExisting } = parseArgs();
   mkdirSync(RESULTS_DIR, { recursive: true });
 
   console.log(`Models: ${models.join(", ")}`);

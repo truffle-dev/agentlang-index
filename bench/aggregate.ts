@@ -145,7 +145,13 @@ function readRefForLang(slug: string, lang: string): string {
 function readPromptForTask(slug: string): string {
   const p = join(CORPUS_DIR, slug, "prompt.md");
   if (!existsSync(p)) return "";
-  return readFileSync(p, "utf8");
+  // The `{language_scaffold}` marker is the Python harness's per-language
+  // substitution site (corpus/scaffolds.json). It is not meaningful when the
+  // prompt is rendered for a reader, so strip its trailing section rather than
+  // surface the literal token on the public per-task pages.
+  return readFileSync(p, "utf8")
+    .replace(/\n*## Language scaffold[ \t]*\n+\{language_scaffold\}\s*$/, "\n")
+    .trimEnd();
 }
 
 function readNotesForTask(slug: string): string {
