@@ -1,0 +1,37 @@
+name: harness-tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: harness-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: harness
+    steps:
+      - name: Check out agentlang-index
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      # The suite is hermetic: the claude-CLI and agent-loop tests stub the
+      # subprocess, so no model key or network access is needed. test_scaffolds.py
+      # reads corpus/*/prompt.md and corpus/scaffolds.json from the checkout, so it
+      # guards the prompt single-source-of-truth against silent drift on every push.
+      - name: Run harness pytest
+        run: uv run --extra test pytest -q
