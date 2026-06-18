@@ -171,12 +171,46 @@ def _load_mock_fixtures(
     return fixtures
 
 
+def _print_one_shot_prompts(
+    args: argparse.Namespace,
+    spec: Any,
+    template: str,
+    languages: list[str],
+) -> int:
+    """Print the exact system + user prompt for each (task, language) pair.
+
+    Reuses OneShotRunner.build_messages so the preview cannot drift from what
+    a live one-shot call would send. build_messages reads only corpus_dir and
+    zero_vendor_dir, so no model client or storage handle is needed here.
+    """
+    runner = OneShotRunner(
+        storage=None,  # type: ignore[arg-type]  # build_messages never reads storage
+        client=None,  # type: ignore[arg-type]  # ... nor the client
+        corpus_dir=args.corpus_dir,
+        zero_vendor_dir=args.vendor_zero_dir,
+        model=args.model,
+        max_tokens=args.max_tokens,
+    )
+    for lang in languages:
+        system_blocks, _messages, user_text = runner.build_messages(spec, template, lang)
+        system_text = "\n\n".join(block["text"] for block in system_blocks)
+        print(f"===== {args.task} :: {lang} =====")
+        print("----- system -----")
+        print(system_text)
+        print("----- user -----")
+        print(user_text)
+        print()
+    return 0
+
+
 def _cmd_one_shot(args: argparse.Namespace) -> int:
-    spec, _, _ = load_task_spec(args.corpus_dir, args.task)
+    spec, _, template = load_task_spec(args.corpus_dir, args.task)
     languages = resolve_languages(spec, args.languages)
     if not languages:
         print(f"no matching languages for task {args.task!r}", file=sys.stderr)
         return 2
+    if args.dry_run:
+        return _print_one_shot_prompts(args, spec, template, languages)
     client = _make_claude_cli_client()
     with Storage(args.db) as store:
         run_id = store.start_run(
@@ -333,6 +367,14 @@ def build_parser() -> argparse.ArgumentParser:
         help=(
             "directory of vendored Zero skill markdown files; "
             f"default: {DEFAULT_VENDOR_ZERO_DIR}"
+        ),
+    )
+    p_one.add_argument(
+        "--dry-run",
+        action="store_true",
+        help=(
+            "print the assembled system + user prompt for each (task, language) "
+            "and exit, without calling the model or opening the database"
         ),
     )
     p_one.set_defaults(func=_cmd_one_shot)

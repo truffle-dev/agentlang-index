@@ -57,6 +57,10 @@ uv run agentlang-run verify-task 000-hello-stdout --lang python
 uv run agentlang-run one-shot 000-hello-stdout --lang python
 uv run agentlang-run one-shot 001-fibonacci-memoized  # all 5 langs
 
+# --dry-run prints the exact system + user prompt for each (task, language)
+# and exits, with no model call, no database, and no network.
+uv run agentlang-run one-shot 001-fibonacci-memoized --lang zero --dry-run
+
 # Agent-loop: model writes, verifier reports, model fixes, up to --max-iters times.
 uv run agentlang-run agent-loop 000-hello-stdout --lang python
 uv run agentlang-run agent-loop 005-balanced-parens --max-iters 8

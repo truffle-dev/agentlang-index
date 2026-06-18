@@ -228,3 +228,47 @@ def test_languages_constant_matches_corpus_declarations(corpus_dir: Path) -> Non
     for spec in list_tasks(corpus_dir):
         for lang in spec.languages:
             assert lang in LANGUAGES
+
+
+def test_one_shot_dry_run_prints_prompts_without_calling_model(
+    corpus_dir: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """`one-shot --dry-run` prints the assembled prompt for each language and
+    exits 0 without a model call, a database, or any leftover scaffold marker.
+
+    Drives the real CLI entrypoint so the preview is exercised through the same
+    OneShotRunner.build_messages path a live call uses. The --db default is never
+    touched because the dry-run returns before storage is opened; pointing it at a
+    fresh tmp path and asserting the file is absent proves that.
+    """
+    from agentlang_harness.cli import main
+
+    db_path = tmp_path / "should-not-exist.db"
+    ret = main(
+        [
+            "one-shot",
+            "001-fibonacci-memoized",
+            "--lang",
+            "zero",
+            "--lang",
+            "python",
+            "--corpus-dir",
+            str(corpus_dir),
+            "--db",
+            str(db_path),
+            "--dry-run",
+        ]
+    )
+    assert ret == 0
+    assert not db_path.exists()
+
+    out = capsys.readouterr().out
+    assert "===== 001-fibonacci-memoized :: zero =====" in out
+    assert "===== 001-fibonacci-memoized :: python =====" in out
+    # The placeholder must be substituted, never emitted literally.
+    assert "{language_scaffold}" not in out
+    # The canonical per-language scaffold text is what got substituted in.
+    assert scaffold_for("zero", corpus_dir) in out
+    assert scaffold_for("python", corpus_dir) in out
+    # No run was finalized, so no run_id/db summary line is printed.
+    assert "run_id=" not in out
