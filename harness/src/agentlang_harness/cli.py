@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 from .agent_loop import DEFAULT_MAX_ITERS, AgentLoopRunner
-from .providers.claude_cli import ClaudeCliClient
+from .providers import DEFAULT_PROVIDER, available_providers, make_client
 from .runner import (
     DEFAULT_MAX_TOKENS,
     DEFAULT_MODEL,
@@ -97,8 +97,18 @@ def _cmd_verify_task(args: argparse.Namespace) -> int:
     return 0 if all_passed else 1
 
 
-def _make_claude_cli_client() -> object:
-    return ClaudeCliClient()
+def _make_client(provider: str) -> object:
+    """Resolve a provider name to a client, exiting cleanly on an unknown name.
+
+    The CLI restricts --provider with argparse `choices`, so this guard only
+    fires when a caller passes a name programmatically; it keeps make_client's
+    error surface from leaking as an uncaught ValueError.
+    """
+    try:
+        return make_client(provider)
+    except ValueError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        raise SystemExit(2) from None
 
 
 @dataclass
@@ -211,7 +221,7 @@ def _cmd_one_shot(args: argparse.Namespace) -> int:
         return 2
     if args.dry_run:
         return _print_one_shot_prompts(args, spec, template, languages)
-    client = _make_claude_cli_client()
+    client = _make_client(args.provider)
     with Storage(args.db) as store:
         run_id = store.start_run(
             model=args.model,
@@ -258,7 +268,7 @@ def _cmd_agent_loop(args: argparse.Namespace) -> int:
         fixtures = _load_mock_fixtures(args.mock_fixture_dir, args.task, languages)
         client: Any = _MockClient(fixtures=fixtures)
     else:
-        client = _make_claude_cli_client()
+        client = _make_client(args.provider)
     zero_binary = args.zero_binary if args.zero_binary.exists() else None
     with Storage(args.db) as store:
         run_id = store.start_run(
@@ -344,6 +354,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="restrict to one or more languages (repeatable; default: all in spec)",
     )
     p_one.add_argument(
+        "--provider",
+        default=DEFAULT_PROVIDER,
+        choices=available_providers(),
+        help=f"model-call provider (default: {DEFAULT_PROVIDER})",
+    )
+    p_one.add_argument(
         "--model",
         default=DEFAULT_MODEL,
         help=f"Anthropic model id (default: {DEFAULT_MODEL})",
@@ -391,6 +407,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="append",
         choices=LANGUAGES,
         help="restrict to one or more languages (repeatable; default: all in spec)",
+    )
+    p_loop.add_argument(
+        "--provider",
+        default=DEFAULT_PROVIDER,
+        choices=available_providers(),
+        help=f"model-call provider (default: {DEFAULT_PROVIDER})",
     )
     p_loop.add_argument(
         "--model",

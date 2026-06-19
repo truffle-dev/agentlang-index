@@ -67,6 +67,11 @@ uv run agentlang-run agent-loop 005-balanced-parens --max-iters 8
 
 # --mock replays canned fixtures instead of calling the API (used by tests).
 uv run agentlang-run agent-loop 000-hello-stdout --lang python --mock
+
+# --provider selects the model-call backend (default: claude-cli). The
+# registry lives in providers/__init__.py; cloud providers register there
+# once their keys are provisioned.
+uv run agentlang-run one-shot 001-fibonacci-memoized --provider claude-cli
 ```
 
 The one-shot verb prompts `claude-opus-4-7` once per (task, language),
