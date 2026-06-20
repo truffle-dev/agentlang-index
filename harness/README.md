@@ -72,6 +72,14 @@ uv run agentlang-run agent-loop 000-hello-stdout --lang python --mock
 # registry lives in providers/__init__.py; cloud providers register there
 # once their keys are provisioned.
 uv run agentlang-run one-shot 001-fibonacci-memoized --provider claude-cli
+
+# openai-compatible drives any endpoint that speaks the OpenAI chat schema
+# (hosted DeepSeek/Together/Fireworks/Groq, or a local Ollama server). It
+# reads OPENAI_COMPAT_BASE_URL and an optional OPENAI_COMPAT_API_KEY from the
+# environment; local servers like Ollama need no key.
+OPENAI_COMPAT_BASE_URL=http://ollama:11434/v1 \
+  uv run agentlang-run one-shot 001-fibonacci-memoized \
+  --provider openai-compatible --model qwen2.5-coder:0.5b
 ```
 
 The one-shot verb prompts `claude-opus-4-7` once per (task, language),

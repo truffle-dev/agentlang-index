@@ -16,15 +16,19 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from .claude_cli import ClaudeCliClient
+from .openai_compatible import OpenAICompatibleClient
 
 DEFAULT_PROVIDER = "claude-cli"
 
 # Provider name -> client factory. Each factory returns an object satisfying
-# the AnthropicClient Protocol in runner.py. claude-cli is the only key-free
-# provider today (it shells out to the local `claude` CLI); cloud providers
-# land here once their keys are provisioned.
+# the AnthropicClient Protocol in runner.py. claude-cli is key-free (it shells
+# out to the local `claude` CLI). openai-compatible drives any endpoint that
+# speaks the OpenAI chat schema (hosted DeepSeek/Together/Fireworks/Groq, or a
+# local Ollama server); it reads OPENAI_COMPAT_BASE_URL and an optional
+# OPENAI_COMPAT_API_KEY from the environment at construction.
 PROVIDER_FACTORIES: dict[str, Callable[[], object]] = {
     "claude-cli": ClaudeCliClient,
+    "openai-compatible": OpenAICompatibleClient,
 }
 
 
