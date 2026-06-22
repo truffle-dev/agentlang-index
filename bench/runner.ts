@@ -20,6 +20,15 @@
  *   bun run bench/runner.ts --model gpt-4o-mini --task 000-hello-stdout
  *   bun run bench/runner.ts --model gpt-5.2-codex --lang python
  *   bun run bench/runner.ts --models gpt-5.5,gpt-4o-mini --tasks 000,001,002
+ *   bun run bench/runner.ts --provider claude-cli --model opus --task 000
+ *
+ * Providers:
+ *   --provider openai      (default) calls the OpenAI Chat Completions API;
+ *                          reads OPENAI_API_KEY.
+ *   --provider claude-cli  shells out to the local `claude` CLI
+ *                          (--print --output-format json); needs no API key.
+ *   When --provider is omitted it is inferred from the model names: models
+ *   beginning claude/opus/sonnet/haiku default to claude-cli, else openai.
  */
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "fs";
@@ -32,6 +41,9 @@ const CORPUS_DIR = join(REPO_ROOT, "corpus");
 const BENCH_DIR = join(REPO_ROOT, "bench");
 const RESULTS_DIR = join(BENCH_DIR, "results");
 const ZERO_BIN = "/home/phantom/repos/zero/bin/zero";
+const CLAUDE_BIN =
+  (process.env.CLAUDE_BIN ?? "").trim() ||
+  join(process.env.HOME ?? "/home/phantom", ".local/bin/claude");
 
 const LANG_EXT: Record<string, string> = {
   zero: "0",
@@ -214,6 +226,90 @@ async function callOpenAI(
     completionTokens: json.usage?.completion_tokens ?? 0,
     ms,
   };
+}
+
+/**
+ * Drive the local `claude` CLI instead of a hosted HTTP API. This lets the
+ * same pipeline that built the OpenAI leaderboard produce an Anthropic
+ * column with no API key — the CLI carries its own auth. Mirrors the Python
+ * harness's claude_cli provider: flatten system + user into one prompt
+ * (system at the top, the request labeled `User:`), run
+ *   claude --print --output-format json --model <model> --max-turns 1
+ * with the prompt on stdin, then read `result` text and `usage` tokens from
+ * the JSON payload.
+ */
+function flattenClaudePrompt(systemPrompt: string, userPrompt: string): string {
+  const parts: string[] = [];
+  if (systemPrompt.trim()) parts.push(systemPrompt);
+  parts.push(`User:\n${userPrompt}`);
+  return parts.join("\n\n");
+}
+
+function callClaudeCli(
+  model: string,
+  systemPrompt: string,
+  userPrompt: string
+): { text: string; promptTokens: number; completionTokens: number; ms: number } {
+  const t0 = Date.now();
+  const prompt = flattenClaudePrompt(systemPrompt, userPrompt);
+  const res = spawnSync(
+    CLAUDE_BIN,
+    ["--print", "--output-format", "json", "--model", model, "--max-turns", "1"],
+    { input: prompt, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, timeout: 600_000 }
+  );
+  const ms = Date.now() - t0;
+  if (res.error) {
+    throw new Error(`claude CLI invocation failed: ${res.error.message}`);
+  }
+  if (res.status !== 0) {
+    const tail = ((res.stderr || res.stdout || "") as string).trim().slice(-500);
+    throw new Error(`claude CLI exited ${res.status}: ${tail}`);
+  }
+  const stdout = (res.stdout || "") as string;
+  let payload: any;
+  try {
+    payload = JSON.parse(stdout);
+  } catch (e: any) {
+    throw new Error(
+      `claude CLI returned non-JSON output: ${e.message}: ${stdout.trim().slice(-500)}`
+    );
+  }
+  const text = payload.result;
+  if (typeof text !== "string") {
+    throw new Error(
+      `claude CLI JSON missing string \`result\`: keys=${Object.keys(payload).sort().join(",")}`
+    );
+  }
+  const usage = payload.usage ?? {};
+  return {
+    text,
+    promptTokens: Number(usage.input_tokens ?? 0) || 0,
+    completionTokens: Number(usage.output_tokens ?? 0) || 0,
+    ms,
+  };
+}
+
+/** Dispatch a single model call to the selected provider. */
+async function callModel(
+  provider: string,
+  model: string,
+  systemPrompt: string,
+  userPrompt: string,
+  apiKey: string
+): Promise<{ text: string; promptTokens: number; completionTokens: number; ms: number }> {
+  if (provider === "claude-cli") {
+    return callClaudeCli(model, systemPrompt, userPrompt);
+  }
+  return callOpenAI(model, systemPrompt, userPrompt, apiKey);
+}
+
+/** Pick the default provider from the model names when none is given. */
+function inferProvider(models: string[]): string {
+  const claudish = /^(claude|opus|sonnet|haiku)/i;
+  if (models.length > 0 && models.every((m) => claudish.test(m))) {
+    return "claude-cli";
+  }
+  return "openai";
 }
 
 /**
@@ -461,6 +557,7 @@ function fixtureScriptFor(task: Task): string | null {
 }
 
 async function runAttempt(
+  provider: string,
   model: string,
   task: Task,
   lang: string,
@@ -477,7 +574,7 @@ async function runAttempt(
 
   let apiResp;
   try {
-    apiResp = await callOpenAI(model, systemPrompt, userPrompt, apiKey);
+    apiResp = await callModel(provider, model, systemPrompt, userPrompt, apiKey);
   } catch (e: any) {
     const result: AttemptResult = {
       model,
@@ -659,6 +756,7 @@ async function runAttempt(
 }
 
 function parseArgs(): {
+  provider: string;
   models: string[];
   tasks: string[];
   langs: string[];
@@ -666,13 +764,16 @@ function parseArgs(): {
   printPrompt: boolean;
 } {
   const argv = process.argv.slice(2);
+  let provider = "";
   let models: string[] = [];
   let tasks: string[] = [];
   let langs: string[] = ["zero", "ts", "rust", "go", "python"];
   let skipExisting = false;
   let printPrompt = false;
   for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === "--model") {
+    if (argv[i] === "--provider") {
+      provider = argv[++i];
+    } else if (argv[i] === "--model") {
       models = [argv[++i]];
     } else if (argv[i] === "--models") {
       models = argv[++i].split(",");
@@ -704,11 +805,16 @@ function parseArgs(): {
       return matches.length > 0 ? matches : [t];
     });
   }
-  return { models, tasks, langs, skipExisting, printPrompt };
+  if (!provider) provider = inferProvider(models);
+  if (provider !== "openai" && provider !== "claude-cli") {
+    console.error(`Error: unknown --provider "${provider}" (use openai or claude-cli)`);
+    process.exit(2);
+  }
+  return { provider, models, tasks, langs, skipExisting, printPrompt };
 }
 
 async function main() {
-  const { models, tasks, langs, skipExisting, printPrompt } = parseArgs();
+  const { provider, models, tasks, langs, skipExisting, printPrompt } = parseArgs();
   if (printPrompt) {
     // Dry run: assemble and print the exact system + user prompts without
     // calling the API. Useful for auditing prompt parity against the harness.
@@ -727,12 +833,13 @@ async function main() {
     return;
   }
   const apiKey = (process.env.OPENAI_API_KEY ?? "").trim();
-  if (!apiKey) {
+  if (provider === "openai" && !apiKey) {
     console.error("Error: OPENAI_API_KEY not set");
     process.exit(2);
   }
   mkdirSync(RESULTS_DIR, { recursive: true });
 
+  console.log(`Provider: ${provider}`);
   console.log(`Models: ${models.join(", ")}`);
   console.log(`Tasks: ${tasks.length} (${tasks[0]}..${tasks[tasks.length - 1]})`);
   console.log(`Langs: ${langs.join(", ")}`);
@@ -767,7 +874,7 @@ async function main() {
           console.log(`SKIP ${model} ${taskSlug} ${lang.padEnd(6)} -> cached ${tag} ${r.num_passed}/${r.num_cases}`);
           continue;
         }
-        const r = await runAttempt(model, task, lang, apiKey);
+        const r = await runAttempt(provider, model, task, lang, apiKey);
         all.push(r);
         const tag = r.passed ? "PASS" : (r.extracted ? "FAIL" : "NOCODE");
         const err = r.error ? ` [${r.error.slice(0, 40)}]` : "";
