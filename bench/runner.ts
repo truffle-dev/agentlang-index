@@ -457,10 +457,29 @@ function build(
     return { ok: true, runner: ["python3", entrypoint], ms: Date.now() - t0 };
   }
   if (lang === "go") {
-    // go run is acceptable here — pre-build per task is heavier and not the
-    // point. For repeated runs we could `go build -o bin/main` but the
-    // tradeoff favors simplicity for now.
-    return { ok: true, runner: ["go", "run", entrypoint], ms: Date.now() - t0 };
+    // Compile ahead of the timed run, the same way rust does. `go run`
+    // compiles and runs in one step, so a cold Go toolchain pays its
+    // first-build cost (building the stdlib into an empty cache) inside the
+    // per-case exec timeout — which silently fails the first go cell of a
+    // fresh run with a false negative, even when the source is correct.
+    // Moving the compile into build() lands that cost in build_ms under a
+    // generous budget and leaves the timed run to execute a ready binary.
+    const bin = join(scratchDir, "main_bin");
+    const res = spawnSync("go", ["build", "-o", bin, entrypoint], {
+      cwd: scratchDir,
+      env: { ...process.env, PATH: process.env.PATH! },
+      stdio: ["ignore", "pipe", "pipe"],
+      timeout: 120_000,
+    });
+    if (res.status !== 0) {
+      return {
+        ok: false,
+        runner: [],
+        ms: Date.now() - t0,
+        error: `go build failed: ${res.stderr?.toString().slice(0, 500)}`,
+      };
+    }
+    return { ok: true, runner: [bin], ms: Date.now() - t0 };
   }
   if (lang === "rust") {
     const res = spawnSync("cargo", ["build", "--release", "--quiet"], {
