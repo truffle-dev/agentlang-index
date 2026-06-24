@@ -238,7 +238,7 @@ async function callOpenAI(
  * with the prompt on stdin, then read `result` text and `usage` tokens from
  * the JSON payload.
  */
-function flattenClaudePrompt(systemPrompt: string, userPrompt: string): string {
+export function flattenClaudePrompt(systemPrompt: string, userPrompt: string): string {
   const parts: string[] = [];
   if (systemPrompt.trim()) parts.push(systemPrompt);
   parts.push(`User:\n${userPrompt}`);
@@ -304,7 +304,7 @@ async function callModel(
 }
 
 /** Pick the default provider from the model names when none is given. */
-function inferProvider(models: string[]): string {
+export function inferProvider(models: string[]): string {
   const claudish = /^(claude|opus|sonnet|haiku)/i;
   if (models.length > 0 && models.every((m) => claudish.test(m))) {
     return "claude-cli";
@@ -946,7 +946,9 @@ function aggregate(attempts: AttemptResult[], model: string) {
   };
 }
 
-main().catch((e) => {
-  console.error("Fatal:", e);
-  process.exit(1);
-});
+if (import.meta.main) {
+  main().catch((e) => {
+    console.error("Fatal:", e);
+    process.exit(1);
+  });
+}
