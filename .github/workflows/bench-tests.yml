@@ -1,0 +1,31 @@
+name: bench-tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: bench-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bun-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out agentlang-index
+        uses: actions/checkout@v6
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.12'
+
+      # The bench suite is hermetic: it exercises only the runner's pure
+      # provider-selection and prompt-flatten helpers (no model call, no
+      # network, no subprocess), so it needs no key. It guards the
+      # openai/claude-cli routing contract against silent drift on every push.
+      - name: Run bench bun tests
+        run: bun test bench/
