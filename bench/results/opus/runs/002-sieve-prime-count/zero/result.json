@@ -1,0 +1,84 @@
+{
+  "model": "opus",
+  "task": "002-sieve-prime-count",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/002-sieve-prime-count/zero/scratch/ref.zero:72:16 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 52
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/002-sieve-prime-count/zero/scratch/ref.zero:72:16 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 42
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/002-sieve-prime-count/zero/scratch/ref.zero:72:16 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 39
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/002-sieve-prime-count/zero/scratch/ref.zero:72:16 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 46
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/002-sieve-prime-count/zero/scratch/ref.zero:72:16 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 39
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/002-sieve-prime-count/zero/scratch/ref.zero:72:16 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 39
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 20353,
+  "build_ms": 0,
+  "exec_ms": 257,
+  "total_ms": 20612,
+  "prompt_tokens": 2,
+  "completion_tokens": 691
+}

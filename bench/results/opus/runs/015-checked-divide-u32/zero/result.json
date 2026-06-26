@@ -1,0 +1,90 @@
+{
+  "model": "opus",
+  "task": "015-checked-divide-u32",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive divide (20 / 4 == 5)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/015-checked-divide-u32/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 41
+    },
+    {
+      "name": "zero dividend (0 / 7 == 0)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/015-checked-divide-u32/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 54
+    },
+    {
+      "name": "integer floor division (10 / 3 == 3)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/015-checked-divide-u32/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 50
+    },
+    {
+      "name": "divide by zero",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/015-checked-divide-u32/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 43
+    },
+    {
+      "name": "non-digit divisor",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/015-checked-divide-u32/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 48
+    },
+    {
+      "name": "dividend exceeds u32::MAX",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/015-checked-divide-u32/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 37
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 19093,
+  "build_ms": 0,
+  "exec_ms": 274,
+  "total_ms": 19367,
+  "prompt_tokens": 2,
+  "completion_tokens": 667
+}

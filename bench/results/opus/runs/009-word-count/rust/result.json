@@ -1,0 +1,18 @@
+{
+  "model": "opus",
+  "task": "009-word-count",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 12389,
+  "build_ms": 138,
+  "exec_ms": 0,
+  "total_ms": 12527,
+  "prompt_tokens": 3,
+  "completion_tokens": 94,
+  "error": "build_error: cargo build failed: error[E0599]: no method named `write_all` found for struct `Stdout` in the current scope\n    --> ref.rs:6:23\n     |\n   6 |     std::io::stdout().write_all(format!(\"{c}\\n\").as_bytes()).unwrap();\n     |                       ^^^^^^^^^\n     |\n    ::: /home/phantom/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/io/mod.rs:1857:8\n     |\n1857 |     fn write_all(&mut self, mut buf: &[u8]) -> Result<()> {\n     |        --------- the method is available for `Stdout"
+}

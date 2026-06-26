@@ -1,0 +1,90 @@
+{
+  "model": "opus",
+  "task": "014-http-header-echo",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "X-Echo header on /headers route returns hello-world",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "hello-world\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 67
+    },
+    {
+      "name": "lowercase content-type on /headers route returns application/json (case-insensitive name match)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "application/json\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 61
+    },
+    {
+      "name": "X-Custom-Name header on /headers route returns first-value",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "first-value\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 52
+    },
+    {
+      "name": "missing header on /empty route returns error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 57
+    },
+    {
+      "name": "non-200 status on /404 route returns error even though X-Echo header is present",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 74
+    },
+    {
+      "name": "non-200 status on /no-such-route returns error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 41
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 14104,
+  "build_ms": 0,
+  "exec_ms": 352,
+  "total_ms": 14519,
+  "prompt_tokens": 3,
+  "completion_tokens": 239
+}

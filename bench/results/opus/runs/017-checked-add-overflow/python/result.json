@@ -1,0 +1,90 @@
+{
+  "model": "opus",
+  "task": "017-checked-add-overflow",
+  "lang": "python",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive add (2 + 3 == 5)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "5\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 14
+    },
+    {
+      "name": "boundary just under wrap (0 + 4294967295 == 4294967295)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "4294967295\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 14
+    },
+    {
+      "name": "small positive add (1000 + 2000 == 3000)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3000\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 14
+    },
+    {
+      "name": "smallest u32 overflow (4294967295 + 1)",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 14
+    },
+    {
+      "name": "exact u32 wrap (2^31 + 2^31 == 2^32)",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 13
+    },
+    {
+      "name": "parse fails on first addend (abc + 5)",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 14
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 13731,
+  "build_ms": 0,
+  "exec_ms": 83,
+  "total_ms": 13816,
+  "prompt_tokens": 3,
+  "completion_tokens": 271
+}

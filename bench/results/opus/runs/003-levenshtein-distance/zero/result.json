@@ -1,0 +1,84 @@
+{
+  "model": "opus",
+  "task": "003-levenshtein-distance",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:11 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 48
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:11 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 51
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:11 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 43
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:11 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 42
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:11 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 38
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/003-levenshtein-distance/zero/scratch/ref.zero:1:11 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 51
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 19802,
+  "build_ms": 0,
+  "exec_ms": 273,
+  "total_ms": 20076,
+  "prompt_tokens": 2,
+  "completion_tokens": 697
+}

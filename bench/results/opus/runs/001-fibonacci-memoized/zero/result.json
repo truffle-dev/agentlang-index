@@ -1,0 +1,73 @@
+{
+  "model": "opus",
+  "task": "001-fibonacci-memoized",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/001-fibonacci-memoized/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 44
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/001-fibonacci-memoized/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 47
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/001-fibonacci-memoized/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 47
+    },
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/001-fibonacci-memoized/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 41
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/001-fibonacci-memoized/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 49
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 5,
+  "num_passed": 0,
+  "api_ms": 15511,
+  "build_ms": 0,
+  "exec_ms": 228,
+  "total_ms": 15743,
+  "prompt_tokens": 2,
+  "completion_tokens": 263
+}

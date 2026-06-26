@@ -1,0 +1,90 @@
+{
+  "model": "opus",
+  "task": "008-word-reverse",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "two-word swap",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/008-word-reverse/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 67
+    },
+    {
+      "name": "four words",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/008-word-reverse/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 50
+    },
+    {
+      "name": "single word stays single",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/008-word-reverse/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 43
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/008-word-reverse/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 46
+    },
+    {
+      "name": "spaces collapse and trim",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/008-word-reverse/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 54
+    },
+    {
+      "name": "only spaces writes nothing",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": true,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/008-word-reverse/zero/scratch/ref.zero:1:13 PAR100: unexpected character '@'\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 41
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 15970,
+  "build_ms": 0,
+  "exec_ms": 301,
+  "total_ms": 16274,
+  "prompt_tokens": 2,
+  "completion_tokens": 381
+}

@@ -1,0 +1,40 @@
+{
+  "model": "opus",
+  "task": "000-hello-stdout",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/000-hello-stdout/zero/scratch/ref.zero:1:12 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 44
+    },
+    {
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": false,
+      "exit_zero": false,
+      "stdout": "",
+      "stderr": "/home/phantom/repos/agentlang-index/bench/results/opus/runs/000-hello-stdout/zero/scratch/ref.zero:1:12 PAR100: expected '{' before block\n  explain: zero explain PAR100\n",
+      "exit_code": 1,
+      "ms": 45
+    }
+  ],
+  "pass_rate": 0,
+  "num_cases": 2,
+  "num_passed": 0,
+  "api_ms": 13276,
+  "build_ms": 0,
+  "exec_ms": 91,
+  "total_ms": 13369,
+  "prompt_tokens": 2,
+  "completion_tokens": 37
+}

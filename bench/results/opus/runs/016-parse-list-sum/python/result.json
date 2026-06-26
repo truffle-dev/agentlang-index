@@ -1,0 +1,90 @@
+{
+  "model": "opus",
+  "task": "016-parse-list-sum",
+  "lang": "python",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "N=3 with values [1,2,3] sums to 6",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "6\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 16
+    },
+    {
+      "name": "N=0 is the empty sum (0)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 14
+    },
+    {
+      "name": "N=5 with multiples-of-ten sums to 150",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "150\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 14
+    },
+    {
+      "name": "second value is non-digit (abc)",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 15
+    },
+    {
+      "name": "N=2 but only one value provided",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 16
+    },
+    {
+      "name": "running sum overflows u32 (2^32-1 + 1 = 2^32)",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 13
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 16604,
+  "build_ms": 0,
+  "exec_ms": 88,
+  "total_ms": 16692,
+  "prompt_tokens": 3,
+  "completion_tokens": 442
+}

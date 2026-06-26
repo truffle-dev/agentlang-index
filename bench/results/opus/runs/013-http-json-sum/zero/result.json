@@ -1,0 +1,18 @@
+{
+  "model": "opus",
+  "task": "013-http-json-sum",
+  "lang": "zero",
+  "passed": false,
+  "extracted": false,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 98475,
+  "build_ms": 0,
+  "exec_ms": 0,
+  "total_ms": 98475,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "error": "api_error: claude CLI JSON missing string `result`: keys=duration_api_ms,duration_ms,errors,fast_mode_state,is_error,modelUsage,num_turns,permission_denials,session_id,stop_reason,subtype,total_cost_usd,type,usage,uuid"
+}

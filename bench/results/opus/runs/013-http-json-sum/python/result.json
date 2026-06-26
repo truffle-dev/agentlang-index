@@ -1,0 +1,90 @@
+{
+  "model": "opus",
+  "task": "013-http-json-sum",
+  "lang": "python",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive pair sums to 7",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "7\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 59
+    },
+    {
+      "name": "negative + positive integers",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "15\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 60
+    },
+    {
+      "name": "million-scale integers",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3000000\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 57
+    },
+    {
+      "name": "response missing sum field surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 79
+    },
+    {
+      "name": "non-JSON response body surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 50
+    },
+    {
+      "name": "HTTP 404 response surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 62
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 14539,
+  "build_ms": 0,
+  "exec_ms": 367,
+  "total_ms": 14957,
+  "prompt_tokens": 3,
+  "completion_tokens": 265
+}

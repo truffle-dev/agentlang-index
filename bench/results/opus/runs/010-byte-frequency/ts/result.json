@@ -1,0 +1,90 @@
+{
+  "model": "opus",
+  "task": "010-byte-frequency",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "single byte",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "97 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 38
+    },
+    {
+      "name": "three distinct bytes",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "97 1\n98 1\n99 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 36
+    },
+    {
+      "name": "three byte pairs",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "97 2\n98 2\n99 2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 40
+    },
+    {
+      "name": "empty input writes nothing",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 33
+    },
+    {
+      "name": "hello has four distinct bytes",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "101 1\n104 1\n108 2\n111 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 30
+    },
+    {
+      "name": "uppercase and lowercase are distinct",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "65 2\n97 1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 38
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 13571,
+  "build_ms": 0,
+  "exec_ms": 215,
+  "total_ms": 13787,
+  "prompt_tokens": 3,
+  "completion_tokens": 128
+}
