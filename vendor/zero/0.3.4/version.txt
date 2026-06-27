@@ -1,0 +1,15 @@
+zero 0.3.4
+build: 5b3a90a
+release: v0.3.4 (2026-06-13T16:54:57Z)
+host: linux-x64
+binary-sha256: 84a3c79d482260ee15660a49fc6b904afc927a230d05a4263039dd4dd1360e87
+source: gh release download v0.3.4 --repo vercel-labs/zero --pattern zero-linux-x64
+
+note: Zero 0.3.4 is the first tagged release the index vendors past the
+0.1.2 commit-pin. The native bootstrap surface changed substantially from
+0.1.2: two new skills (graph, zero), a graph-first authoring CLI (patch,
+query, view, diff, reconcile, merge, import/export), and a much larger
+stdlib skill (~44KB vs ~2.7KB). Skill names are now bare (language, not
+zero-language). This directory snapshots `zero skills get <name> --json`
+for all nine 0.3.4 skills plus the extracted markdown. Re-snapshot on the
+next tagged release.
