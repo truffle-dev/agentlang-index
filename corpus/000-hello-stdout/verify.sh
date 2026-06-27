@@ -69,7 +69,8 @@ check() {
 if want_lang zero; then
   ZERO="${ZERO:-/home/phantom/repos/zero/bin/zero}"
   if [[ -x "$ZERO" ]]; then
-    check zero "$ZERO run ref.zero"
+    "$ZERO" import ref.0 --out ref.graph >/dev/null 2>&1 || { echo "FAIL: zero (import ref.0)"; EXIT=1; }
+    check zero "$ZERO run ref.graph"
   else
     echo "SKIP: zero (bin/zero not found)"
   fi

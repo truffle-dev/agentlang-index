@@ -1,7 +1,7 @@
 // Reverse the order of words on a line, Zero 0.1.2 direct backend.
 //
 // argv[1] is the line (Zero 0.1.2 has no exposed stdin capability).
-// All logic stays inside `pub fun main` to avoid Span/MutSpan parameter
+// All logic stays inside `pub fn main` to avoid Span/MutSpan parameter
 // restrictions.
 //
 // Two-pass design: first pass scans the input and records each word's
@@ -13,22 +13,22 @@
 // Zero's `&&` is not assumed to short-circuit, so the inner loops are
 // split into a `while true` with an explicit early-exit setting the
 // loop index to n.
-pub fun main(world: World) -> Void raises {
-    let line_opt = std.args.get(1)
-    let mut bytes: Span<u8> = std.mem.span("")
+pub fn main(world: World) -> Void raises {
+    let line_opt: Maybe<String> = std.args.get(1)
+    var bytes: Span<u8> = std.mem.span("")
     if line_opt.has {
         bytes = std.mem.span(line_opt.value)
     }
     let n: usize = std.mem.len(bytes)
 
-    let mut starts: [500]u32 = [0_u32; 500]
-    let mut lens: [500]u32 = [0_u32; 500]
-    let mut nw: usize = 0
+    var starts: [500]u32 = [0_u32; 500]
+    var lens: [500]u32 = [0_u32; 500]
+    var nw: usize = 0
 
-    let mut i: usize = 0
+    var i: usize = 0
     while i < n {
         // Skip spaces. Inner loop avoids relying on && short-circuit.
-        let mut skipping: Bool = true
+        var skipping: Bool = true
         while skipping {
             if i >= n {
                 skipping = false
@@ -42,7 +42,7 @@ pub fun main(world: World) -> Void raises {
         }
         if i < n {
             let start: usize = i
-            let mut scanning: Bool = true
+            var scanning: Bool = true
             while scanning {
                 if i >= n {
                     scanning = false
@@ -65,10 +65,10 @@ pub fun main(world: World) -> Void raises {
         return
     }
 
-    let mut out_buf: [1024]u8 = [0_u8; 1024]
-    let mut written: usize = 0
+    var out_buf: [1024]u8 = [0_u8; 1024]
+    var written: usize = 0
 
-    let mut w: usize = nw
+    var w: usize = nw
     while w > 0 {
         w = w - 1
         if written > 0 {
@@ -77,7 +77,7 @@ pub fun main(world: World) -> Void raises {
         }
         let s: usize = starts[w] as usize
         let l: usize = lens[w] as usize
-        let mut k: usize = 0
+        var k: usize = 0
         while k < l {
             out_buf[written] = bytes[s + k]
             written = written + 1

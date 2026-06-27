@@ -10,10 +10,10 @@
 // MutSpan<u8>, or returning shape locals, so the i32 parse, envelope
 // rendering, response scan, and output rendering are all inline here.
 
-pub fun main(world: World) -> Void raises {
-    let maybe_url = std.args.get(1)
-    let maybe_a = std.args.get(2)
-    let maybe_b = std.args.get(3)
+pub fn main(world: World) -> Void raises {
+    let maybe_url: Maybe<String> = std.args.get(1)
+    let maybe_a: Maybe<String> = std.args.get(2)
+    let maybe_b: Maybe<String> = std.args.get(3)
     if maybe_url.has == false {
         check world.out.write("error\n")
         return
@@ -27,19 +27,19 @@ pub fun main(world: World) -> Void raises {
         return
     }
 
-    let url_s = std.mem.span(maybe_url.value)
-    let a_s = std.mem.span(maybe_a.value)
-    let b_s = std.mem.span(maybe_b.value)
+    let url_s: Span<u8> = std.mem.span(maybe_url.value)
+    let a_s: Span<u8> = std.mem.span(maybe_a.value)
+    let b_s: Span<u8> = std.mem.span(maybe_b.value)
 
     // ---- Parse a as i32 from trimmed ASCII digits ----
-    let a_n = std.mem.len(a_s)
-    let mut a_i: usize = 0
-    let mut a_skip_flag: Bool = true
+    let a_n: usize = std.mem.len(a_s)
+    var a_i: usize = 0
+    var a_skip_flag: Bool = true
     while a_skip_flag {
         if a_i >= a_n {
             a_skip_flag = false
         } else {
-            let c = a_s[a_i]
+            let c: u8 = a_s[a_i]
             if c == 32_u8 {
                 a_i = a_i + 1
             } else {
@@ -55,7 +55,7 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut a_neg: Bool = false
+    var a_neg: Bool = false
     if a_s[a_i] == 45_u8 {
         a_neg = true
         a_i = a_i + 1
@@ -64,14 +64,14 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut a_have_digit: Bool = false
-    let mut a_acc: u32 = 0_u32
-    let mut a_digit_flag: Bool = true
+    var a_have_digit: Bool = false
+    var a_acc: u32 = 0_u32
+    var a_digit_flag: Bool = true
     while a_digit_flag {
         if a_i >= a_n {
             a_digit_flag = false
         } else {
-            let c = a_s[a_i]
+            let c: u8 = a_s[a_i]
             if c >= 48_u8 {
                 if c <= 57_u8 {
                     let d: u32 = (c - 48_u8) as u32
@@ -86,13 +86,13 @@ pub fun main(world: World) -> Void raises {
             }
         }
     }
-    let mut a_tail_flag: Bool = true
-    let mut a_tail_ok: Bool = true
+    var a_tail_flag: Bool = true
+    var a_tail_ok: Bool = true
     while a_tail_flag {
         if a_i >= a_n {
             a_tail_flag = false
         } else {
-            let c = a_s[a_i]
+            let c: u8 = a_s[a_i]
             if c == 32_u8 {
                 a_i = a_i + 1
             } else {
@@ -125,20 +125,20 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut a_val: i32 = a_acc as i32
+    var a_val: i32 = a_acc as i32
     if a_neg {
         a_val = 0_i32 - a_val
     }
 
     // ---- Parse b as i32 from trimmed ASCII digits ----
-    let b_n = std.mem.len(b_s)
-    let mut b_i: usize = 0
-    let mut b_skip_flag: Bool = true
+    let b_n: usize = std.mem.len(b_s)
+    var b_i: usize = 0
+    var b_skip_flag: Bool = true
     while b_skip_flag {
         if b_i >= b_n {
             b_skip_flag = false
         } else {
-            let c = b_s[b_i]
+            let c: u8 = b_s[b_i]
             if c == 32_u8 {
                 b_i = b_i + 1
             } else {
@@ -154,7 +154,7 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut b_neg: Bool = false
+    var b_neg: Bool = false
     if b_s[b_i] == 45_u8 {
         b_neg = true
         b_i = b_i + 1
@@ -163,14 +163,14 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut b_have_digit: Bool = false
-    let mut b_acc: u32 = 0_u32
-    let mut b_digit_flag: Bool = true
+    var b_have_digit: Bool = false
+    var b_acc: u32 = 0_u32
+    var b_digit_flag: Bool = true
     while b_digit_flag {
         if b_i >= b_n {
             b_digit_flag = false
         } else {
-            let c = b_s[b_i]
+            let c: u8 = b_s[b_i]
             if c >= 48_u8 {
                 if c <= 57_u8 {
                     let d: u32 = (c - 48_u8) as u32
@@ -185,13 +185,13 @@ pub fun main(world: World) -> Void raises {
             }
         }
     }
-    let mut b_tail_flag: Bool = true
-    let mut b_tail_ok: Bool = true
+    var b_tail_flag: Bool = true
+    var b_tail_ok: Bool = true
     while b_tail_flag {
         if b_i >= b_n {
             b_tail_flag = false
         } else {
-            let c = b_s[b_i]
+            let c: u8 = b_s[b_i]
             if c == 32_u8 {
                 b_i = b_i + 1
             } else {
@@ -224,32 +224,32 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut b_val: i32 = b_acc as i32
+    var b_val: i32 = b_acc as i32
     if b_neg {
         b_val = 0_i32 - b_val
     }
 
     // ---- Build POST envelope: POST <url>\n + Content-Type header + body ----
-    let mut envelope: [1024]u8 = [0_u8; 1024]
-    let mut env_n: usize = 0
+    var envelope: [1024]u8 = [0_u8; 1024]
+    var env_n: usize = 0
 
-    let prefix = std.mem.span("POST ")
-    let pre_n = std.mem.len(prefix)
-    let mut pi: usize = 0
+    let prefix: Span<u8> = std.mem.span("POST ")
+    let pre_n: usize = std.mem.len(prefix)
+    var pi: usize = 0
     while pi < pre_n {
         envelope[env_n] = prefix[pi]
         env_n = env_n + 1
         pi = pi + 1
     }
 
-    let url_n = std.mem.len(url_s)
-    let mut ui: usize = 0
-    let mut url_flag: Bool = true
+    let url_n: usize = std.mem.len(url_s)
+    var ui: usize = 0
+    var url_flag: Bool = true
     while url_flag {
         if ui >= url_n {
             url_flag = false
         } else {
-            let c = url_s[ui]
+            let c: u8 = url_s[ui]
             if c == 10_u8 {
                 url_flag = false
             } else {
@@ -266,9 +266,9 @@ pub fun main(world: World) -> Void raises {
     envelope[env_n] = 10_u8
     env_n = env_n + 1
 
-    let ct = std.mem.span("Content-Type: application/json\n")
-    let ct_n = std.mem.len(ct)
-    let mut ci: usize = 0
+    let ct: Span<u8> = std.mem.span("Content-Type: application/json\n")
+    let ct_n: usize = std.mem.len(ct)
+    var ci: usize = 0
     while ci < ct_n {
         envelope[env_n] = ct[ci]
         env_n = env_n + 1
@@ -290,8 +290,8 @@ pub fun main(world: World) -> Void raises {
     env_n = env_n + 1
 
     // Inline writeI32 for a_val
-    let mut a_write_neg: Bool = false
-    let mut a_write_v: u32 = 0_u32
+    var a_write_neg: Bool = false
+    var a_write_v: u32 = 0_u32
     if a_val < 0_i32 {
         envelope[env_n] = 45_u8
         env_n = env_n + 1
@@ -304,15 +304,15 @@ pub fun main(world: World) -> Void raises {
         envelope[env_n] = 48_u8
         env_n = env_n + 1
     } else {
-        let mut a_tmp: [16]u8 = [0_u8; 16]
-        let mut a_tn: usize = 0
+        var a_tmp: [16]u8 = [0_u8; 16]
+        var a_tn: usize = 0
         while a_write_v > 0_u32 {
             let digit_u32: u32 = 48_u32 + (a_write_v % 10_u32)
             a_tmp[a_tn] = digit_u32 as u8
             a_tn = a_tn + 1
             a_write_v = a_write_v / 10_u32
         }
-        let mut a_wj: usize = 0
+        var a_wj: usize = 0
         while a_wj < a_tn {
             envelope[env_n] = a_tmp[a_tn - 1 - a_wj]
             env_n = env_n + 1
@@ -332,8 +332,8 @@ pub fun main(world: World) -> Void raises {
     env_n = env_n + 1
 
     // Inline writeI32 for b_val
-    let mut b_write_neg: Bool = false
-    let mut b_write_v: u32 = 0_u32
+    var b_write_neg: Bool = false
+    var b_write_v: u32 = 0_u32
     if b_val < 0_i32 {
         envelope[env_n] = 45_u8
         env_n = env_n + 1
@@ -346,15 +346,15 @@ pub fun main(world: World) -> Void raises {
         envelope[env_n] = 48_u8
         env_n = env_n + 1
     } else {
-        let mut b_tmp: [16]u8 = [0_u8; 16]
-        let mut b_tn: usize = 0
+        var b_tmp: [16]u8 = [0_u8; 16]
+        var b_tn: usize = 0
         while b_write_v > 0_u32 {
             let digit_u32: u32 = 48_u32 + (b_write_v % 10_u32)
             b_tmp[b_tn] = digit_u32 as u8
             b_tn = b_tn + 1
             b_write_v = b_write_v / 10_u32
         }
-        let mut b_wj: usize = 0
+        var b_wj: usize = 0
         while b_wj < b_tn {
             envelope[env_n] = b_tmp[b_tn - 1 - b_wj]
             env_n = env_n + 1
@@ -366,10 +366,10 @@ pub fun main(world: World) -> Void raises {
     env_n = env_n + 1
 
     // ---- Fetch ----
-    let net = std.net.host()
-    let client = std.http.client(net)
-    let mut response: [8192]u8 = [0_u8; 8192]
-    let result = std.http.fetch(client, envelope[0..env_n], response, std.time.ms(5000))
+    let net: Net = std.net.host()
+    let client: HttpClient = std.http.client(net)
+    var response: [8192]u8 = [0_u8; 8192]
+    let result: HttpResult = std.http.fetch(client, envelope[0..env_n], response, std.time.ms(5000))
     if std.http.resultOk(result) == false {
         check world.out.write("error\n")
         return
@@ -378,12 +378,12 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let body_len = std.http.resultBodyLen(result)
-    let body_offset = std.http.responseBodyOffset(response)
+    let body_len: usize = std.http.resultBodyLen(result)
+    let body_offset: usize = std.http.responseBodyOffset(response)
 
     // ---- Scan body for `"sum":<digits>` ----
-    let needle = std.mem.span("\"sum\":")
-    let needle_n = std.mem.len(needle)
+    let needle: Span<u8> = std.mem.span("\"sum\":")
+    let needle_n: usize = std.mem.len(needle)
     let end: usize = body_offset + body_len
     if needle_n == 0_usize {
         check world.out.write("error\n")
@@ -394,17 +394,17 @@ pub fun main(world: World) -> Void raises {
         return
     }
     let stop: usize = end - needle_n
-    let mut found_at: usize = 0_usize
-    let mut found: Bool = false
-    let mut si: usize = body_offset
-    let mut search_flag: Bool = true
+    var found_at: usize = 0_usize
+    var found: Bool = false
+    var si: usize = body_offset
+    var search_flag: Bool = true
     while search_flag {
         if si > stop {
             search_flag = false
         } else {
-            let mut j: usize = 0
-            let mut matched: Bool = true
-            let mut inner_flag: Bool = true
+            var j: usize = 0
+            var matched: Bool = true
+            var inner_flag: Bool = true
             while inner_flag {
                 if j >= needle_n {
                     inner_flag = false
@@ -432,13 +432,13 @@ pub fun main(world: World) -> Void raises {
     }
 
     // Parse digits (with optional leading `-`) at found_at.
-    let mut k = found_at
-    let mut k_ws_flag: Bool = true
+    var k: usize = found_at
+    var k_ws_flag: Bool = true
     while k_ws_flag {
         if k >= end {
             k_ws_flag = false
         } else {
-            let c = response[k]
+            let c: u8 = response[k]
             if c == 32_u8 {
                 k = k + 1
             } else {
@@ -454,7 +454,7 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut sum_neg: Bool = false
+    var sum_neg: Bool = false
     if response[k] == 45_u8 {
         sum_neg = true
         k = k + 1
@@ -463,14 +463,14 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut sum_have_digit: Bool = false
-    let mut sum_acc: u32 = 0_u32
-    let mut sum_digit_flag: Bool = true
+    var sum_have_digit: Bool = false
+    var sum_acc: u32 = 0_u32
+    var sum_digit_flag: Bool = true
     while sum_digit_flag {
         if k >= end {
             sum_digit_flag = false
         } else {
-            let c = response[k]
+            let c: u8 = response[k]
             if c >= 48_u8 {
                 if c <= 57_u8 {
                     let d: u32 = (c - 48_u8) as u32
@@ -490,9 +490,9 @@ pub fun main(world: World) -> Void raises {
         return
     }
     // After digits, next byte must be a JSON terminator or end.
-    let mut term_ok: Bool = true
+    var term_ok: Bool = true
     if k < end {
-        let c = response[k]
+        let c: u8 = response[k]
         if c == 44_u8 {
             // ok
         } else {
@@ -531,15 +531,15 @@ pub fun main(world: World) -> Void raises {
         check world.out.write("error\n")
         return
     }
-    let mut sum_val: i32 = sum_acc as i32
+    var sum_val: i32 = sum_acc as i32
     if sum_neg {
         sum_val = 0_i32 - sum_val
     }
 
     // ---- Render sum_val + newline ----
-    let mut out: [16]u8 = [0_u8; 16]
-    let mut out_n: usize = 0
-    let mut out_v: u32 = 0_u32
+    var out: [16]u8 = [0_u8; 16]
+    var out_n: usize = 0
+    var out_v: u32 = 0_u32
     if sum_val < 0_i32 {
         out[out_n] = 45_u8
         out_n = out_n + 1
@@ -551,15 +551,15 @@ pub fun main(world: World) -> Void raises {
         out[out_n] = 48_u8
         out_n = out_n + 1
     } else {
-        let mut out_tmp: [16]u8 = [0_u8; 16]
-        let mut out_tn: usize = 0
+        var out_tmp: [16]u8 = [0_u8; 16]
+        var out_tn: usize = 0
         while out_v > 0_u32 {
             let digit_u32: u32 = 48_u32 + (out_v % 10_u32)
             out_tmp[out_tn] = digit_u32 as u8
             out_tn = out_tn + 1
             out_v = out_v / 10_u32
         }
-        let mut out_wj: usize = 0
+        var out_wj: usize = 0
         while out_wj < out_tn {
             out[out_n] = out_tmp[out_tn - 1 - out_wj]
             out_n = out_n + 1

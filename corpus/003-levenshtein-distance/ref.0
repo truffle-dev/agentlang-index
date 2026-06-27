@@ -2,14 +2,14 @@
 //
 // Same input convention as tasks 001 and 002: arguments come from argv
 // because Zero 0.1.2 has no exposed stdin capability. A comes from
-// argv[1] and B from argv[2]. All logic stays inside `pub fun main` to
+// argv[1] and B from argv[2]. All logic stays inside `pub fn main` to
 // avoid the Span/MutSpan-as-parameter restriction.
 //
 // Two rolling [51]u32 buffers form the DP row (current and previous).
 // Spec caps each string at 50 characters so a 51-cell row covers it.
-pub fun main(world: World) -> Void raises {
-    let a_opt = std.args.get(1)
-    let b_opt = std.args.get(2)
+pub fn main(world: World) -> Void raises {
+    let a_opt: Maybe<String> = std.args.get(1)
+    let b_opt: Maybe<String> = std.args.get(2)
     if a_opt.has == false || b_opt.has == false {
         check world.err.write("usage: pass A as argv[1] and B as argv[2] (Zero 0.1.2 has no stdin capability)\n")
         return
@@ -24,29 +24,29 @@ pub fun main(world: World) -> Void raises {
         return
     }
 
-    let mut prev: [51]u32 = [0_u32; 51]
-    let mut curr: [51]u32 = [0_u32; 51]
+    var prev: [51]u32 = [0_u32; 51]
+    var curr: [51]u32 = [0_u32; 51]
 
-    let mut j: usize = 0
+    var j: usize = 0
     while j <= b_len {
         prev[j] = j as u32
         j = j + 1
     }
 
-    let mut i: usize = 0
+    var i: usize = 0
     while i < a_len {
         curr[0] = (i + 1) as u32
         let ai: u8 = a_bytes[i]
-        let mut k: usize = 0
+        var k: usize = 0
         while k < b_len {
             let bk: u8 = b_bytes[k]
             let del_cost: u32 = prev[k + 1] + 1_u32
             let ins_cost: u32 = curr[k] + 1_u32
-            let mut sub_cost: u32 = prev[k]
+            var sub_cost: u32 = prev[k]
             if ai != bk {
                 sub_cost = sub_cost + 1_u32
             }
-            let mut best: u32 = del_cost
+            var best: u32 = del_cost
             if ins_cost < best {
                 best = ins_cost
             }
@@ -56,7 +56,7 @@ pub fun main(world: World) -> Void raises {
             curr[k + 1] = best
             k = k + 1
         }
-        let mut copy_i: usize = 0
+        var copy_i: usize = 0
         while copy_i <= b_len {
             prev[copy_i] = curr[copy_i]
             copy_i = copy_i + 1
@@ -66,16 +66,16 @@ pub fun main(world: World) -> Void raises {
 
     let distance: u32 = prev[b_len]
 
-    let mut buf: [16]u8 = [0_u8; 16]
-    let mut written: usize = 0
+    var buf: [16]u8 = [0_u8; 16]
+    var written: usize = 0
     if distance == 0_u32 {
         buf[0] = 48_u8
         buf[1] = 10_u8
         written = 2
     } else {
-        let mut digits: [16]u8 = [0_u8; 16]
-        let mut rem: u32 = distance
-        let mut digit_count: usize = 0
+        var digits: [16]u8 = [0_u8; 16]
+        var rem: u32 = distance
+        var digit_count: usize = 0
         while rem > 0_u32 {
             let dq: u32 = rem / 10_u32
             let dr: u32 = rem % 10_u32
@@ -83,7 +83,7 @@ pub fun main(world: World) -> Void raises {
             rem = dq
             digit_count = digit_count + 1
         }
-        let mut o: usize = 0
+        var o: usize = 0
         while o < digit_count {
             buf[o] = digits[digit_count - 1 - o]
             o = o + 1

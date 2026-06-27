@@ -2,24 +2,24 @@
 //
 // Same input convention as 001-004: argv[1] is the line to check, because
 // Zero 0.1.2 has no exposed stdin capability. All logic stays inside
-// `pub fun main` to avoid Span/MutSpan parameter restrictions.
+// `pub fn main` to avoid Span/MutSpan parameter restrictions.
 //
 // Stack of openers is a flat [1000]u8 buffer (the spec caps the input at
 // 1000 printable-ASCII characters, so the stack depth cannot exceed that).
 // Bracket bytes: '(' 40, ')' 41, '[' 91, ']' 93, '{' 123, '}' 125.
-pub fun main(world: World) -> Void raises {
-    let line_opt = std.args.get(1)
-    let mut bytes: Span<u8> = std.mem.span("")
+pub fn main(world: World) -> Void raises {
+    let line_opt: Maybe<String> = std.args.get(1)
+    var bytes: Span<u8> = std.mem.span("")
     if line_opt.has {
         bytes = std.mem.span(line_opt.value)
     }
     let n: usize = std.mem.len(bytes)
 
-    let mut stack: [1000]u8 = [0_u8; 1000]
-    let mut top: usize = 0
-    let mut balanced: Bool = true
+    var stack: [1000]u8 = [0_u8; 1000]
+    var top: usize = 0
+    var balanced: Bool = true
 
-    let mut i: usize = 0
+    var i: usize = 0
     while i < n {
         let ch: u8 = bytes[i]
         if ch == 40_u8 || ch == 91_u8 || ch == 123_u8 {
@@ -69,8 +69,8 @@ pub fun main(world: World) -> Void raises {
         }
     }
 
-    let mut out_buf: [4]u8 = [0_u8; 4]
-    let mut written: usize = 0
+    var out_buf: [4]u8 = [0_u8; 4]
+    var written: usize = 0
     if balanced && top == 0 {
         out_buf[0] = 121_u8
         out_buf[1] = 101_u8

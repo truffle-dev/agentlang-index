@@ -2,17 +2,17 @@
 //
 // Same input convention as 001-005: arguments come from argv because
 // Zero 0.1.2 has no exposed stdin capability. argv[1] is the pattern P
-// and argv[2] is the text T. All logic stays inside `pub fun main`
+// and argv[2] is the text T. All logic stays inside `pub fn main`
 // to avoid Span/MutSpan parameter restrictions.
 //
 // Greedy non-overlapping scan: once a match starts at index i, the
 // next candidate starts at i + m. The count is rendered with the
 // small-divisor u32 divmod renderer (avoids the 2^32-divisor SIGFPE).
-pub fun main(world: World) -> Void raises {
-    let p_opt = std.args.get(1)
-    let t_opt = std.args.get(2)
-    let mut p_bytes: Span<u8> = std.mem.span("")
-    let mut t_bytes: Span<u8> = std.mem.span("")
+pub fn main(world: World) -> Void raises {
+    let p_opt: Maybe<String> = std.args.get(1)
+    let t_opt: Maybe<String> = std.args.get(2)
+    var p_bytes: Span<u8> = std.mem.span("")
+    var t_bytes: Span<u8> = std.mem.span("")
     if p_opt.has {
         p_bytes = std.mem.span(p_opt.value)
     }
@@ -22,12 +22,12 @@ pub fun main(world: World) -> Void raises {
     let m: usize = std.mem.len(p_bytes)
     let n: usize = std.mem.len(t_bytes)
 
-    let mut count: u32 = 0_u32
+    var count: u32 = 0_u32
     if m > 0 && m <= n {
-        let mut i: usize = 0
+        var i: usize = 0
         while i + m <= n {
-            let mut k: usize = 0
-            let mut equal: Bool = true
+            var k: usize = 0
+            var equal: Bool = true
             while k < m {
                 if t_bytes[i + k] != p_bytes[k] {
                     equal = false
@@ -45,15 +45,15 @@ pub fun main(world: World) -> Void raises {
         }
     }
 
-    let mut out_buf: [16]u8 = [0_u8; 16]
-    let mut written: usize = 0
+    var out_buf: [16]u8 = [0_u8; 16]
+    var written: usize = 0
     if count == 0_u32 {
         out_buf[0] = 48_u8
         written = 1
     } else {
-        let mut digits: [16]u8 = [0_u8; 16]
-        let mut rem: u32 = count
-        let mut dc: usize = 0
+        var digits: [16]u8 = [0_u8; 16]
+        var rem: u32 = count
+        var dc: usize = 0
         while rem > 0_u32 {
             let dq: u32 = rem / 10_u32
             let dr: u32 = rem % 10_u32
@@ -61,7 +61,7 @@ pub fun main(world: World) -> Void raises {
             rem = dq
             dc = dc + 1
         }
-        let mut o: usize = 0
+        var o: usize = 0
         while o < dc {
             out_buf[written] = digits[dc - 1 - o]
             written = written + 1

@@ -12,9 +12,9 @@
 
 use lib
 
-pub fun main(world: World) -> Void raises {
-    let maybe_shift = std.args.get(1)
-    let maybe_text = std.args.get(2)
+pub fn main(world: World) -> Void raises {
+    let maybe_shift: Maybe<String> = std.args.get(1)
+    let maybe_text: Maybe<String> = std.args.get(2)
     if maybe_shift.has == false {
         check world.out.write("error\n")
         return
@@ -24,17 +24,17 @@ pub fun main(world: World) -> Void raises {
         return
     }
 
-    let shift_in = std.mem.span(maybe_shift.value)
-    let text_in = std.mem.span(maybe_text.value)
+    let shift_in: Span<u8> = std.mem.span(maybe_shift.value)
+    let text_in: Span<u8> = std.mem.span(maybe_text.value)
 
     // ---- Parse shift as u8 in 0..=25 ----
-    let s_len = std.mem.len(shift_in)
-    let mut s_acc: u64 = 0_u64
-    let mut s_have: Bool = false
-    let mut s_ok: Bool = true
-    let mut s_i: usize = 0
+    let s_len: usize = std.mem.len(shift_in)
+    var s_acc: u64 = 0_u64
+    var s_have: Bool = false
+    var s_ok: Bool = true
+    var s_i: usize = 0
     while s_i < s_len {
-        let c = shift_in[s_i]
+        let c: u8 = shift_in[s_i]
         if c >= 48_u8 {
             if c <= 57_u8 {
                 let d: u64 = (c - 48_u8) as u64
@@ -65,15 +65,15 @@ pub fun main(world: World) -> Void raises {
     let shift_val: u8 = s_acc as u8
 
     // ---- Validate plaintext non-empty + all lowercase letters ----
-    let t_len = std.mem.len(text_in)
+    let t_len: usize = std.mem.len(text_in)
     if t_len == 0 {
         check world.out.write("error\n")
         return
     }
-    let mut text_ok: Bool = true
-    let mut t_i: usize = 0
+    var text_ok: Bool = true
+    var t_i: usize = 0
     while t_i < t_len {
-        let b = text_in[t_i]
+        let b: u8 = text_in[t_i]
         if is_lowercase_letter(b) == false {
             text_ok = false
             t_i = t_len
@@ -87,11 +87,11 @@ pub fun main(world: World) -> Void raises {
     }
 
     // ---- Build ciphertext + trailing newline ----
-    let mut out: [1100]u8 = [0_u8; 1100]
-    let mut out_n: usize = 0
-    let mut wi: usize = 0
+    var out: [1100]u8 = [0_u8; 1100]
+    var out_n: usize = 0
+    var wi: usize = 0
     while wi < t_len {
-        let b = text_in[wi]
+        let b: u8 = text_in[wi]
         out[out_n] = shift_letter(b, shift_val)
         out_n = out_n + 1
         wi = wi + 1

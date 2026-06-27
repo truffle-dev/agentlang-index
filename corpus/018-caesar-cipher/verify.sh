@@ -120,6 +120,7 @@ check_zero_argv() {
 if want_lang zero; then
   ZERO="${ZERO:-/home/phantom/repos/zero/bin/zero}"
   if [[ -x "$ZERO" ]]; then
+    "$ZERO" import zero >/dev/null 2>&1 || { echo "FAIL: zero (import zero)"; EXIT=1; }
     check_zero_argv "$ZERO"
   else
     echo "SKIP: zero (bin/zero not found)"

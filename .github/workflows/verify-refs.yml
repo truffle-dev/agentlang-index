@@ -46,27 +46,26 @@ jobs:
       - name: Install tsx for TypeScript ref impls
         run: npm install -g tsx
 
-      - name: Clone, install, and build Zero (pinned SHA past v0.1.2)
-        # vendor/zero/CURRENT/version.txt nominally reads 0.1.2, but the corpus's
-        # ref.zero files use language features (`[expr; size]` array syntax, std.http
-        # client) that landed on main after the v0.1.2 tag. The pin below is the
-        # exact SHA used to author the corpus locally: PR #79 merge on vercel-labs/zero.
-        # Refresh both this SHA and vendor/zero/CURRENT when the corpus is re-authored
-        # against a newer Zero.
+      - name: Download Zero v0.3.4 release binary (sha256-verified)
+        # The corpus is authored against Zero v0.3.4: .0 source compiled to a graph
+        # with `zero import`, then executed with `zero run`. Pull the tagged release
+        # binary and verify its checksum rather than building from source: faster,
+        # hermetic, and tied to a published release instead of a floating SHA.
+        # Refresh this version + sha256 (and vendor/zero/CURRENT) when the corpus is
+        # re-authored against a newer Zero.
         env:
-          ZERO_PINNED_SHA: 2f182253d15c34335d70ab80aef6d7a794803fd6
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git clone https://github.com/vercel-labs/zero.git "${{ github.workspace }}/zero-src"
-          cd "${{ github.workspace }}/zero-src"
-          git checkout "$ZERO_PINNED_SHA"
-          npm install
-          make -C native/zero-c
-          test -x bin/zero
-          ./bin/zero --version
+          mkdir -p "${{ github.workspace }}/bin"
+          gh release download v0.3.4 --repo vercel-labs/zero \
+            --pattern zero-linux-x64 -O "${{ github.workspace }}/bin/zero"
+          echo "84a3c79d482260ee15660a49fc6b904afc927a230d05a4263039dd4dd1360e87  ${{ github.workspace }}/bin/zero" | sha256sum -c -
+          chmod +x "${{ github.workspace }}/bin/zero"
+          "${{ github.workspace }}/bin/zero" --version
 
       - name: Run verify.sh across every corpus task
         env:
-          ZERO: ${{ github.workspace }}/zero-src/bin/zero
+          ZERO: ${{ github.workspace }}/bin/zero
           C_INCLUDE_PATH: /usr/include
           LIBRARY_PATH: /usr/lib/x86_64-linux-gnu
         run: |

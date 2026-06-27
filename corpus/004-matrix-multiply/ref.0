@@ -3,7 +3,7 @@
 // Same input convention as 001-003: arguments come from argv because
 // Zero 0.1.2 has no exposed stdin capability. argv[1] is N; the next
 // N*N args are A row-major; the next N*N args are B row-major. All
-// logic stays inside `pub fun main` to avoid the Span/MutSpan
+// logic stays inside `pub fn main` to avoid the Span/MutSpan
 // parameter restriction.
 //
 // Matrices are stored as flat [25]i32 buffers (the spec caps N at 5
@@ -12,8 +12,8 @@
 // 5 * 99 * 99 = 49005, comfortably inside i32 range. The decimal
 // renderer handles negative values and emits N lines of space-
 // separated decimals terminated by \n.
-pub fun main(world: World) -> Void raises {
-    let n_opt = std.args.get(1)
+pub fn main(world: World) -> Void raises {
+    let n_opt: Maybe<String> = std.args.get(1)
     if n_opt.has == false {
         check world.err.write("usage: pass N as argv[1] and the matrix entries as argv[2..]\n")
         return
@@ -24,8 +24,8 @@ pub fun main(world: World) -> Void raises {
         check world.err.write("N must be in [1, 5]\n")
         return
     }
-    let mut np: usize = 0
-    let mut n_val: u32 = 0_u32
+    var np: usize = 0
+    var n_val: u32 = 0_u32
     while np < n_str_len {
         let ch: u8 = n_bytes[np]
         if ch < 48_u8 || ch > 57_u8 {
@@ -42,12 +42,12 @@ pub fun main(world: World) -> Void raises {
     let n: usize = n_val as usize
     let nn: usize = n * n
 
-    let mut a: [25]i32 = [0_i32; 25]
-    let mut b: [25]i32 = [0_i32; 25]
+    var a: [25]i32 = [0_i32; 25]
+    var b: [25]i32 = [0_i32; 25]
 
-    let mut idx: usize = 0
+    var idx: usize = 0
     while idx < nn {
-        let arg = std.args.get(2_usize + idx)
+        let arg: Maybe<String> = std.args.get(2_usize + idx)
         if arg.has == false {
             check world.err.write("missing matrix entry\n")
             return
@@ -58,8 +58,8 @@ pub fun main(world: World) -> Void raises {
             check world.err.write("empty matrix entry\n")
             return
         }
-        let mut p: usize = 0
-        let mut neg: Bool = false
+        var p: usize = 0
+        var neg: Bool = false
         if bytes[0] == 45_u8 {
             neg = true
             p = 1
@@ -68,7 +68,7 @@ pub fun main(world: World) -> Void raises {
             check world.err.write("invalid matrix entry\n")
             return
         }
-        let mut v: i32 = 0_i32
+        var v: i32 = 0_i32
         while p < bl {
             let c: u8 = bytes[p]
             if c < 48_u8 || c > 57_u8 {
@@ -85,9 +85,9 @@ pub fun main(world: World) -> Void raises {
         idx = idx + 1
     }
 
-    let mut jdx: usize = 0
+    var jdx: usize = 0
     while jdx < nn {
-        let arg = std.args.get(2_usize + nn + jdx)
+        let arg: Maybe<String> = std.args.get(2_usize + nn + jdx)
         if arg.has == false {
             check world.err.write("missing matrix entry\n")
             return
@@ -98,8 +98,8 @@ pub fun main(world: World) -> Void raises {
             check world.err.write("empty matrix entry\n")
             return
         }
-        let mut p: usize = 0
-        let mut neg: Bool = false
+        var p: usize = 0
+        var neg: Bool = false
         if bytes[0] == 45_u8 {
             neg = true
             p = 1
@@ -108,7 +108,7 @@ pub fun main(world: World) -> Void raises {
             check world.err.write("invalid matrix entry\n")
             return
         }
-        let mut v: i32 = 0_i32
+        var v: i32 = 0_i32
         while p < bl {
             let c: u8 = bytes[p]
             if c < 48_u8 || c > 57_u8 {
@@ -125,15 +125,15 @@ pub fun main(world: World) -> Void raises {
         jdx = jdx + 1
     }
 
-    let mut out_buf: [512]u8 = [0_u8; 512]
-    let mut written: usize = 0
+    var out_buf: [512]u8 = [0_u8; 512]
+    var written: usize = 0
 
-    let mut i: usize = 0
+    var i: usize = 0
     while i < n {
-        let mut j: usize = 0
+        var j: usize = 0
         while j < n {
-            let mut s: i32 = 0_i32
-            let mut k: usize = 0
+            var s: i32 = 0_i32
+            var k: usize = 0
             while k < n {
                 s = s + a[i * n + k] * b[k * n + j]
                 k = k + 1
@@ -143,8 +143,8 @@ pub fun main(world: World) -> Void raises {
                 out_buf[written] = 32_u8
                 written = written + 1
             }
-            let mut is_neg: Bool = false
-            let mut u: u32 = 0_u32
+            var is_neg: Bool = false
+            var u: u32 = 0_u32
             if s < 0_i32 {
                 is_neg = true
                 u = (0_i32 - s) as u32
@@ -159,9 +159,9 @@ pub fun main(world: World) -> Void raises {
                 out_buf[written] = 48_u8
                 written = written + 1
             } else {
-                let mut digits: [16]u8 = [0_u8; 16]
-                let mut rem: u32 = u
-                let mut dc: usize = 0
+                var digits: [16]u8 = [0_u8; 16]
+                var rem: u32 = u
+                var dc: usize = 0
                 while rem > 0_u32 {
                     let dq: u32 = rem / 10_u32
                     let dr: u32 = rem % 10_u32
@@ -169,7 +169,7 @@ pub fun main(world: World) -> Void raises {
                     rem = dq
                     dc = dc + 1
                 }
-                let mut o: usize = 0
+                var o: usize = 0
                 while o < dc {
                     out_buf[written] = digits[dc - 1 - o]
                     written = written + 1
