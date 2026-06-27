@@ -31,13 +31,26 @@ the verified recipe for the source half of that move.
    | `std.mem.len(...)`        | `usize`        |
    | `someMaybe.value`         | `String`       |
    | `someByteSpan[i]`         | `u8`           |
+   | `userFn(...)`             | `userFn`'s declared return type |
+   | typed-literal arithmetic  | the literal's suffix type (`emit_i - 1_u32` -> `u32`) |
 
    `Maybe<T>` still exposes `.has` / `.value`; read `.value` only inside a
    visible `if x.has { ... }` guard (unchanged from 0.1.2).
 
+   The last two rows are read, not guessed. For a user-fn call the porter scans
+   the source plus any sibling `.0` files it is given for `pub fn NAME(..) -> RET`
+   signatures and annotates with the declared `RET`; for package tasks pass every
+   `src/*.0` so cross-file calls (main.0 -> lib.0) resolve. Typed-literal
+   arithmetic fires only when the RHS has no field access, no indexing, and no
+   call, contains an arithmetic operator, and carries a typed numeric literal.
+
 `port_ref.py` applies all three transforms. It annotates only the RHS shapes
 above and leaves any other inferred `let` untouched (printed to stderr as
 `UNHANDLED`) so the compiler flags it loudly rather than the porter guessing.
+
+```
+port_ref.py [sibling1.0 sibling2.0 ...] < ref.zero > ported.0
+```
 
 ## What changes in how a `ref` is compiled and run
 
@@ -64,25 +77,41 @@ Two gotchas:
 - `if` is still statement-only, not an r-value (`let x: T = if c {..} else {..}`
   still errors PAR100). The 0.1.2 workarounds in the corpus already avoid this.
 
-`zero-graph-shim.sh` bridges the old call into the new flow (copy to a `.0`
-temp, import to a graph, run the graph), so the existing per-task `verify.sh`
-runs unchanged against ported sources. It is a migration aid, not the final
-harness.
+### Package (multi-file) tasks
+
+The multi-file tasks (018, 019) ship as a Zero package: `zero/zero.json` +
+`zero/src/main.0` + `zero/src/lib.0`, invoked as `zero run zero -- ARGS`. The
+source transforms are identical (every `src/*.0` through `port_ref.py`,
+`zero.json` untouched, `use lib` survives 0.3.4 unchanged). The compile flow
+differs from single files:
+
+```
+zero import zero          # writes zero/zero.graph in place; --out is REJECTED
+zero run zero -- ARGS
+```
+
+`zero import <pkgdir> --out f.graph` errors `RGP002: repository graph
+import/export writes fixed repository paths and does not support --out`. The
+package import is in place and the run target is the directory, not a `.graph`.
+
+`zero-graph-shim.sh` handles both shapes: a `*.zero` argument takes the
+copy-to-`.0` / import-to-graph / run-graph path; a directory argument takes the
+in-place package import / run-directory path.
 
 ## Proof
 
-`verify-batch.sh` ports each single-file, non-HTTP corpus task through
-`port_ref.py` and runs its unchanged `verify.sh --lang zero` through the shim
-against the installed 0.3.4 binary. As of this commit all 15 pass byte-exact
-across every public + hidden case:
+`verify-batch.sh` ports each non-HTTP corpus task through `port_ref.py` and runs
+its unchanged `verify.sh --lang zero` through the shim against the installed
+0.3.4 binary. As of this commit all 17 (15 single-file + 2 package) pass
+byte-exact across every public + hidden case:
 
 ```
 000-hello-stdout 001-fibonacci-memoized 002-sieve-prime-count
 003-levenshtein-distance 004-matrix-multiply 005-balanced-parens
 006-substring-count 007-csv-line-tokenize 008-word-reverse 009-word-count
 010-byte-frequency 011-rle-encode 015-checked-divide-u32 016-parse-list-sum
-017-checked-add-overflow
----- PASS=15 FAIL=0
+017-checked-add-overflow 018-caesar-cipher 019-run-length-encode
+---- PASS=17 FAIL=0
 ```
 
 Run it yourself (needs zero 0.3.4 on PATH or `ZERO_REAL` set):
@@ -96,8 +125,6 @@ migration/zero-0.3.4/verify-batch.sh
 - **HTTP tasks 012-014** need a live fixture server plus `std.http` / `std.net`
   return-type annotations (`std.net.host`, `std.http.client`, `std.http.fetch`,
   `std.http.resultStatus`, ...). Not covered by the table above.
-- **Multi-file tasks 018, 019** use a `zero/` package layout (`zero.json` +
-  `src/`), not a single `ref.zero`. They import a package directory, not a file.
 - Renaming `ref.zero` -> `ref.0`, rewriting every `verify.sh` Zero block to the
   import->run-graph flow, bumping the CI binary, and re-porting
   `bench/runner.ts`'s extraction + invocation are the cutover commit, done as

@@ -26,4 +26,20 @@ if [[ "${1:-}" == "run" && "${2:-}" == *.zero ]]; then
   exit $rc
 fi
 
+if [[ "${1:-}" == "run" && -d "${2:-}" ]]; then
+  dir="$2"; shift 2
+  # Package flow (zero.json + src/main.0 + src/lib.0). 0.3.4 import for a
+  # package writes a fixed zero.graph inside the package dir; --out is rejected
+  # (RGP002), so we import in place, then run the directory.
+  ierr="$(mktemp)"
+  if ! "$REAL" import "$dir" >/dev/null 2>"$ierr"; then
+    cat "$ierr" >&2          # surface import diagnostics on failure
+    rm -f "$ierr"
+    exit 1
+  fi
+  rm -f "$ierr"              # import succeeded: discard any benign stderr
+  "$REAL" run "$dir" "$@"
+  exit $?
+fi
+
 exec "$REAL" "$@"

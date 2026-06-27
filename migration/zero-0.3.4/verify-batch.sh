@@ -8,10 +8,13 @@
 #      the 0.1.2 `zero run ref.zero` call into the 0.3.4 import->run-graph flow
 #   4. asserts the task PASSes byte-exact across every public + hidden case
 #
+# The multi-file tasks (018, 019) use a zero/ package layout (zero.json +
+# src/main.0 + src/lib.0); they are ported the same way (every src/*.0 through
+# port_ref.py, zero.json untouched) and driven through the shim's package
+# branch, which bridges `zero run zero -- args` into the 0.3.4 import->run flow.
+#
 # The live corpus is never mutated; this only reads it. HTTP tasks (012-014)
-# need a fixture server + std.http type annotations and are out of scope here;
-# the multi-file tasks (018, 019) use a zero/ package layout, also out of scope
-# for this single-file batch proof.
+# need a fixture server + std.http type annotations and are out of scope here.
 #
 # Requires: zero 0.3.4 on PATH (or ZERO_REAL pointing at it), python3.
 set -uo pipefail
@@ -42,6 +45,41 @@ for t in $BATCH; do
   if [[ -s "$td/unhandled" ]]; then
     echo "WARN $t has unhandled inferred lets:"; sed 's/^/    /' "$td/unhandled"
   fi
+  cp "$ver" "$td/verify.sh"
+  out="$(cd "$td" && ZERO="$SHIM" bash verify.sh --lang zero 2>&1)"
+  if grep -q "^PASS: zero" <<<"$out"; then
+    echo "PASS $t"; PASS=$((PASS+1))
+  else
+    echo "FAIL $t:"; sed 's/^/    /' <<<"$out"; FAIL=$((FAIL+1))
+  fi
+  rm -rf "$td"
+done
+
+PKG_BATCH="018-caesar-cipher 019-run-length-encode"
+for t in $PKG_BATCH; do
+  pkg="$REPO/corpus/$t/zero"
+  ver="$REPO/corpus/$t/verify.sh"
+  if [[ ! -d "$pkg" || ! -f "$ver" ]]; then
+    echo "MISSING $t"; FAIL=$((FAIL+1)); continue
+  fi
+  td="$(mktemp -d)"
+  cp -r "$pkg" "$td/zero"
+  # Port every package source (zero.json is left untouched). Every src/*.0 file
+  # is passed as a sibling to each port invocation so cross-file user-fn calls
+  # (e.g. main.0 calling a lib.0 export) resolve their declared return type.
+  siblings=("$td"/zero/src/*.0)
+  port_err=0
+  for f in "${siblings[@]}"; do
+    [[ -f "$f" ]] || continue
+    if ! python3 "$PORT" "${siblings[@]}" < "$f" > "$f.ported" 2>"$td/unhandled"; then
+      echo "FAIL $t (port_ref.py error on $(basename "$f"))"; cat "$td/unhandled"; port_err=1; break
+    fi
+    mv "$f.ported" "$f"
+    if [[ -s "$td/unhandled" ]]; then
+      echo "WARN $t/$(basename "$f") has unhandled inferred lets:"; sed 's/^/    /' "$td/unhandled"
+    fi
+  done
+  if (( port_err )); then FAIL=$((FAIL+1)); rm -rf "$td"; continue; fi
   cp "$ver" "$td/verify.sh"
   out="$(cd "$td" && ZERO="$SHIM" bash verify.sh --lang zero 2>&1)"
   if grep -q "^PASS: zero" <<<"$out"; then
