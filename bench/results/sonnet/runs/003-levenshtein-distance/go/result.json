@@ -1,0 +1,84 @@
+{
+  "model": "sonnet",
+  "task": "003-levenshtein-distance",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "5\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "4\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 14195,
+  "build_ms": 254,
+  "exec_ms": 10,
+  "total_ms": 14460,
+  "prompt_tokens": 3,
+  "completion_tokens": 504
+}

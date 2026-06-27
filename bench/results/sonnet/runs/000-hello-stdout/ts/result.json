@@ -1,0 +1,40 @@
+{
+  "model": "sonnet",
+  "task": "000-hello-stdout",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "hello\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 48
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "hello\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 48
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 2,
+  "num_passed": 2,
+  "api_ms": 10781,
+  "build_ms": 0,
+  "exec_ms": 96,
+  "total_ms": 10878,
+  "prompt_tokens": 3,
+  "completion_tokens": 18
+}

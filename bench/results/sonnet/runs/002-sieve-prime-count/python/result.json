@@ -1,0 +1,84 @@
+{
+  "model": "sonnet",
+  "task": "002-sieve-prime-count",
+  "lang": "python",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 15
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 13
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "4\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 13
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "25\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 13
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "168\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 13
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1229\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 16
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 11798,
+  "build_ms": 0,
+  "exec_ms": 83,
+  "total_ms": 11882,
+  "prompt_tokens": 3,
+  "completion_tokens": 159
+}

@@ -1,0 +1,90 @@
+{
+  "model": "sonnet",
+  "task": "015-checked-divide-u32",
+  "lang": "python",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "small positive divide (20 / 4 == 5)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "5\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 37
+    },
+    {
+      "name": "zero dividend (0 / 7 == 0)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 22
+    },
+    {
+      "name": "integer floor division (10 / 3 == 3)",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "3\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 25
+    },
+    {
+      "name": "divide by zero",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 22
+    },
+    {
+      "name": "non-digit divisor",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 19
+    },
+    {
+      "name": "dividend exceeds u32::MAX",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 21
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 16828,
+  "build_ms": 0,
+  "exec_ms": 146,
+  "total_ms": 16976,
+  "prompt_tokens": 3,
+  "completion_tokens": 210
+}

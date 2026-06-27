@@ -1,0 +1,90 @@
+{
+  "model": "sonnet",
+  "task": "012-http-status-code",
+  "lang": "ts",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "200 OK from fixture",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "200\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 59
+    },
+    {
+      "name": "404 Not Found from fixture",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "404\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 61
+    },
+    {
+      "name": "500 Internal Server Error from fixture",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "500\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 58
+    },
+    {
+      "name": "503 Service Unavailable from fixture",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "503\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 49
+    },
+    {
+      "name": "fixture root path defaults to 200",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "200\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 47
+    },
+    {
+      "name": "unresolvable host surfaces as error",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 87
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 13047,
+  "build_ms": 0,
+  "exec_ms": 361,
+  "total_ms": 13455,
+  "prompt_tokens": 3,
+  "completion_tokens": 276
+}

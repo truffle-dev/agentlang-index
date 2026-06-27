@@ -1,0 +1,90 @@
+{
+  "model": "sonnet",
+  "task": "018-caesar-cipher",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "shift 3, abc -> def",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "name": "shift 0 is identity, hello -> hello",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "name": "shift 25, abc -> zab (wrap)",
+      "hidden": false,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "name": "shift 13, xyz -> klm (rot13)",
+      "hidden": true,
+      "passed": false,
+      "stdout_match": false,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "name": "shift 26 rejects (out of range)",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "name": "uppercase H in plaintext rejects",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "error\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    }
+  ],
+  "pass_rate": 0.3333333333333333,
+  "num_cases": 6,
+  "num_passed": 2,
+  "api_ms": 17029,
+  "build_ms": 292,
+  "exec_ms": 8,
+  "total_ms": 17329,
+  "prompt_tokens": 3,
+  "completion_tokens": 587
+}

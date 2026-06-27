@@ -1,0 +1,73 @@
+{
+  "model": "sonnet",
+  "task": "001-fibonacci-memoized",
+  "lang": "go",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "55\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "12586269025\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "610\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 5,
+  "num_passed": 5,
+  "api_ms": 13339,
+  "build_ms": 261,
+  "exec_ms": 8,
+  "total_ms": 13610,
+  "prompt_tokens": 3,
+  "completion_tokens": 260
+}

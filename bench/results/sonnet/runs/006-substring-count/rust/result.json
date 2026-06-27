@@ -1,0 +1,90 @@
+{
+  "model": "sonnet",
+  "task": "006-substring-count",
+  "lang": "rust",
+  "passed": true,
+  "extracted": true,
+  "case_results": [
+    {
+      "name": "simple repetition",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "4\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "name": "greedy non-overlap on aa over aaaa",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "name": "no occurrences",
+      "hidden": false,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "name": "banana with na pattern",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "2\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 1
+    },
+    {
+      "name": "pattern equals text",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    },
+    {
+      "name": "longer pattern in mixed text",
+      "hidden": true,
+      "passed": true,
+      "stdout_match": true,
+      "stderr_empty": true,
+      "exit_zero": true,
+      "stdout": "4\n",
+      "stderr": "",
+      "exit_code": 0,
+      "ms": 2
+    }
+  ],
+  "pass_rate": 1,
+  "num_cases": 6,
+  "num_passed": 6,
+  "api_ms": 13243,
+  "build_ms": 258,
+  "exec_ms": 10,
+  "total_ms": 13511,
+  "prompt_tokens": 3,
+  "completion_tokens": 244
+}

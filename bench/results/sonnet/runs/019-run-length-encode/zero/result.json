@@ -1,0 +1,18 @@
+{
+  "model": "sonnet",
+  "task": "019-run-length-encode",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 142441,
+  "build_ms": 4,
+  "exec_ms": 0,
+  "total_ms": 142447,
+  "prompt_tokens": 2,
+  "completion_tokens": 9030,
+  "error": "build_error: zero import failed: /home/phantom/repos/agentlang-index/bench/results/sonnet/runs/019-run-length-encode/zero/scratch/zero/src/main.0:3:24 PAR100: expected return type arrow\n  expected: ->\n  actual: {\n  help: use canonical .0 text source\n  explain: zero explain PAR100\n"
+}

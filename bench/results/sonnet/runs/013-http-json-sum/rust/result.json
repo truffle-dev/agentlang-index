@@ -1,0 +1,18 @@
+{
+  "model": "sonnet",
+  "task": "013-http-json-sum",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 15217,
+  "build_ms": 118,
+  "exec_ms": 0,
+  "total_ms": 15337,
+  "prompt_tokens": 3,
+  "completion_tokens": 441,
+  "error": "build_error: cargo build failed: error[E0433]: cannot find module or crate `ureq` in this scope\n  --> ref.rs:23:18\n   |\n23 |     let client = ureq::AgentBuilder::new()\n   |                  ^^^^ use of unresolved module or unlinked crate `ureq`\n   |\n   = help: if you wanted to use a crate named `ureq`, use `cargo add ureq` to add it to your `Cargo.toml`\n\nerror[E0433]: cannot find module or crate `serde_json` in this scope\n  --> ref.rs:38:34\n   |\n38 |     let val: serde_json::Value = serde_json::from_str(&text).ok()?;\n   |      "
+}

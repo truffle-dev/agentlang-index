@@ -31,6 +31,7 @@ const PRICING: Record<string, { prompt: number; completion: number; provider: st
   "gpt-4o": { prompt: 2.5, completion: 10.0, provider: "OpenAI" },
   "gpt-4o-mini": { prompt: 0.15, completion: 0.6, provider: "OpenAI" },
   "opus": { prompt: 15.0, completion: 75.0, provider: "Anthropic" },
+  "sonnet": { prompt: 3.0, completion: 15.0, provider: "Anthropic" },
 };
 
 type Attempt = {

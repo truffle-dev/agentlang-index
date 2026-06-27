@@ -1,0 +1,18 @@
+{
+  "model": "sonnet",
+  "task": "015-checked-divide-u32",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 13669,
+  "build_ms": 2,
+  "exec_ms": 0,
+  "total_ms": 13671,
+  "prompt_tokens": 2,
+  "completion_tokens": 279,
+  "error": "build_error: zero import failed: /home/phantom/repos/agentlang-index/bench/results/sonnet/runs/015-checked-divide-u32/zero/scratch/ref.0:1:11 PAR100: expected return type arrow\n  expected: ->\n  actual: {\n  help: use canonical .0 text source\n  explain: zero explain PAR100\n"
+}

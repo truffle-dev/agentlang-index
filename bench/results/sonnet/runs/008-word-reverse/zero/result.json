@@ -1,0 +1,18 @@
+{
+  "model": "sonnet",
+  "task": "008-word-reverse",
+  "lang": "zero",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 119846,
+  "build_ms": 2,
+  "exec_ms": 0,
+  "total_ms": 119849,
+  "prompt_tokens": 2,
+  "completion_tokens": 7743,
+  "error": "build_error: zero import failed: /home/phantom/repos/agentlang-index/bench/results/sonnet/runs/008-word-reverse/zero/scratch/ref.0:1:1 PAR100: expected canonical declaration\n  expected: declaration\n  actual: import\n  help: use canonical .0 text source\n  explain: zero explain PAR100\n"
+}

@@ -1,0 +1,18 @@
+{
+  "model": "sonnet",
+  "task": "012-http-status-code",
+  "lang": "rust",
+  "passed": false,
+  "extracted": true,
+  "case_results": [],
+  "pass_rate": 0,
+  "num_cases": 6,
+  "num_passed": 0,
+  "api_ms": 12591,
+  "build_ms": 103,
+  "exec_ms": 0,
+  "total_ms": 12695,
+  "prompt_tokens": 3,
+  "completion_tokens": 220,
+  "error": "build_error: cargo build failed: error[E0433]: cannot find module or crate `ureq` in this scope\n  --> ref.rs:17:13\n   |\n17 |         Err(ureq::Error::Status(code, _)) => format!(\"{}\\n\", code),\n   |             ^^^^ use of unresolved module or unlinked crate `ureq`\n   |\n   = help: if you wanted to use a crate named `ureq`, use `cargo add ureq` to add it to your `Cargo.toml`\nhelp: consider importing one of these items\n   |\n 1 + use crate::io::Error;\n   |\n 1 + use std::error::Error;\n   |\n 1 + use std::fmt::Error;\n   |\n 1 + use std"
+}
