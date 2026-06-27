@@ -15,25 +15,25 @@
 
 use lib
 
-pub fun main(world: World) -> Void raises {
-    let maybe_text = std.args.get(1)
+pub fn main(world: World) -> Void raises {
+    let maybe_text: Maybe<String> = std.args.get(1)
     if maybe_text.has == false {
         check world.out.write("error\n")
         return
     }
-    let text_in = std.mem.span(maybe_text.value)
+    let text_in: Span<u8> = std.mem.span(maybe_text.value)
 
-    let t_len = std.mem.len(text_in)
+    let t_len: usize = std.mem.len(text_in)
     if t_len == 0 {
         check world.out.write("error\n")
         return
     }
 
     // Validate all bytes in [a-z] first.
-    let mut text_ok: Bool = true
-    let mut v_i: usize = 0
+    var text_ok: Bool = true
+    var v_i: usize = 0
     while v_i < t_len {
-        let b = text_in[v_i]
+        let b: u8 = text_in[v_i]
         if is_lowercase_letter(b) == false {
             text_ok = false
             v_i = t_len
@@ -49,15 +49,15 @@ pub fun main(world: World) -> Void raises {
     // Walk maximal runs and emit byte + decimal count.
     // Output buffer: each input byte expands to at most 1 + 10 bytes
     // (letter + up to 10 decimal digits for u32 max). Plus newline.
-    let mut out: [16384]u8 = [0_u8; 16384]
-    let mut out_n: usize = 0
+    var out: [16384]u8 = [0_u8; 16384]
+    var out_n: usize = 0
 
-    let mut run_start: usize = 0
+    var run_start: usize = 0
     while run_start < t_len {
-        let run_byte = text_in[run_start]
-        let mut run_len: usize = 1
-        let mut probe: usize = run_start + 1
-        let mut scanning: Bool = true
+        let run_byte: u8 = text_in[run_start]
+        var run_len: usize = 1
+        var probe: usize = run_start + 1
+        var scanning: Bool = true
         while scanning {
             if probe >= t_len {
                 scanning = false
@@ -72,18 +72,18 @@ pub fun main(world: World) -> Void raises {
         }
 
         let run_len_u32: u32 = run_len as u32
-        let digit_count = decimal_length(run_len_u32)
+        let digit_count: u32 = decimal_length(run_len_u32)
 
         // Emit the byte.
         out[out_n] = run_byte
         out_n = out_n + 1
 
         // Emit decimal digits left-to-right by iterating positions.
-        let mut emit_i: u32 = digit_count
+        var emit_i: u32 = digit_count
         while emit_i > 0_u32 {
-            let pos = emit_i - 1_u32
-            let mut divisor: u32 = 1_u32
-            let mut p: u32 = 0_u32
+            let pos: u32 = emit_i - 1_u32
+            var divisor: u32 = 1_u32
+            var p: u32 = 0_u32
             while p < pos {
                 divisor = divisor * 10_u32
                 p = p + 1_u32

@@ -33,6 +33,9 @@ Cargo.lock
 
 # Zero
 .zero/
+# Compiled graph artifacts: `zero import` output, rebuilt by verify.sh on demand.
+corpus/**/ref.graph
+corpus/**/zero/zero.graph
 
 # Editor and OS
 .DS_Store

@@ -86,7 +86,8 @@ check_lang() {
 if want_lang zero; then
   ZERO="${ZERO:-/home/phantom/repos/zero/bin/zero}"
   if [[ -x "$ZERO" ]]; then
-    check_lang zero argv "$ZERO run ref.zero %N%"
+    "$ZERO" import ref.0 --out ref.graph >/dev/null 2>&1 || { echo "FAIL: zero (import ref.0)"; EXIT=1; }
+    check_lang zero argv "$ZERO run ref.graph %N%"
   else
     echo "SKIP: zero (bin/zero not found)"
   fi

@@ -14,22 +14,22 @@
 // main ends with an explicit `return` to dodge the trailing-write
 // byte-count-as-exit-code codegen quirk.
 
-pub fun main(world: World) -> Void raises {
-    let maybe_n = std.args.get(1)
+pub fn main(world: World) -> Void raises {
+    let maybe_n: Maybe<String> = std.args.get(1)
     if maybe_n.has == false {
         check world.out.write("error\n")
         return
     }
-    let n_in = std.mem.span(maybe_n.value)
+    let n_in: Span<u8> = std.mem.span(maybe_n.value)
 
     // ---- Parse N as u32, reject > 1000 ----
-    let n_len = std.mem.len(n_in)
-    let mut n_acc: u64 = 0_u64
-    let mut n_have: Bool = false
-    let mut n_ok: Bool = true
-    let mut n_i: usize = 0
+    let n_len: usize = std.mem.len(n_in)
+    var n_acc: u64 = 0_u64
+    var n_have: Bool = false
+    var n_ok: Bool = true
+    var n_i: usize = 0
     while n_i < n_len {
-        let c = n_in[n_i]
+        let c: u8 = n_in[n_i]
         if c >= 48_u8 {
             if c <= 57_u8 {
                 let d: u64 = (c - 48_u8) as u64
@@ -60,7 +60,7 @@ pub fun main(world: World) -> Void raises {
     let n_val: u32 = n_acc as u32
 
     // ---- Verify std.args.len() >= n_val + 2 (program + N-arg + N values) ----
-    let argc = std.args.len()
+    let argc: usize = std.args.len()
     let needed: usize = (n_val as usize) + 2_usize
     if argc < needed {
         check world.out.write("error\n")
@@ -68,24 +68,24 @@ pub fun main(world: World) -> Void raises {
     }
 
     // ---- Loop N times: parse argv[i+1] (i in 1..=N), accumulate in u64 ----
-    let mut total: u64 = 0_u64
-    let mut idx: u32 = 0_u32
-    let mut loop_ok: Bool = true
+    var total: u64 = 0_u64
+    var idx: u32 = 0_u32
+    var loop_ok: Bool = true
     while idx < n_val {
         let arg_pos: usize = (idx as usize) + 2_usize
-        let maybe_v = std.args.get(arg_pos)
+        let maybe_v: Maybe<String> = std.args.get(arg_pos)
         if maybe_v.has == false {
             loop_ok = false
             idx = n_val
         } else {
-            let v_in = std.mem.span(maybe_v.value)
-            let v_len = std.mem.len(v_in)
-            let mut v_acc: u64 = 0_u64
-            let mut v_have: Bool = false
-            let mut v_ok: Bool = true
-            let mut v_i: usize = 0
+            let v_in: Span<u8> = std.mem.span(maybe_v.value)
+            let v_len: usize = std.mem.len(v_in)
+            var v_acc: u64 = 0_u64
+            var v_have: Bool = false
+            var v_ok: Bool = true
+            var v_i: usize = 0
             while v_i < v_len {
-                let c = v_in[v_i]
+                let c: u8 = v_in[v_i]
                 if c >= 48_u8 {
                     if c <= 57_u8 {
                         let d: u64 = (c - 48_u8) as u64
@@ -131,22 +131,22 @@ pub fun main(world: World) -> Void raises {
     }
 
     // ---- Render total (u64, but constrained to u32 range) as decimal + newline ----
-    let mut out: [16]u8 = [0_u8; 16]
-    let mut out_n: usize = 0
+    var out: [16]u8 = [0_u8; 16]
+    var out_n: usize = 0
     if total == 0_u64 {
         out[out_n] = 48_u8
         out_n = out_n + 1
     } else {
-        let mut tmp: [16]u8 = [0_u8; 16]
-        let mut tn: usize = 0
-        let mut v: u64 = total
+        var tmp: [16]u8 = [0_u8; 16]
+        var tn: usize = 0
+        var v: u64 = total
         while v > 0_u64 {
             let digit_u64: u64 = 48_u64 + (v % 10_u64)
             tmp[tn] = digit_u64 as u8
             tn = tn + 1
             v = v / 10_u64
         }
-        let mut wj: usize = 0
+        var wj: usize = 0
         while wj < tn {
             out[out_n] = tmp[tn - 1 - wj]
             out_n = out_n + 1

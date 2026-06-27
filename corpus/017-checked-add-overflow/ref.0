@@ -15,9 +15,9 @@
 // main ends with an explicit `return` to dodge the trailing-write
 // byte-count-as-exit-code codegen quirk surfaced on task 012.
 
-pub fun main(world: World) -> Void raises {
-    let maybe_a = std.args.get(1)
-    let maybe_b = std.args.get(2)
+pub fn main(world: World) -> Void raises {
+    let maybe_a: Maybe<String> = std.args.get(1)
+    let maybe_b: Maybe<String> = std.args.get(2)
     if maybe_a.has == false {
         check world.out.write("error\n")
         return
@@ -27,17 +27,17 @@ pub fun main(world: World) -> Void raises {
         return
     }
 
-    let a_in = std.mem.span(maybe_a.value)
-    let b_in = std.mem.span(maybe_b.value)
+    let a_in: Span<u8> = std.mem.span(maybe_a.value)
+    let b_in: Span<u8> = std.mem.span(maybe_b.value)
 
     // ---- Parse a as u32, reject non-digit / empty / > u32::MAX ----
-    let a_len = std.mem.len(a_in)
-    let mut a_acc: u64 = 0_u64
-    let mut a_have: Bool = false
-    let mut a_ok: Bool = true
-    let mut a_i: usize = 0
+    let a_len: usize = std.mem.len(a_in)
+    var a_acc: u64 = 0_u64
+    var a_have: Bool = false
+    var a_ok: Bool = true
+    var a_i: usize = 0
     while a_i < a_len {
-        let c = a_in[a_i]
+        let c: u8 = a_in[a_i]
         if c >= 48_u8 {
             if c <= 57_u8 {
                 let d: u64 = (c - 48_u8) as u64
@@ -67,13 +67,13 @@ pub fun main(world: World) -> Void raises {
     }
 
     // ---- Parse b as u32 ----
-    let b_len = std.mem.len(b_in)
-    let mut b_acc: u64 = 0_u64
-    let mut b_have: Bool = false
-    let mut b_ok: Bool = true
-    let mut b_i: usize = 0
+    let b_len: usize = std.mem.len(b_in)
+    var b_acc: u64 = 0_u64
+    var b_have: Bool = false
+    var b_ok: Bool = true
+    var b_i: usize = 0
     while b_i < b_len {
-        let c = b_in[b_i]
+        let c: u8 = b_in[b_i]
         if c >= 48_u8 {
             if c <= 57_u8 {
                 let d: u64 = (c - 48_u8) as u64
@@ -111,22 +111,22 @@ pub fun main(world: World) -> Void raises {
     let s_val: u32 = sum as u32
 
     // ---- Render s_val as decimal + newline ----
-    let mut out: [16]u8 = [0_u8; 16]
-    let mut out_n: usize = 0
+    var out: [16]u8 = [0_u8; 16]
+    var out_n: usize = 0
     if s_val == 0_u32 {
         out[out_n] = 48_u8
         out_n = out_n + 1
     } else {
-        let mut tmp: [16]u8 = [0_u8; 16]
-        let mut tn: usize = 0
-        let mut v: u32 = s_val
+        var tmp: [16]u8 = [0_u8; 16]
+        var tn: usize = 0
+        var v: u32 = s_val
         while v > 0_u32 {
             let digit_u32: u32 = 48_u32 + (v % 10_u32)
             tmp[tn] = digit_u32 as u8
             tn = tn + 1
             v = v / 10_u32
         }
-        let mut wj: usize = 0
+        var wj: usize = 0
         while wj < tn {
             out[out_n] = tmp[tn - 1 - wj]
             out_n = out_n + 1

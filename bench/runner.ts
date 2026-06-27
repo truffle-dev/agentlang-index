@@ -40,7 +40,9 @@ const REPO_ROOT = "/home/phantom/repos/agentlang-index";
 const CORPUS_DIR = join(REPO_ROOT, "corpus");
 const BENCH_DIR = join(REPO_ROOT, "bench");
 const RESULTS_DIR = join(BENCH_DIR, "results");
-const ZERO_BIN = "/home/phantom/repos/zero/bin/zero";
+const ZERO_BIN =
+  (process.env.ZERO_BIN ?? process.env.ZERO ?? "").trim() ||
+  join(process.env.HOME ?? "/home/phantom", ".local/bin/zero");
 const CLAUDE_BIN =
   (process.env.CLAUDE_BIN ?? "").trim() ||
   join(process.env.HOME ?? "/home/phantom", ".local/bin/claude");
@@ -178,7 +180,7 @@ function buildUserPrompt(task: Task, lang: string): string {
   if (lang === "zero" && task.hasZeroProject) {
     convention = `\n\n## Multi-file Zero project layout\n\nWrite a multi-file Zero project. Emit at minimum:\n\n=== zero.json ===\n{\n  "package": { "name": "${("t_" + task.slug.replace(/-/g, "_"))}", "version": "0.1.0", "license": "MIT" },\n  "targets": { "cli": { "kind": "exe", "main": "src/main.0", "defaultTarget": "linux-musl-x64", "devTarget": "host", "releaseProfile": "release-small" } },\n  "deps": {}, "profiles": { "dev": { "inherits": "dev" }, "release-small": { "inherits": "release-small" } }\n}\n\n=== src/main.0 ===\n(your driver, with \`use lib\` to pull in helpers)\n\n=== src/lib.0 ===\n(scalar-only exports, no Span<u8>/shape values)\n\nInvoked as: zero run <projdir> -- <argv...>\n`;
   } else if (lang === "zero") {
-    convention = `\n\n## Single-file Zero layout\n\nWrite a single-file Zero program (ref.zero). Read arguments from std.args (no stdin available). Invoked as: zero run ref.zero <argv...>\n`;
+    convention = `\n\n## Single-file Zero layout\n\nWrite a single-file Zero program (ref.0). Read arguments from std.args (no stdin available). It is compiled with \`zero import ref.0 --out ref.graph\` and executed as: zero run ref.graph <argv...>\n`;
   }
   return `## Spec\n\n${stripScaffoldMarker(task.promptMd)}${convention}`;
 }
@@ -413,7 +415,7 @@ function materializeFiles(
   }
 
   // Single-file languages.
-  const fileName = lang === "zero" ? "ref.zero" : `ref.${LANG_EXT[lang]}`;
+  const fileName = `ref.${LANG_EXT[lang]}`;
   const content = files.__single__ ?? Object.values(files)[0] ?? "";
   if (!content) return { ok: false, entrypoint: "", error: "no content extracted" };
   writeFileSync(join(scratchDir, fileName), content);
@@ -503,17 +505,48 @@ function build(
     };
   }
   if (lang === "zero") {
-    // Zero compiles on `zero run`. Smoke-build with `zero build` if available;
-    // otherwise just trust the runner.
+    // Zero 0.3.4 compiles .0 source to a graph with `zero import`, then executes
+    // the graph with `zero run`. Build the graph here (timed under build_ms) so the
+    // timed run executes a ready graph, mirroring the rust/go ahead-of-time compile.
     if (task.hasZeroProject) {
-      // entrypoint is the project dir.
+      // entrypoint is the project dir; `zero import <dir>` writes <dir>/zero.graph.
+      const res = spawnSync(ZERO_BIN, ["import", entrypoint], {
+        cwd: scratchDir,
+        env: { ...process.env, PATH: process.env.PATH! },
+        stdio: ["ignore", "pipe", "pipe"],
+        timeout: 120_000,
+      });
+      if (res.status !== 0) {
+        return {
+          ok: false,
+          runner: [],
+          ms: Date.now() - t0,
+          error: `zero import failed: ${res.stderr?.toString().slice(0, 500)}`,
+        };
+      }
       return {
         ok: true,
         runner: [ZERO_BIN, "run", entrypoint, "--"],
         ms: Date.now() - t0,
       };
     }
-    return { ok: true, runner: [ZERO_BIN, "run", entrypoint], ms: Date.now() - t0 };
+    // Single-file: compile ref.0 -> ref.graph, then run the graph.
+    const graph = join(scratchDir, "ref.graph");
+    const res = spawnSync(ZERO_BIN, ["import", entrypoint, "--out", graph], {
+      cwd: scratchDir,
+      env: { ...process.env, PATH: process.env.PATH! },
+      stdio: ["ignore", "pipe", "pipe"],
+      timeout: 120_000,
+    });
+    if (res.status !== 0) {
+      return {
+        ok: false,
+        runner: [],
+        ms: Date.now() - t0,
+        error: `zero import failed: ${res.stderr?.toString().slice(0, 500)}`,
+      };
+    }
+    return { ok: true, runner: [ZERO_BIN, "run", graph], ms: Date.now() - t0 };
   }
   return { ok: false, runner: [], ms: Date.now() - t0, error: `unknown lang: ${lang}` };
 }

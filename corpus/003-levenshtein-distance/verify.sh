@@ -102,7 +102,7 @@ check_zero_argv() {
     err_file=$(mktemp)
     expected_file=$(mktemp)
     printf '%s\n' "$expected" > "$expected_file"
-    if ! "$zero_bin" run ref.zero "$a" "$b" >"$out_file" 2>"$err_file"; then
+    if ! "$zero_bin" run ref.graph "$a" "$b" >"$out_file" 2>"$err_file"; then
       echo "FAIL: zero A=$(printf %q "$a") B=$(printf %q "$b") (nonzero exit)"
       lang_ok=0
     elif ! cmp -s "$expected_file" "$out_file"; then
@@ -125,6 +125,7 @@ check_zero_argv() {
 if want_lang zero; then
   ZERO="${ZERO:-/home/phantom/repos/zero/bin/zero}"
   if [[ -x "$ZERO" ]]; then
+    "$ZERO" import ref.0 --out ref.graph >/dev/null 2>&1 || { echo "FAIL: zero (import ref.0)"; EXIT=1; }
     check_zero_argv "$ZERO"
   else
     echo "SKIP: zero (bin/zero not found)"

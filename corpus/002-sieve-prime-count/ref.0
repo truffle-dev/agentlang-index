@@ -2,14 +2,14 @@
 //
 // Same input convention as task 001: N is read from argv[1] because
 // Zero 0.1.2 has no exposed stdin capability. All logic stays inside
-// `pub fun main` to avoid the Span/MutSpan-as-parameter restriction.
+// `pub fn main` to avoid the Span/MutSpan-as-parameter restriction.
 //
 // The composite-flag table is fixed-size [10001]u8 so the spec cap
 // of N <= 10000 is enforced at the type level. Element type is u8
 // to stay inside the direct backend's allowed local-array element
 // types (u8, u32, i32).
-pub fun main(world: World) -> Void raises {
-    let arg = std.args.get(1)
+pub fn main(world: World) -> Void raises {
+    let arg: Maybe<String> = std.args.get(1)
     if arg.has == false {
         check world.err.write("usage: pass N as argv[1] (Zero 0.1.2 has no stdin capability)\n")
         return
@@ -21,8 +21,8 @@ pub fun main(world: World) -> Void raises {
         check world.err.write("N must be a non-negative integer\n")
         return
     }
-    let mut parse_i: usize = 0
-    let mut n: u32 = 0_u32
+    var parse_i: usize = 0
+    var n: u32 = 0_u32
     while parse_i < arg_len {
         let ch: u8 = arg_bytes[parse_i]
         if ch < 48_u8 || ch > 57_u8 {
@@ -37,13 +37,13 @@ pub fun main(world: World) -> Void raises {
         return
     }
 
-    let mut count: u32 = 0_u32
+    var count: u32 = 0_u32
     if n >= 2_u32 {
-        let mut composite: [10001]u8 = [0_u8; 10001]
-        let mut i: u32 = 2_u32
+        var composite: [10001]u8 = [0_u8; 10001]
+        var i: u32 = 2_u32
         while i * i <= n {
             if composite[i as usize] == 0_u8 {
-                let mut j: u32 = i * i
+                var j: u32 = i * i
                 while j <= n {
                     composite[j as usize] = 1_u8
                     j = j + i
@@ -51,7 +51,7 @@ pub fun main(world: World) -> Void raises {
             }
             i = i + 1_u32
         }
-        let mut k: u32 = 2_u32
+        var k: u32 = 2_u32
         while k <= n {
             if composite[k as usize] == 0_u8 {
                 count = count + 1_u32
@@ -60,16 +60,16 @@ pub fun main(world: World) -> Void raises {
         }
     }
 
-    let mut buf: [16]u8 = [0_u8; 16]
-    let mut written: usize = 0
+    var buf: [16]u8 = [0_u8; 16]
+    var written: usize = 0
     if count == 0_u32 {
         buf[0] = 48_u8
         buf[1] = 10_u8
         written = 2
     } else {
-        let mut digits: [16]u8 = [0_u8; 16]
-        let mut rem: u32 = count
-        let mut digit_count: usize = 0
+        var digits: [16]u8 = [0_u8; 16]
+        var rem: u32 = count
+        var digit_count: usize = 0
         while rem > 0_u32 {
             let dq: u32 = rem / 10_u32
             let dr: u32 = rem % 10_u32
@@ -77,7 +77,7 @@ pub fun main(world: World) -> Void raises {
             rem = dq
             digit_count = digit_count + 1
         }
-        let mut o: usize = 0
+        var o: usize = 0
         while o < digit_count {
             buf[o] = digits[digit_count - 1 - o]
             o = o + 1
