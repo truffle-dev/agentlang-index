@@ -33,16 +33,38 @@ the verified recipe for the source half of that move.
    | `someByteSpan[i]`         | `u8`           |
    | `userFn(...)`             | `userFn`'s declared return type |
    | typed-literal arithmetic  | the literal's suffix type (`emit_i - 1_u32` -> `u32`) |
+   | bare identifier RHS       | the RHS binding's own declared type (`var k = found_at` -> `usize`) |
+   | `std.net.host()`          | `Net`          |
+   | `std.http.client(...)`    | `HttpClient`   |
+   | `std.http.fetch(...)`     | `HttpResult`   |
+   | `std.http.resultOk(...)`  | `Bool`         |
+   | `std.http.resultStatus(...)` | `u16`       |
+   | `std.http.resultBodyLen(...)` | `usize`    |
+   | `std.http.resultError(...)` | `HttpError`  |
+   | `std.http.responseBody(...)` | `Maybe<Span<u8>>` |
+   | `std.http.responseBodyBytes(...)` | `Maybe<Span<u8>>` |
+   | `std.http.responseBodyOffset(...)` | `usize` |
+   | `std.http.headerValue(...)` | `HttpHeaderValue` |
+   | `std.http.headerFound(...)` | `Bool`       |
+   | `std.http.headerOffset(...)` | `usize`     |
+   | `std.http.headerLen(...)` | `usize`        |
+   | `std.http.headerBytes(...)` | `Maybe<Span<u8>>` |
 
    `Maybe<T>` still exposes `.has` / `.value`; read `.value` only inside a
    visible `if x.has { ... }` guard (unchanged from 0.1.2).
 
-   The last two rows are read, not guessed. For a user-fn call the porter scans
-   the source plus any sibling `.0` files it is given for `pub fn NAME(..) -> RET`
+   These rows are read, not guessed. For a user-fn call the porter scans the
+   source plus any sibling `.0` files it is given for `pub fn NAME(..) -> RET`
    signatures and annotates with the declared `RET`; for package tasks pass every
    `src/*.0` so cross-file calls (main.0 -> lib.0) resolve. Typed-literal
    arithmetic fires only when the RHS has no field access, no indexing, and no
-   call, contains an arithmetic operator, and carries a typed numeric literal.
+   call, contains an arithmetic operator, and carries a typed numeric literal. The
+   bare-identifier rule resolves from a per-function symbol table the porter
+   builds as it walks each `fn` body: every annotation it reads or adds records
+   `name -> type`, so `var k = found_at` annotates from `found_at`'s own declared
+   `usize`. The table resets at each `fn` boundary so a name reused in another
+   function never resolves to the wrong type. The `std.http` / `std.net` rows are
+   the 0.3.4 hosted-capability signatures from `skill-zero-stdlib.md`.
 
 `port_ref.py` applies all three transforms. It annotates only the RHS shapes
 above and leaves any other inferred `let` untouched (printed to stderr as
@@ -98,11 +120,21 @@ package import is in place and the run target is the directory, not a `.graph`.
 copy-to-`.0` / import-to-graph / run-graph path; a directory argument takes the
 in-place package import / run-directory path.
 
+### HTTP tasks
+
+The HTTP tasks (012, 013, 014) are single-file `ref.zero` drivers that talk to a
+per-task `fixture_server.py` over `std.http`. The source transforms are the same
+single-file recipe (the porter carries the `std.http` / `std.net` return types
+and the symbol table above); the only extra step is that the task's
+`fixture_server.py` is copied into the temp dir alongside the ported source so
+the corpus `verify.sh` can spin the fixture up itself. They run through the
+shim's `*.zero` import-to-graph path unchanged.
+
 ## Proof
 
-`verify-batch.sh` ports each non-HTTP corpus task through `port_ref.py` and runs
-its unchanged `verify.sh --lang zero` through the shim against the installed
-0.3.4 binary. As of this commit all 17 (15 single-file + 2 package) pass
+`verify-batch.sh` ports each corpus task through `port_ref.py` and runs its
+unchanged `verify.sh --lang zero` through the shim against the installed 0.3.4
+binary. As of this commit all 20 (15 single-file + 2 package + 3 HTTP) pass
 byte-exact across every public + hidden case:
 
 ```
@@ -111,7 +143,8 @@ byte-exact across every public + hidden case:
 006-substring-count 007-csv-line-tokenize 008-word-reverse 009-word-count
 010-byte-frequency 011-rle-encode 015-checked-divide-u32 016-parse-list-sum
 017-checked-add-overflow 018-caesar-cipher 019-run-length-encode
----- PASS=17 FAIL=0
+012-http-status-code 013-http-json-sum 014-http-header-echo
+---- PASS=20 FAIL=0
 ```
 
 Run it yourself (needs zero 0.3.4 on PATH or `ZERO_REAL` set):
@@ -122,9 +155,6 @@ migration/zero-0.3.4/verify-batch.sh
 
 ## Out of scope here (later chapters of the cutover)
 
-- **HTTP tasks 012-014** need a live fixture server plus `std.http` / `std.net`
-  return-type annotations (`std.net.host`, `std.http.client`, `std.http.fetch`,
-  `std.http.resultStatus`, ...). Not covered by the table above.
 - Renaming `ref.zero` -> `ref.0`, rewriting every `verify.sh` Zero block to the
   import->run-graph flow, bumping the CI binary, and re-porting
   `bench/runner.ts`'s extraction + invocation are the cutover commit, done as

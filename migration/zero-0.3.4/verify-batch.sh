@@ -13,8 +13,14 @@
 # port_ref.py, zero.json untouched) and driven through the shim's package
 # branch, which bridges `zero run zero -- args` into the 0.3.4 import->run flow.
 #
-# The live corpus is never mutated; this only reads it. HTTP tasks (012-014)
-# need a fixture server + std.http type annotations and are out of scope here.
+# The HTTP tasks (012, 013, 014) are single-file ref.zero drivers that talk to
+# a per-task fixture_server.py over std.http. They are ported the same way as
+# the other single-file tasks (the porter now carries the 0.3.4 std.http /
+# std.net return types plus a local symbol table for identifier-RHS bindings)
+# and additionally copy fixture_server.py into the temp dir so the corpus
+# verify.sh can spin the fixture up itself.
+#
+# The live corpus is never mutated; this only reads it.
 #
 # Requires: zero 0.3.4 on PATH (or ZERO_REAL pointing at it), python3.
 set -uo pipefail
@@ -81,6 +87,32 @@ for t in $PKG_BATCH; do
   done
   if (( port_err )); then FAIL=$((FAIL+1)); rm -rf "$td"; continue; fi
   cp "$ver" "$td/verify.sh"
+  out="$(cd "$td" && ZERO="$SHIM" bash verify.sh --lang zero 2>&1)"
+  if grep -q "^PASS: zero" <<<"$out"; then
+    echo "PASS $t"; PASS=$((PASS+1))
+  else
+    echo "FAIL $t:"; sed 's/^/    /' <<<"$out"; FAIL=$((FAIL+1))
+  fi
+  rm -rf "$td"
+done
+
+HTTP_BATCH="012-http-status-code 013-http-json-sum 014-http-header-echo"
+for t in $HTTP_BATCH; do
+  src="$REPO/corpus/$t/ref.zero"
+  ver="$REPO/corpus/$t/verify.sh"
+  fix="$REPO/corpus/$t/fixture_server.py"
+  if [[ ! -f "$src" || ! -f "$ver" ]]; then
+    echo "MISSING $t"; FAIL=$((FAIL+1)); continue
+  fi
+  td="$(mktemp -d)"
+  if ! python3 "$PORT" < "$src" > "$td/ref.zero" 2>"$td/unhandled"; then
+    echo "FAIL $t (port_ref.py error)"; cat "$td/unhandled"; FAIL=$((FAIL+1)); rm -rf "$td"; continue
+  fi
+  if [[ -s "$td/unhandled" ]]; then
+    echo "WARN $t has unhandled inferred lets:"; sed 's/^/    /' "$td/unhandled"
+  fi
+  cp "$ver" "$td/verify.sh"
+  [[ -f "$fix" ]] && cp "$fix" "$td/fixture_server.py"
   out="$(cd "$td" && ZERO="$SHIM" bash verify.sh --lang zero 2>&1)"
   if grep -q "^PASS: zero" <<<"$out"; then
     echo "PASS $t"; PASS=$((PASS+1))
